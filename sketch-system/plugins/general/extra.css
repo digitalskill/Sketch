@@ -14,7 +14,7 @@
 #login form input[type=text],#login form input[type=password]{background-color:#FFF;behavior:url(iepngfix/PIE.htc);border:1px solid #E2E2E2;border-radius:5px 5px 5px 5px;color:#789;float:left;font-size:12px;height:26px !important;margin:5px;padding-top:6px !important;width:223px}
 #login form input[type=text]:focus,#login form input[type=password]:focus{-moz-box-shadow:0 0 3px #789;-webkit-box-shadow:0 0 3px #789;background-color:#fff;behavior:url(iepngfix/PIE.htc);border-color:#789;box-shadow:0 0 3px #789}
 .sketch-logo{background-image:url(images/sketch-logo-sml.png);background-position:top left;background-repeat:no-repeat}
-.hide{display:none}
+.hide{display:none !important}
 .accordian,.accord-container,.accord-body{position:relative}
 #panels{position:relative}
 .banner-text{right:0;bottom:0}

@@ -67,21 +67,17 @@ class ADMIN extends PLUGIN {
        
         </div>
         <div id="admin-tabMenuRight">
-       		<form class="required" style="float:left;width:100px;margin-right:10px;overflow:visible;position:relative;margin-top:-1px;z-index:999;height:23px">
+        	<a href="<?php echo urlPath( "?logout=true" ); ?>" class="logout:true" style="float:right;"><span>Logout</span></a>
+       		<form class="required" style="float:right;clear:none;width:100px;overflow:visible;position:relative;margin-top:-1px;z-index:999;height:23px">
                 <select name="menu_under" class="bgClass:'select_bg'" style="-webkit-appearance:textarea;" id="pagejumper" onchange="if(this.value != ''){ window.location ='<?php echo urlPath(); ?>?page_id=' + this.value;}">
                 <option value="">Jump to page</option>
                 <?php adminFilter("menu",array("select"=>true)); ?>
                 </select>
             </form>
-            <a href="<?php echo urlPath( "?logout=true" ); ?>" class="logout:true"><span>Logout</span></a></div>
+         </div>
   <div id="sub-nav" class="hide">
       <div class="subnavmid">
-        <div class="assetbutn">
-        <a href="<?php echo urlPath( "admin" );?>/ajax_plugin_images?page_id=<?php echo $sketch->page_id;?>&amp;preview=preview" class="image:true" id="assetlink" onclick="$('helplink').toggleClass('hide'); if($('helplink').hasClass('hide')){ $('helplink').fade('out'); }else{$('helplink').fade('in');}"><span>Assets</span></a>
-    	</div>
-    	<div class="helpbutn">
-        	<a href="<?php echo urlPath();?>/userhelp?page_id=<?php echo $sketch->page_id;?>" class="image:true" id="helplink" onclick="$('assetlink').toggleClass('hide'); if($('assetlink').hasClass('hide')){ $('assetlink').fade('out'); }else{$('assetlink').fade('in');}"><span>Help</span></a>
-    	</div>
+      <div id="adminSubs">
       <?php
         $section     = "";
         $allSections = array( );
@@ -91,10 +87,8 @@ class ADMIN extends PLUGIN {
         }
         foreach ( $allSections as $key => $value ) {
 ?>
-       <div id="section_<?php
-            echo $key;
-?>" class="hide" style="float:left;"><?php
-            $menuSectionHTML = "<span class='asortable'>";
+       <div id="section_<?php echo $key; ?>" class="hide"><?php
+            $menuSectionHTML = "";
             foreach ( $value as $k => $v ) {
                 if ( $sketch->plugins[ $v ]->candoform() == true && $sketch->plugins[ $v ]->superUser() == false && ( $sketch->checkIfLoaded( strtolower( $v ) ) == true || $sketch->plugins[ $v ]->showIfAdmin() == true ) ) {
                     if ( $sketch->plugins[ $v ]->topNav() != true ) {
@@ -102,44 +96,37 @@ class ADMIN extends PLUGIN {
                     } else {
 ?>
                    <a rel="" href="<?php
-                        echo urlPath( "admin" );
-?>/ajax_plugin_<?php
-                        echo $v;
-?>?page_id=<?php
-                        echo $sketch->page_id;
-?>&preview=" class="<?php
-                        echo $sketch->plugins[ $v ]->getAdminclass();
-?>"><?php
-                        echo $sketch->plugins[ $v ]->menuName( $v );
-?></a>
+                        echo urlPath( "admin" ); ?>/ajax_plugin_<?php
+                        echo $v; ?>?page_id=<?php
+                        echo $sketch->page_id; ?>&preview=" class="<?php
+                        echo $sketch->plugins[ $v ]->getAdminclass(); ?>"><?php
+                        echo $sketch->plugins[ $v ]->menuName( $v );?></a>
           <?php
                     }
                 }
             }
-            echo $menuSectionHTML . "&nbsp;</span>";
+            echo $menuSectionHTML;
 ?>
        </div>
         <?php
         }
 ?>
+		</div>
+		<div id="adminsupport">
+            <div class="assetbutn">
+            <a href="<?php echo urlPath( "admin" );?>/ajax_plugin_images?page_id=<?php echo $sketch->page_id;?>&amp;preview=preview" class="image:true" id="assetlink" onclick="$('helplink').toggleClass('hide'); if($('helplink').hasClass('hide')){ $('helplink').fade('out'); }else{$('helplink').fade('in');}"><span>Assets</span></a>
+            </div>
+            <div class="helpbutn">
+                <a href="<?php echo urlPath();?>/userhelp?page_id=<?php echo $sketch->page_id;?>" class="image:true" id="helplink" onclick="$('assetlink').toggleClass('hide'); if($('assetlink').hasClass('hide')){ $('assetlink').fade('out'); }else{$('assetlink').fade('in');}"><span>Help</span></a>
+            </div>
+		</div>
    </div>
  </div>
 </div>
 </div>
 <script type="text/javascript">
     function sortAdminMenu(){
-        new Sorter($("admin-tabMenu"),{"url":"<?php
-        echo urlPath( "admin" );
-?>/plugin_<?php
-        echo $this->settings[ 'name' ];
-?>"});
-        $$(".asortable").each(function(item,index){
-            new Sorter($(item),{"url":"<?php
-        echo urlPath( "admin" );
-?>/plugin_<?php
-        echo $this->settings[ 'name' ];
-?>?menuorder","clone":false});
-        });
+        new Sorter($("admin-tabMenu"),{"url":"<?php echo urlPath( "admin" ); ?>/plugin_<?php echo $this->settings[ 'name' ];?>"});
     };
     sortAdminMenu.delay(1000);
     <?php

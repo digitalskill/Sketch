@@ -2,25 +2,35 @@ html body{padding-top:30px}
 html body .clear{clear:both}
 html body .button.clear{float:left}
 body #admin_panel,body #load-box{font-size:11px}
-body .adminMask{background:url(images/banner_bg_13.png) left top;min-width:900px;overflow:hidden;top:53px;z-index:199!important}
-#admin_panel{font-family:Arial,Helvetica,sans-serif;left:0;min-width:900px;position:fixed;top:0;width:100%;z-index:999}
+body #admin_panel{position:fixed;top:0;left:0}
+body .adminMask{
+	background: url(images/banner_bg_13.png) left top;
+	z-index: 199!important;
+	overflow: hidden;
+}
+#admin_panel{font-family:Arial,Helvetica,sans-serif;z-index:999;background-color:transparent;
+	background-image: url(images/header-bg.png);
+	background-repeat: repeat;
+	background-position: left bottom}
 #admin_panel .admin-controls{
-	height: 32px;
 	overflow: visible;
-	padding-left: 30px;
-	padding-right: 30px;
 	padding-top: 5px;
 	position: relative;
-	background-color:transparent;
-	background-image: url(images/header-bg.png);
+}
+#bottom-box{
+	bottom: 0;
+	height: 46px;
+	position:relative;
+	margin-top:-46px;
+	overflow: hidden;
+	z-index: 9999;
+	background-image: url(images/footer-bg.png);
 	background-repeat: repeat;
 	background-position: left top;
 }
-#bottom-box{-moz-box-shadow:0 0 2px #000;-o-box-shadow:0 0 2px #000;-webkit-box-shadow:0 0 2px #000;background:#000;behavior:url(iepngfix/PIE.htc);bottom:0;box-shadow:0 0 2px #000;height:46px;min-width:900px;overflow:hidden;position:absolute;width:100%;z-index:9999}
 #bottom-box .link{display:none;float:right;margin-right:30px}
 #bottom-box .link a{font-size:9px}
 #butn-cancel{margin-left:35px}
-#admin-tabMenu{margin-left:-15px}
 #admin-tabMenu a,#admin-tabMenuRight a{background-color:transparent;background-image:none;color:#778899;float:left;height:19px;line-height:19px;overflow:hidden;padding:5px 15px 8px;position:relative;text-decoration:none;text-transform:uppercase;width:auto;z-index:0}
 #admin-tabMenu a.current.over,#admin-tabMenu a.current,#admin-tabMenu a:hover{background-color:transparent;background-image:none;color:#FFF;z-index:3}
 #admin-tabMenuRight .name{color:#789;float:left;margin:5px 10px 0 0}
@@ -31,15 +41,9 @@ body .adminMask{background:url(images/banner_bg_13.png) left top;min-width:900px
 	-webkit-box-shadow: 0 0 3px #000;
 	behavior: url(iepngfix/PIE.htc);
 	box-shadow: 0 0 3px #000;
-	clear: both;
 	color: #FFF;
 	font-size: 10px;
 	height: 25px;
-	margin-left: -35px;
-	margin-right: -35px;
-	margin-top: 28px;
-	padding-left: 30px;
-	padding-right: 30px;
 	position: relative;
 	z-index: 4;
 	background-color: #000;
@@ -77,21 +81,12 @@ body .adminMask{background:url(images/banner_bg_13.png) left top;min-width:900px
 #imageSide ul li div{background:#FFF;border:2px solid #ccc;height:auto;overflow:hidden;width:99%}
 #imageSide ul ul li img{float:left;max-height:200px;max-width:100%}
 #load-box{
-	-moz-box-shadow: 0 0 6px #000;
-	-webkit-box-shadow: 0 0 6px #000;
-	behavior: url(iepngfix/PIE.htc);
-	box-shadow: 0 0 6px #000;
 	font-family: Arial, Helvetica, sans-serif;
-	margin-left: 0;
-	margin-right: 0;
-	margin-top: 0;
 	overflow: auto;
-	padding: 5px 28px;
-	position: relative;
-	width: auto;
 	background-image: url(images/paper.jpg);
 	background-repeat: repeat;
 	background-position: left top;
+	padding:0 2%;
 }
 #adminMask #addnewadmin{height:auto}
 #directory_f_images .admin_image .del{height:30px}
@@ -189,7 +184,7 @@ body #adminMask .directory_list ul li{max-width:150px}
 .admin_image img{height:auto;margin-left:-2px;margin-top:-2px;width:101%}
 .sk-line{font-size:11px;padding-bottom:11px;position:relative;top:-4px}
 #adminMask .accord-container{-moz-border-radius:5px;-o-border-radius:5px;-webkit-border-radius:5px;background:#fff;behavior:url(iepngfix/PIE.htc);border:1px solid #999;border-radius:5px;margin-bottom:0;overflow:hidden;padding:5px 0 20px 15px;position:relative}
-#admin-tabMenuRight,.assetbutn,#adminMask .menu-lister li a span.rightarrow,.helpbutn{float:right}
+.assetbutn,#adminMask .menu-lister li a span.rightarrow,.helpbutn{float:right}
 #admin-container .del a.ajaxlink,#adminMask .del a{border:1px solid #E2E2E2;color:#900;display:block;padding:2px;text-align:center}
 #admin-container .del div,#adminMask .del div{padding-left:5px;text-align:left}
 #bottom-box a.button:hover span.icons.logo,#bottom-box button:hover span.icons.logo,#bottom-box a.button span.icons.logo,#bottom-box button span.icons.logo{background:url(images/sketch-logo-sml.png);height:11px;margin-top:-4px;width:40px}
@@ -238,7 +233,8 @@ body #imageSide a.accord-title.button{
 	text-decoration: none;
 	position: relative;
 	text-shadow: 0px 1px 1px #0f0f0f;
-	font-size:11px;
+	font-size: 11px;
+	float: left;
 }
 
 body #admin-tabMenu a, #admin-tabMenu a:visited, body #admin-tabMenuRight a, #admin-tabMenuRight a:visited {
@@ -251,4 +247,7 @@ body #admin-tabMenu a, #admin-tabMenu a:visited, body #admin-tabMenuRight a, #ad
 
 #admin-tabMenu a:hover, #admin-tabMenuRight a:hover {
 	color: #a5a5a5;
+}
+body #adminMask{
+	width:100% !important;	
 }

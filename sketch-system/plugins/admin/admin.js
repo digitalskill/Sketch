@@ -66,7 +66,6 @@ var AdminPanelController = new Class({
 	$(this.object).setOpacity(0);
 	
 	$(this.object).setStyles({
-	    "position":"fixed",
 	    "top":0
 	});
 	
@@ -223,13 +222,6 @@ loadPlugin: function(objOptions,theobj){
 	"useIframeShim":true,
 	"hideOnClick":false,
 	"destroyOnHide":true,
-	'style': {
-	"height":window.innerHeight,
-	"width":$(window).getSize().x,
-	"position":"fixed",
-	"top":0,
-	"overflow":"hidden"
-	},
 	"class":'adminMask'
     });
     this.windowMask.show();
@@ -243,7 +235,7 @@ loadPlugin: function(objOptions,theobj){
     this.loadbox 	= new Element("div",{
 	"id":"load-box",
 	"class":"container",
-	"styles":{"height":$(this.windowMask).getSize().y-120}
+	"styles":{"height":$(this.windowMask).getSize().y}
     });
     $(this.loadbox).inject(this.windowMask,"top");
 	this.windowSpinner = new Spinner($(this.loadbox));
@@ -503,12 +495,8 @@ resize: function(){
 	    if(this.preview == false){
 		$(this.windowMask).setStyles({
 		    "height":$(document.body).getSize().y,
-		    "width":$(document.body).getSize().x,
 		    "position":pos,
 		    "top":60
-		});
-		$(this.bottombox).setStyles({
-		    "bottom":60
 		});
 		if($(this.imageElement)){
 		    $(this.imageElement).setStyles({
@@ -519,7 +507,6 @@ resize: function(){
 		$(this.loadbox).setStyles({
 		    "height": he,
 		    "overflow":"auto",
-		    "padding":"5px 12px 5px 28px",
 			"margin-top":0
 		});
 		
@@ -531,10 +518,8 @@ resize: function(){
 	    }else{
 		$(this.windowMask).setStyles({
 		    "height":"60px",
-		    "width":$(window).getSize().x,
 		    "bottom":0,
 		    "top":$(window).getSize().y-60,
-		    "position":"fixed"
 		});
 		$(this.loadbox).setStyles({
 			"margin-top":17

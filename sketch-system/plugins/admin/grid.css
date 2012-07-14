@@ -1,2 +1,219 @@
-/* CSS Document */
+#admin_panel {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	position:absolute;
+	top:0;
+	left:0;
+}
 
+#admin-tabMenu {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+#admin-tabMenuRight {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display:none;
+}
+
+#sub-nav {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+#adminsupport {
+	clear: none;
+	float: left;
+	margin-left: 2.6785%;
+	width: 100%;
+	display:none;
+}
+
+#adminSubs {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+#adminMask {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+#load-box {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 96%;
+	display: block;
+}
+
+#bottom-box {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+/* Tablet Layout: 481px to 768px. Inherits styles from: Mobile Layout. */
+
+@media only screen and (min-width: 481px) {
+#admin_panel{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	position:absolute;
+	top:0;
+	left:0;
+}
+#admin-tabMenu{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 87.2928%;
+	display: block;
+}
+#admin-tabMenuRight{
+	clear: none;
+	float: left;
+	margin-left: 1.6574%;
+	width: 11.0497%;
+	display: block;
+}
+#admin-tabMenuRight form{display:none}
+#sub-nav{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#adminsupport{
+	clear: none;
+	float: left;
+	margin-left: 1.6574%;
+	width: 23.7569%;
+	display: block;
+}
+#adminSubs{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 74.5856%;
+	display: block;
+}
+#adminMask{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#load-box{
+	clear: both;
+	float: left;
+	margin: 0;
+	width: 96%;
+	display: block;
+}
+#bottom-box{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+}
+
+/* Desktop Layout: 769px to a max of 1232px.  Inherits styles from: Mobile Layout and Tablet Layout. */
+
+@media only screen and (min-width: 769px) {
+#admin_panel{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	position:fixed;
+	top:0;
+	left:0;
+}
+#admin-tabMenu{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 69.6035%;
+	display: block;
+}
+#admin-tabMenuRight{
+	clear: none;
+	float: left;
+	margin-left: 1.3215%;
+	width: 29.0748%;
+	display: block;
+}
+#admin-tabMenuRight form{display:block}
+#sub-nav{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#adminsupport{
+	clear: none;
+	float: left;
+	margin-left: 1.3215%;
+	width: 29.0748%;
+	display: block;
+}
+#adminSubs{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 69.6035%;
+	display: block;
+}
+#adminMask{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#load-box{
+	clear: both;
+	float: left;
+	margin: 0;
+	width: 96%;
+	display: block;
+}
+#bottom-box{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+}
