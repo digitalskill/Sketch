@@ -1,0 +1,19 @@
+.tip,.lt,.lb{position:absolute}
+.tip{-moz-border-radius:5px;-webkit-border-radius:5px;background-image:url(images/dark_back.png);behavior:url(iepngfix/PIE.htc);border-radius:5px}
+.tip-text{color:#FFF;font-family:Arial, Helvetica, sans-serif;font-size:8pt;margin:0;padding-left:10px;padding-right:10px;padding-top:0}
+.tip-bottom,.calender-bottom{height:7px}
+.tip-top,.calender-top{height:7px;overflow:hidden}
+.tip-heading{color:#FC0;font-weight:700;text-transform:uppercase}
+.tip .tip-arrow{background-color:transparent;background-image:url(images/dark_divot.png);background-repeat:no-repeat;border:none;bottom:5px;float:none;margin-bottom:0;margin-right:0;margin-top:0;padding:0;position:absolute;top:5px;width:12px}
+.tip .arrow_10{height:23px;margin-left:-11px;width:12px}
+.tip .arrow_9{background-position:left center;margin-left:-10px;width:12px}
+.tip .arrow_8{background-position:left bottom;margin-left:-10px;width:12px}
+.tip .arrow_2{background-position:right 5px;left:auto;margin-right:-10px;right:0;width:12px}
+.tip .arrow_3{background-position:right center;left:auto;margin-right:-10px;right:0;width:12px}
+.tip .arrow_4{background-position:right bottom;left:auto;margin-right:-10px;right:0;width:12px}
+.tip .arrow_11{background-position:left top;height:10px;left:5px;margin-top:-10px;right:5px;top:0;width:auto}
+.tip .arrow_1{background-position:right top;height:10px;left:5px;margin-top:-9px;right:5px;top:0;width:auto}
+.tip .arrow_7{background-position:left bottom;bottom:0;height:10px;left:5px;margin-bottom:-10px;right:5px;top:auto;width:auto}
+.tip .arrow_5{background-position:right bottom;bottom:0;height:10px;left:5px;margin-bottom:-10px;right:5px;top:auto;width:auto}
+.tip .arrow_6{background-position:center bottom;bottom:0;height:10px;left:5px;margin-bottom:-10px;right:5px;top:auto;width:auto}
+.tip .arrow_12{background-position:center top;bottom:auto;height:10px;left:5px;margin-top:-10px;right:5px;top:0;width:auto}

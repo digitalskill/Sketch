@@ -1,0 +1,20 @@
+#login{font-family:arial,sans-serif;font-size:11px;margin:auto;padding-left:5px;padding-right:5px;width:255px}
+#login .loginForm{-moz-border-radius:5px;-moz-box-shadow:0 0 6px #000;-webkit-border-radius:5px;-webkit-box-shadow:0 0 6px #000;background:#fff;behavior:url(iepngfix/PIE.htc);border-radius:5px;box-shadow:0 0 6px #000;height:203px;overflow:hidden;position:relative;text-align:center;width:255px}
+#login .sitename{background-image:url(images/sketch-logo.png);background-position:48px 5px;background-repeat:no-repeat;height:50px;margin-bottom:5px;position:relative;text-indent:-999em}
+#login .butn-login{-moz-border-radius:5px;-webkit-border-radius:5px;background-color:#287B28;background-image:url(images/gray_grad.jpg);behavior:url(iepngfix/PIE.htc);border:2px solid #ccc;border-radius:5px;color:#333;font-weight:400;height:30px;margin-left:72px;margin-top:10px;width:107px}
+#login .inputrow{height:40px;margin-bottom:6px;padding-left:5px;position:relative}
+#login .inputrow label{color:#D4D4D4;font-size:13px;left:26px;padding-top:10px;position:absolute;text-align:left;text-transform:uppercase;top:13px;width:202px}
+#login a{color:#a9b926}
+#login .forgot-pass{letter-spacing:1px;line-height:17px}
+#login #version{color:#fff;font-size:11px;letter-spacing:1px;margin-bottom:18px;text-align:center;width:100%}
+#login #version a{text-decoration:none}
+#login .greyline{border-top:1px solid #555;margin-top:-45px;width:100%}
+#login .popup-container{background:transparent !important}
+#login .popup-loader{overflow:hidden !important}
+#login form input[type=text],#login form input[type=password]{background-color:#FFF;behavior:url(iepngfix/PIE.htc);border:1px solid #E2E2E2;border-radius:5px 5px 5px 5px;color:#789;float:left;font-size:12px;height:26px !important;margin:5px;padding-top:6px !important;width:223px}
+#login form input[type=text]:focus,#login form input[type=password]:focus{-moz-box-shadow:0 0 3px #789;-webkit-box-shadow:0 0 3px #789;background-color:#fff;behavior:url(iepngfix/PIE.htc);border-color:#789;box-shadow:0 0 3px #789}
+.sketch-logo{background-image:url(images/sketch-logo-sml.png);background-position:top left;background-repeat:no-repeat}
+.hide{display:none}
+.accordian,.accord-container,.accord-body{position:relative}
+#panels{position:relative}
+.banner-text{right:0;bottom:0}

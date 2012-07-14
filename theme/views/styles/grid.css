@@ -1,0 +1,696 @@
+img, object, embed, video {
+	max-width: 100%;
+}
+/* IE 6 does not support max-width so default to width 100% */
+.ie6 img {
+	width:100%;
+}
+
+/*
+	Dreamweaver Fluid Grid Properties
+	----------------------------------
+	dw-num-cols-mobile:		5;
+	dw-num-cols-tablet:		8;
+	dw-num-cols-desktop:	10;
+	dw-gutter-percentage:	15;
+	
+	Inspiration from "Responsive Web Design" by Ethan Marcotte 
+	http://www.alistapart.com/articles/responsive-web-design
+	
+	and Golden Grid System by Joni Korpi
+	http://goldengridsystem.com/
+*/
+
+/* Mobile Layout: 480px and below. */
+
+.gridContainer {
+	margin-left: auto;
+	margin-right: auto;
+	width: 98%;
+	padding-left: 1%;
+	padding-right:1%;
+}
+
+#topNav {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	margin-bottom: 20px;
+	height: 88px
+}
+
+#menu ul {
+	margin: auto;
+	padding: 0;
+	list-style-type: none;
+	float:none;
+}
+#content {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+#footer {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+#boxes {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+#footerLeft {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 58.9285%;
+	display: block;
+}
+
+#footerRight {
+	clear: none;
+	float: left;
+	margin-left: 2.6785%;
+	width: 38.3928%;
+	display: block;
+}
+
+#logo {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: none;
+}
+
+#menu {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+#banner-container {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+#leftbtn {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 17.8571%;
+	display: none;
+}
+
+#rightbtn {
+	clear: none;
+	float: left;
+	margin-left: 2.6785%;
+	width: 17.8571%;
+	display: none;
+}
+
+#bannerCenter {
+	clear: none;
+	float: left;
+	margin-left: 0%;
+	width: 100%;
+	display: block;
+}
+
+#sidenav {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 17.8571%;
+	display: block;
+}
+
+#center {
+	clear: none;
+	float: left;
+	margin-left: 2.6785%;
+	width: 100%;
+	display: block;
+}
+
+#rightcontent {
+	clear: none;
+	float: left;
+	margin-left: 2.6785%;
+	width: 79.4642%;
+	display: block;
+}
+
+#landing {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+.about #panels div{
+	position: relative;
+	margin-right: 4%;
+	margin-left:4%;
+	float: left;
+	width:92%;
+}
+
+#gallerynav{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+#gallerygrid{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+ul.grid li {
+	width: 98%;
+	margin: 0;
+	margin-left: 2%;
+	margin-bottom: 20px;
+	height:120px;
+	float: left;
+	overflow: hidden;
+	background: none;
+	-moz-box-shadow: 0px 1px 2px #8e8e8e;
+	-webkit-box-shadow: 0px 1px 2px #8e8e8e;
+	box-shadow: 0px 1px 2px #8e8e8e;
+}
+
+#postwrap {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+#sidebar {
+	clear: none;
+	float: left;
+	margin-left: 2.6785%;
+	width: 100%;
+	display:none;
+}
+
+#comment-wrapper {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+#portfolio-single {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+#portfolio-single .image {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+#portfolio-single .text {
+	clear: both;
+	float: left;
+	margin-left: 0%;
+	width: 96%;
+	display: block;
+}
+
+#admin_panel {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+/* Tablet Layout: 481px to 768px. Inherits styles from: Mobile Layout. */
+
+@media only screen and (min-width: 481px) {
+ul.grid li {
+	width: 98%;
+	margin: 0;
+	margin-left: 2%;
+	margin-bottom: 20px;
+	height:120px;
+	float: left;
+	overflow: hidden;
+	background: none;
+	-moz-box-shadow: 0px 1px 2px #8e8e8e;
+	-webkit-box-shadow: 0px 1px 2px #8e8e8e;
+	box-shadow: 0px 1px 2px #8e8e8e;
+}	
+	
+	
+.gridContainer {
+	width: 98%;
+	padding-left: 1%;
+	padding-right: 1%;
+}
+#topNav {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	margin-bottom: 40px;
+}
+#content {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#footer {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#boxes {
+	clear: both;
+	float: left;
+	margin-left: 12.7071%;
+	width: 74.5856%;
+	display: block;
+}
+#footerLeft {
+	clear: both;
+	float: left;
+	margin-left: 12.7071%;
+	width: 49.1712%;
+	display: block;
+}
+#footerRight {
+	clear: none;
+	float: left;
+	margin-left: 1.6574%;
+	width: 23.7569%;
+	display: block;
+}
+#logo {
+	clear: both;
+	float: left;
+	margin-left: 12.7071%;
+	width: 23.7569%;
+	display: none;
+}
+#menu {
+	clear: both;
+	float: left;
+	margin-left: 2%;
+	width: 98%;
+	display: block;
+}
+
+#menu ul {
+	margin: auto;
+	padding: 0;
+	list-style-type: none;
+	float:none;
+}
+
+#banner-container {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#leftbtn {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 11.0497%;
+	display: block;
+}
+#rightbtn {
+	clear: none;
+	float: left;
+	margin-left: 1.6574%;
+	width: 11.0497%;
+	display: block;
+}
+#bannerCenter {
+	clear: none;
+	float: left;
+	margin-left: 1.6574%;
+	width: 74.5856%;
+	display: block;
+}
+
+#sidenav {
+	clear: both;
+	float: left;
+	margin-left: 12.7071%;
+	width: 23.7569%;
+	display: block;
+}
+#center {
+	clear: none;
+	float: left;
+	margin-left: 1.6574%;
+	width: 100%;
+	display: block;
+}
+#rightcontent {
+	clear: none;
+	float: left;
+	margin-left: 1.6574%;
+	width: 49.1712%;
+	display: block;
+}
+#landing {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+.about #panels div{
+	position: relative;
+	margin-right: 4%;
+	margin-left:0%;
+	float: left;
+	width:22%;
+}
+#gallerynav{
+	clear: both;
+	float: left;
+	margin-left: 12.7071%;
+	width: 74.5856%;
+	display: block;
+}
+#gallerygrid{
+	clear: both;
+	float: left;
+	margin-left: 12.7071%;
+	width: 74.5856%;
+	display: block;
+}
+#postwrap{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 61.8784%;
+	display: block;
+}
+#sidebar{
+	clear: none;
+	float: left;
+	margin-left: 1.6574%;
+	width: 36.464%;
+	display: block;
+}
+#comment-wrapper{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#portfolio-single{
+	clear: both;
+	float: left;
+	margin-left: 0%;
+	width: 100%;
+	display: block;
+}
+#portfolio-single .image{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 61.8784%;
+	display: block;
+}
+#portfolio-single .text{
+	clear: none;
+	float: left;
+	margin-left: 1.6574%;
+	width: 31.464%;
+	display: block;
+}
+#admin_panel{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+
+}
+
+/* Desktop Layout: 769px to a max of 1232px.  Inherits styles from: Mobile Layout and Tablet Layout. */
+
+@media only screen and (min-width: 769px) {
+ul.grid li {
+	width: 23%;
+	margin: 0;
+	margin-left: 2%;
+	margin-bottom: 20px;
+	height:120px;
+	float: left;
+	overflow: hidden;
+	background: none;
+	-moz-box-shadow: 0px 1px 2px #8e8e8e;
+	-webkit-box-shadow: 0px 1px 2px #8e8e8e;
+	box-shadow: 0px 1px 2px #8e8e8e;
+}
+
+.gridContainer {
+	width: 100%;
+	max-width: 100%;
+	padding-left: 0%;
+	padding-right: 0%;
+	margin: auto;
+}
+#topNav {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	margin-bottom: 70px;
+}
+#content {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#footer {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#boxes {
+	clear: both;
+	float: left;
+	margin-left: 10.1321%;
+	width: 79.7356%;
+	display: block;
+}
+#footerLeft {
+	clear: both;
+	float: left;
+	margin-left: 10.1321%;
+	width: 39.207%;
+	display: block;
+}
+#footerRight {
+	clear: none;
+	float: left;
+	margin-left: 1.3215%;
+	width: 39.207%;
+	display: block;
+}
+#logo {
+	clear: both;
+	float: left;
+	margin-left: 10.1321%;
+	width: 18.9427%;
+	display: block;
+}
+#menu {
+	clear: none;
+	float: left;
+	margin-left: 1.3215%;
+	width: 59.4713%;
+	display: block;
+}
+#menu ul {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	float:right;
+}
+#banner-container {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#leftbtn {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 8.8105%;
+	display: block;
+}
+#rightbtn {
+	clear: none;
+	float: left;
+	margin-left: 1.3215%;
+	width: 8.8105%;
+	display: block;
+}
+#bannerCenter {
+	clear: none;
+	float: left;
+	margin-left: 1.3215%;
+	width: 79.7356%;
+	display: block;
+}
+
+#sidenav {
+	clear: both;
+	float: left;
+	margin-left: 10.1321%;
+	width: 18.9427%;
+	display: block;
+}
+#center {
+	clear: none;
+	float: left;
+	margin-left: 1.3215%;
+	width: 100%;
+	display: block;
+}
+#rightcontent {
+	clear: none;
+	float: left;
+	margin-left: 1.3215%;
+	width: 59.4713%;
+	display: block;
+}
+#landing {
+	clear: both;
+	float: left;
+	margin-left: 10.1321%;
+	width: 79.7356%;
+	display: block;
+}
+.about #panels div{
+	position: relative;
+	margin-right: 4%;
+	margin-left:0%;
+	float: left;
+	width:22%;
+}
+#gallerynav{
+	clear: both;
+	float: left;
+	margin-left: 10.1321%;
+	width: 79.7356%;
+	display: block;
+}
+#gallerygrid{
+	clear: both;
+	float: left;
+	margin-left: 10.1321%;
+	width: 79.7356%;
+	display: block;
+}
+#postwrap{
+	clear: both;
+	float: left;
+	margin-left: 10.1321%;
+	width: 49.3392%;
+	display: block;
+}
+#sidebar{
+	clear: none;
+	float: left;
+	margin-left: 1.3215%;
+	width: 29.0748%;
+	display: block;
+}
+#comment-wrapper{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#portfolio-single{
+	clear: both;
+	float: left;
+	margin-left: 10.1321%;
+	width: 79.7356%;
+	display: block;
+}
+#portfolio-single .image{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 59.4713%;
+	display: block;
+}
+#portfolio-single .text{
+	clear: none;
+	float: left;
+	margin-left: 1.3215%;
+	width: 35.207%;
+	display: block;
+}
+#admin_panel{
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+}

@@ -1,0 +1,6 @@
+.round,#imageSide li label,#imageSide ul li div,.admin_image,.upload_container,.FileUploadSection,.input,.spinner{-moz-border-radius:5px;-webkit-border-radius:5px;-o-border-radius:5px;behavior:url(iepngfix/PIE.htc);border-radius:5px}
+.shadow,#imageSide,.sketchcalender table{-moz-box-shadow:0px 1px 2px #9F9F9F;-webkit-box-shadow:0px 1px 2px #9F9F9F;behavior:url(iepngfix/PIE.htc);box-shadow:0px 1px 2px #9F9F9F}
+.gradient{-pie-background:linear-gradient(#778899, #000);background:linear-gradient(#778899, #000);background-color:#789;behavior:url(iepngfix/PIE.htc)}
+.gradient-hover{-pie-background:linear-gradient(#666, #333);background:linear-gradient(#666, #333);background-color:#666;behavior:url(iepngfix/PIE.htc)}
+.opacity-80,.spinner{-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";filter:alpha(opacity=80);opacity:0.8px}
+body .no-shadow{-moz-box-shadow:none !important;-webkit-box-shadow:none !important;behavior:url(iepngfix/PIE.htc);box-shadow:none !important;background-color:transparent !important}

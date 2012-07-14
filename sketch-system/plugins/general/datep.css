@@ -1,0 +1,15 @@
+.sketchcalender{overflow:visible;position:absolute;text-align:center;z-index:99999;padding-top: 0px !important;padding-bottom: 17px !important}
+.sketchcalender table tr:nth-child(even) td,table tr.even td{background:none repeat scroll 0 0 #92CAE4}
+.calHideBack{bottom:0;height:100%;left:0;overflow:visible;position:absolute;right:0;top:0;visibility:visible;width:100%;z-index:9998}
+.sketchcalender span{display:block}
+.sketchcalender table{width:100%;background:#fff}
+.sketchcalender .calbottom{background-image:url(images/popup_close_03.png);background-position:left top;background-repeat:no-repeat;height:42px;position:absolute;right:-21px;top:-19px;width:46px;z-index:12}
+.sketchcalender td{font-size:10px;height:15px;padding-left:1px;padding-right:1px;text-align:center;vertical-align:middle}
+.sketchcalender table tr .dayOvr{background-color:#E3E2EC;color:#333;cursor:pointer}
+.sketchcalender td.day{color:#205791;cursor:pointer}
+.sketchcalender td.gray{color:#678}
+.sketchcalender table .nday,.sketchcalender table .pday{color:#999;cursor:pointer}
+.calenderPreviousYear,.calenderYearAdvance,.monthPrevious,.monthAdvance{cursor:pointer}
+.monthPrevious,.calenderPreviousYear{text-align:left}
+.calenderYearAdvance,.monthAdvance{text-align:right}
+.sketchcalender table tr,.sketchcalender table td,.sketchcalender table{border:none}

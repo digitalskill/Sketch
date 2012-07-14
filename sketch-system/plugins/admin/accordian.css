@@ -1,0 +1,3 @@
+#admin-container .accord-title,.atitle{display:block;background-image:url(images/gray_grad.jpg);background-position:left top;background-repeat:repeat-x;border-bottom:1px solid #8B8B8B;border-left:1px solid #F0F0F0;border-right:1px solid #D3D3D3;border-top:1px solid #F0F0F0;clear:left;color:#666;font-size:14px;margin:0;padding:1px 5px;text-transform:capitalize;width:auto}
+#admin-container .accord-titleOvr{background-image:url(images/gray_grad.jpg);background-position:left top;background-repeat:repeat-x;border:1px solid #FC0;clear:left;color:#666;font-size:14px;margin:0;padding:1px 5px;text-transform:capitalize;width:auto}
+#admin-container .accord-body,.abody{margin:0;padding:0;width:auto}

@@ -1,0 +1,9 @@
+.spinner{background:#fff;min-height:25px;position:absolute;z-index:999}
+.spinner-msg{font-weight:700;text-align:center}
+.spinner-img{background:url(images/spinner.gif) no-repeat;height:24px;margin:0 auto;width:24px}
+form .validate-error,input[type=text].validate-error,input[type=password].validate-error,input.text.validate-error{background:#fbe3e4;border-color:#fbc2c4;color:#8a1f11}
+form .required.checked,input[type=text].required.checked,input[type=password].required.checked,input.text.required.checked{background:#e6efc2;border-color:#c6d880;color:#264409}
+.errorMessage{overflow:hidden;position:absolute}
+.errorMessage .errorTitle{color:#fcb913;font-size:15px;font-weight:400;padding-bottom:6px;padding-top:3px}
+.errorMessage .errorText{color:#FFF;font-size:13px;font-weight:400;line-height:15px}
+.alert-text{line-height:22px}

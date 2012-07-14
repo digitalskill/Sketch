@@ -1,0 +1,254 @@
+html body{padding-top:30px}
+html body .clear{clear:both}
+html body .button.clear{float:left}
+body #admin_panel,body #load-box{font-size:11px}
+body .adminMask{background:url(images/banner_bg_13.png) left top;min-width:900px;overflow:hidden;top:53px;z-index:199!important}
+#admin_panel{font-family:Arial,Helvetica,sans-serif;left:0;min-width:900px;position:fixed;top:0;width:100%;z-index:999}
+#admin_panel .admin-controls{
+	height: 32px;
+	overflow: visible;
+	padding-left: 30px;
+	padding-right: 30px;
+	padding-top: 5px;
+	position: relative;
+	background-color:transparent;
+	background-image: url(images/header-bg.png);
+	background-repeat: repeat;
+	background-position: left top;
+}
+#bottom-box{-moz-box-shadow:0 0 2px #000;-o-box-shadow:0 0 2px #000;-webkit-box-shadow:0 0 2px #000;background:#000;behavior:url(iepngfix/PIE.htc);bottom:0;box-shadow:0 0 2px #000;height:46px;min-width:900px;overflow:hidden;position:absolute;width:100%;z-index:9999}
+#bottom-box .link{display:none;float:right;margin-right:30px}
+#bottom-box .link a{font-size:9px}
+#butn-cancel{margin-left:35px}
+#admin-tabMenu{margin-left:-15px}
+#admin-tabMenu a,#admin-tabMenuRight a{background-color:transparent;background-image:none;color:#778899;float:left;height:19px;line-height:19px;overflow:hidden;padding:5px 15px 8px;position:relative;text-decoration:none;text-transform:uppercase;width:auto;z-index:0}
+#admin-tabMenu a.current.over,#admin-tabMenu a.current,#admin-tabMenu a:hover{background-color:transparent;background-image:none;color:#FFF;z-index:3}
+#admin-tabMenuRight .name{color:#789;float:left;margin:5px 10px 0 0}
+#admin-tabMenuRight a{margin-right:0}
+#sub-nav{
+	-moz-box-shadow: 0 0 3px #000;
+	-o-box-shadow: 0 0 3px #000;
+	-webkit-box-shadow: 0 0 3px #000;
+	behavior: url(iepngfix/PIE.htc);
+	box-shadow: 0 0 3px #000;
+	clear: both;
+	color: #FFF;
+	font-size: 10px;
+	height: 25px;
+	margin-left: -35px;
+	margin-right: -35px;
+	margin-top: 28px;
+	padding-left: 30px;
+	padding-right: 30px;
+	position: relative;
+	z-index: 4;
+	background-color: #000;
+	background-image: url(images/header-bg.png);
+	background-repeat: repeat;
+	background-position: left center;
+}
+#sub-nav a{clear:none;float:left;font-size:10px;height:11px;margin:2px 1px 0;padding-left:0;padding-right:0;text-align:center;width:auto}
+.subnavmid div{clear:left}
+#admin-area .box,.clb{clear:both}
+#admin-area form{background:#FEFEFD;border:1px solid #F2F2F2;margin-right:10px;padding:10px 0 0 10px}
+#admin-area form .form li{padding-top:5px}
+#admin-container{margin-left:7px;margin-top:7px;position:relative}
+#admin-container .del{background:#FFF;font-size:9px;left:1px;position:absolute;text-align:right;top:-1px;width:100%}
+#admin-container .image_name{border-top:1px solid #ccc;font-size:9px;left:0;padding-top:2px;position:absolute;text-align:center;top:105px;width:100%}
+#admin-container form li ul{background:#E2E2E2;padding-left:5px}
+#admin-container form ul li{clear:left;float:left;list-style-type:none;margin:0;padding:2px 0;width:100%}
+#admin-container ul{float:left}
+#collapse div{background:url(images/001_21.png) no-repeat 5px center;height:25px;margin-left:-10px;margin-top:-5px;width:31px}
+#collapse.open div{background:url(images/001_23.png) center center;margin-left:-5px;width:23px}
+#directory_i_images,#directory_f_images,#master-container .directory_list{clear:none;float:left;list-style-type:none;margin:0 0 0 1% !important;padding:0;position:relative;width:82%}
+#adminMask .directory_list,#master-container .directory_list{clear:both;float:left;margin-right:0;overflow:hidden;padding:0;position:relative;width:15%}
+#adminMask .directory_list ul,#master-container .directory_list ul{width:98%}
+#editor-global #page-details,#editor-global-plugins #page-details{margin-top:-20px}
+#editor-global,#editor-global-plugins{margin-top:20px;min-width:550px;padding-right:300px}
+#editor-global-plugins{padding-left:515px}
+#imageSide{background:#FFF;bottom:60px;left:auto;margin-top:53px;overflow:auto;padding:10px 10px 70px 17px;position:fixed;right:0;top:0;width:215px;z-index:9998}
+#imageSide #imagesidelist li.hover ul li,#imageSide #imagesidelist li.hover ul li.hover{height:auto;overflow:hidden;padding:0}
+#imageSide li label .icon{margin-right:-1px;margin-top:-5px}
+#imageSide li label{background:#F5F5F5;border:1px solid #ccc;display:block;padding-bottom:5px;padding-left:30px;padding-top:5px}
+#imageSide li:hover label,#imageSide li.hover label{background:#dff4ff;border-color:#c2e1ef;color:#369}
+#imageSide li ul{display:none;margin-left:-1px;margin-top:10px}
+#imageSide ul{float:left;margin:0;padding:0;width:100%}
+#imageSide ul li{clear:both;list-style:none;margin:5px 0 0;padding:0}
+#imageSide ul li div{background:#FFF;border:2px solid #ccc;height:auto;overflow:hidden;width:99%}
+#imageSide ul ul li img{float:left;max-height:200px;max-width:100%}
+#load-box{
+	-moz-box-shadow: 0 0 6px #000;
+	-webkit-box-shadow: 0 0 6px #000;
+	behavior: url(iepngfix/PIE.htc);
+	box-shadow: 0 0 6px #000;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-left: 0;
+	margin-right: 0;
+	margin-top: 0;
+	overflow: auto;
+	padding: 5px 28px;
+	position: relative;
+	width: auto;
+	background-image: url(images/paper.jpg);
+	background-repeat: repeat;
+	background-position: left top;
+}
+#adminMask #addnewadmin{height:auto}
+#directory_f_images .admin_image .del{height:30px}
+#directory_f_images .admin_image .del div{padding-left:0}
+#directory_f_images .admin_image,#search_result .files{height:30px;width:190px}
+#adminMask #imageSide ul ul li{height:200px;overflow:hidden;padding:0 0 5px;width:100%}
+#adminMask #menu ul li.highlight,#adminMask .highlight{background:#F3F3F3;padding-bottom:5px;padding-top:5px}
+#adminMask #search_result{border:none;clear:both;float:left;margin:5px;padding:2px;width:100%}
+#adminMask .adminEdit{background:url(images/admin_edit.png) no-repeat left center;display:block;height:20px;padding-left:30px;padding-top:10px}
+#adminMask .admin_image,#master-container .admin_image{
+	background: #eeeeee;
+
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VlZWVlZSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlZWVlZWUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+
+background: -moz-linear-gradient(top,  #eeeeee 0%, #eeeeee 100%);
+
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#eeeeee));
+
+background: -webkit-linear-gradient(top,  #eeeeee 0%,#eeeeee 100%);
+
+background: -o-linear-gradient(top,  #eeeeee 0%,#eeeeee 100%);
+
+background: -ms-linear-gradient(top,  #eeeeee 0%,#eeeeee 100%);
+
+background: linear-gradient(to bottom,  #eeeeee 0%,#eeeeee 100%);
+
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#eeeeee',GradientType=0 );
+
+
+	border:1px solid #E2E2E2;float:left;height:120px;margin:2px;overflow:hidden;padding:2px;position:relative;width:100px}
+#adminMask .content-column{float:left;margin-bottom:10px;margin-right:20px;padding-top:5px}
+#adminMask .content-column .big-font{font-size:16px;font-weight:700;text-transform:none}
+#adminMask .content-column .lgrey{color:#707377}
+#adminMask .del,#master-container .del{background:#FFF;font-size:9px;height:120px;left:-1px;overflow:hidden;position:absolute;text-align:right;top:-1px;width:102%}
+#adminMask .folders,#master-container .folders{clear:none;float:left;margin-top:3px;width:64%}
+#adminMask .image_name,#master-container .image_name{background:#ECECEC;border-top:1px solid #E2E2E2;font-size:9px;height:16px;left:0;padding-top:2px;position:absolute;text-align:center;top:105px;width:100%}
+#adminMask .input,#adminMask input,#adminMask textarea,#adminMask .form .input,#adminMask .select_bg,#admin-tabMenuRight .select_bg,body #admin-tabMenuRight a.select_bg:hover{border:1px solid #ccc;color:#999;display:block;height:32px;margin:2px 0 1px;min-height:15px;overflow:hidden;padding:0 0 0 5px;position:relative;width:96%}
+#adminMask input[type=text],#adminMask input[type=password]{height:27px!important;padding-top:5px!important}
+#bottom-box button,#bottom-box .button{behavior:url(iepngfix/PIE.htc);margin-right:2px;margin-top:10px}
+#adminMask .insideMenuSettings{border-left:1px solid #E2E2E2;margin-right:-25px;overflow:auto;padding-left:13px;position:absolute;right:0;top:-7px;width:450px;z-index:99}
+#adminMask .bgwhite{background:#FFF;float:left;margin-left:2%;padding-top:5px;position:relative;width:90%}
+#adminMask .insideMenuSettings label{display:block;float:left;width:100%}
+#adminMask .instruction-box{-moz-border-radius:3px;-webkit-border-radius:3px;background:#FFF;behavior:url(iepngfix/PIE.htc);border:1px solid #999;border-radius:3px;margin-top:10px;padding:5px 10px}
+#adminMask .loaderArea{background:url(images/paper.jpg);border-left:1px solid #E2E2E2;clear:none;float:right;height:820px;padding-left:5px;padding-top:23px;width:58%}
+#adminMask .menu-lister li{float:left;height:auto;margin:0;overflow:visible;padding:0;position:static;width:200px}
+#adminMask .menu-lister li a{float:left;margin-bottom:2px;overflow:hidden;padding-bottom:6px;width:90%}
+#adminMask .select_bg,#admin-tabMenuRight .select_bg,body #admin-tabMenuRight a.select_bg:hover{clear:left;height:32px;margin:2px 0 1px;overflow:hidden;padding:0 0 0 5px;position:relative;width:96%}
+#adminMask .select_bg span.icons,#admin-tabMenuRight .select_bg span.icons{float:right;margin-right:2px;margin-top:8px}
+#adminMask .select_bg div,#admin-tabMenuRight .select_bg div{height:32px;left:0;margin:0;overflow:hidden;padding:0 5px 0 0;position:absolute;top:0;width:100%}
+#adminMask .select_bg div .span,#admin-tabMenuRight .select_bg div .span{display:block;font-size:11px;left:5px;line-height:30px;overflow:hidden;padding:1px 1px 1px 3px;position:absolute;top:0;width:75%;z-index:0}
+#adminMask .select_bg:hover div .span,body #admin-tabMenuRight a.select_bg:hover div .span{color:#fff}
+#adminMask .select_bg option,#admin-tabMenuRight .select_bg option{background:#EEE;border:none;border-bottom:1px solid #ccc;font-size:11px;padding-bottom:2px;padding-top:2px}
+#adminMask .title,#adminMask form label{clear:both;color:#999;font-size:9px;font-weight:400;text-transform:uppercase;width:100%}
+#adminMask .updatebtn{background:url(images/save_it.png) no-repeat left center;padding-left:25px}
+#adminMask .upload_container .inner_upload,#adminMask .upload_container .closeme{border:1px solid #E2E2E2;padding:2px;width:257px}
+#adminMask form .col1{height:25px;overflow:hidden}
+#adminMask form .menu-lister{left:0;padding:0;position:absolute;top:0}
+#adminMask form .orderhtml{font-size:10px;padding-top:10px;text-align:center}
+#adminMask form .scrollerzone{background:#E2E2E2;border:1px solid #D0D0D0;clear:both;float:left;overflow:auto;position:relative;width:100%}
+#adminMask form label,#adminMask .admin_image:hover .del,#load-box form .menu-lister li.hover .menusettings,#load-box form .menu-lister li.hover .menusettings li.hover .menusettings,#load-box form .menu-lister li.hover .menusettings li.hover .menusettings li.hover .menusettings,#imageSide ul li.hover ul,#load-box form .menu-lister li.hover .menusettings li.hover .menusettings li.hover .menusettings li.hover .menusettings{display:block}
+#adminMask form li .menusettings,#adminMask form .menu-lister li.hover .menusettings li .menusettings,body #load-box form ul.menu-lister li.hover .menusettings li.hover .menusettings li.hover .menusettings li .menusettings,#load-box form .menu-lister li.hover .menusettings li.hover .menusettings .menusettings{display:none;left:260px;position:absolute;top:0;width:100%}
+#adminMask form,#admin-container .form{margin:0;padding:0}
+#adminMask li div.input{overflow:hidden}
+#adminMask p,#adminMask h1,#adminMask h2,#adminMask h3,#adminMask h4{color:#666}
+#adminMask ul{font-size:normal;line-height:normal;margin:0;padding:0}
+#adminMask ul li,#adminMask ul li ul li{box-shadow:none;list-style:none;margin:0;padding:0}
+#adminMask ul li,.adminMask ul li{clear:left;list-style-type:none}
+#menuajaxzone{-moz-box-shadow:-3px -3px 3px #ccc;-webkit-box-shadow:-3px -3px 3px #ccc;background:#FFF;behavior:url(iepngfix/PIE.htc);box-shadow:-3px -3px 3px #ccc;height:100%;left:auto;min-height:452px;overflow:auto;position:absolute;right:5px;top:0;width:409px}
+#panels .panel-surround{position:relative}
+#panels .panel-surround .editclick{border-top:1px solid #e2e2e2;color:#069;padding:5px}
+#panels .panel-surround .moveclick{padding:5px}
+#panels .panel-surround .mover{border:1px solid #e2e2e2;position:absolute;right:-1px;top:-1px;z-index:99}
+#plugin-container{float:left;height:100%;margin-left:-515px;padding-right:25px;position:relative;width:490px}
+#plugin-container .plugin-col{border:1px solid #ccc;float:left;height:100%;min-height:480px;padding:0 15px 10px 12px;position:relative;width:203px}
+#plugin-container .tab-manage{right:-1px}
+.AdminSubMenu ul{clear:both;display:block;height:25px;margin:0;padding:0 0 2px}
+.AdminSubMenu ul li{border:1px solid #E2E2E2;clear:none;float:left;list-style-type:none;margin:0;padding:5px;width:110px}
+#adminMask .hidemce .mceEditor,#adminMask .hidemce textarea,.butn-cancel-inactive,.butn-preview-inactive,.butn-save-inactive,.butn-re-edit-inactive,.butn-publish-inactive,#load-box form.required{visibility:hidden}
+.image_directory_name{background:url(images/header-bg.gif) repeat-x left bottom;display:none;font-size:9px;margin-left:-5px;padding:2px}
+.image_picker{border:1px solid #ccc;height:100%;min-height:480px;overflow-x:hidden;overflow-y:scroll;padding:0 15px 10px 12px;text-align:center;width:225px}
+.image_picker img{border:1px solid #CCC;display:block;margin-top:10px;max-width:213px}
+.image_picker-container{float:right;height:100%;margin-left:25px;margin-right:-300px;padding-right:25px;position:relative;width:252px}
+.pt10,#load-box form label{padding-top:10px}
+.upload_container{overflow:hidden;position:absolute;right:-32px;top:-28px;width:263px;z-index:99}
+#adminMask #asset_menu .menuimage,#adminMask #asset_menu .menufiles,#adminMask #asset_menu .menusearch{-moz-border-radius:5px;-webkit-border-radius:5px;background:#789 url(images/Flower.png) no-repeat 122% 1px;behavior:url(iepngfix/PIE.htc);border:medium none;border-radius:5px;clear:none;color:#FFF;float:left;font-size:12px;font-weight:100;height:14px;margin-right:5px;padding:9px 32px 8px 5px;text-align:left;width:79px}
+#adminMask #asset_menu li.menufiles{background:url(images/Train.png)}
+#adminMask #asset_menu li.menusearch{background:url(images/Search.png)}
+#adminMask #asset_menu{padding:10px 0 5px 0}
+body #adminMask #asset_menu li:hover{background:right 1px}
+body .adminMask #load-box ul li .titles{-moz-border-radius:5px;-moz-box-shadow:0 0 3px #ccc;-webkit-border-radius:5px;-webkit-box-shadow:0 0 3px #ccc;background:#fff;behavior:url(iepngfix/PIE.htc);border:2px solid #fff;border-radius:5px;box-shadow:0 0 3px #ccc;color:#333;font-weight:700;height:22px;margin-top:8px;padding-top:8px}
+body #adminMask .directory_list ul li.input{background:#778899;color:#FFF;font-weight:700;padding-top:5px;width:100%;padding-top:5px;padding-bottom:5px;height:15px}
+body #adminMask .directory_list ul li.input.current{background:#fff;color:#778899;-o-box-shadow:0px 0px 3px #ccc;-webkit-box-shadow:0px 0px 3px #ccc;-moz-box-shadow:0px 0px 3px #ccc;box-shadow:0px 0px 3px #ccc}
+body #adminMask .directory_list ul li{max-width:150px}
+#adminMask .form a.input{background:#fff;color:#999;height:25px;line-height:20px;padding-bottom:0;padding-top:6px}
+.admin_image img{height:auto;margin-left:-2px;margin-top:-2px;width:101%}
+.sk-line{font-size:11px;padding-bottom:11px;position:relative;top:-4px}
+#adminMask .accord-container{-moz-border-radius:5px;-o-border-radius:5px;-webkit-border-radius:5px;background:#fff;behavior:url(iepngfix/PIE.htc);border:1px solid #999;border-radius:5px;margin-bottom:0;overflow:hidden;padding:5px 0 20px 15px;position:relative}
+#admin-tabMenuRight,.assetbutn,#adminMask .menu-lister li a span.rightarrow,.helpbutn{float:right}
+#admin-container .del a.ajaxlink,#adminMask .del a{border:1px solid #E2E2E2;color:#900;display:block;padding:2px;text-align:center}
+#admin-container .del div,#adminMask .del div{padding-left:5px;text-align:left}
+#bottom-box a.button:hover span.icons.logo,#bottom-box button:hover span.icons.logo,#bottom-box a.button span.icons.logo,#bottom-box button span.icons.logo{background:url(images/sketch-logo-sml.png);height:11px;margin-top:-4px;width:40px}
+#master-container .folders{margin:0;min-width:400px;padding-right:200px;width:430px}
+#master-container .upload_container{left:370px;right:auto;top:0}
+#master-container #directory_i_images{height:470px;overflow:auto}
+#adminMask .folders .upload_container{left:auto;position:absolute;right:-10px;top:0;width:281px;padding:0 5px 10px 5px}
+#adminMask #directory_f_images .folders .admin_image{background:#fff;border:1px solid #e2e2e2;display:block;float:none;height:50px;width:auto}
+#adminMask #directory_f_images .folders .admin_image .del{height:50px;left:0;top:0}
+body #load-box a.aspin,#load-box .aspin{color:#900;font-weight:700}
+body #adminMask #load-box{padding-bottom:52px!important}
+body #adminMask form .select_bg div select,body #adminMask .form .select_bg div select,#admin-tabMenuRight .select_bg div select{-webkit-appearance:textfield;height:32px;left:0;margin:0;padding:0;position:absolute;top:0;width:100%;z-index:20}
+#admin-tabMenuRight .select_bg div .span,#admin-tabMenuRight a.select_bg:hover div .span{padding:0;text-align:center;text-shadow:none;text-transform:uppercase;width:90px;margin-top:-2px;}
+#admin-tabMenuRight .select_bg div select{height:22px}
+#imageSide .accord-container h4,#imageSide .accord-container h3{color:#789;font-weight:700;margin-bottom:4px}
+#imageSide .accord-container ul li{color:#030;font-size:1.1em;line-height:1.4em;margin-bottom:2px;padding-bottom:2px;padding-left:5px}
+#imageSide .accord-container h4{color:#000}
+#imageSide .accord-container p{font-size:1.1em;line-height:1.4em;margin-bottom:2px;padding-bottom:2px}
+#imageSize .accord-container ul{margin-top:1px;padding:0}
+#sub-nav a,#sub-nav a:link,#sub-nav a:visited{clear:none;color:#666;display:block;float:left;font-size:10px;height:22px;line-height:15px;margin-top:-2px;padding:7px 15px 0;text-decoration:none;text-shadow:1px 1px 2px #000;text-transform:capitalize;width:auto}
+#sub-nav a:hover,#sub-nav a.current{color:#FFF;text-shadow:1px 1px 2px #000;z-index:9}
+#admin-tabMenuRight a.select_bg.button{border:none!important;font-family:Arial,Helvetica,sans-serif}
+body #load-box .accord-body{margin-bottom:-5px;margin-top:-5px;position:relative;z-index:0}
+body #load-box .accord-title{padding-bottom:10px;padding-top:6px;position:relative;z-index:1;display:block;-moz-box-shadow:inset 0px 0px 2px #ccc;-o-box-shadow:inset 0px 0px 2px #ccc;-webkit-box-shadow:inset 0px 0px 2px #ccc;box-shadow:inset 0px 0px 2px #ccc;}
+body #load-box .accord-title.open,body #load-box .accord-title.over	,body #adminMask .directory_list ul li.input{-moz-transition:all .3s ease-in;-o-transition:all .3s ease-in;-webkit-transition:all .3s ease-in;transition:all .3s ease-in}
+body #load-box .accord-title.open{-moz-box-shadow:2px 2px 5px #777;-o-box-shadow:2px 2px 5px #777;-webkit-box-shadow:2px 2px 5px #777;box-shadow:2px 2px 5px #777;margin-left:-2px;padding-bottom:5px;padding-right:10px;padding-top:6px}
+#admin-tabMenuRight span.icons{display:none}
+#globalpanels a.button, #pagepanels a.button{ 
+	clear: both;
+    float: left;
+    margin-bottom: 2px;
+    margin-top:2px;
+    width: 97%;
+}
+body #imageSide a.accord-title.button{
+	float:left;
+	display:block;
+	clear:left;
+}
+
+
+#admin-tabMenu a, #admin-tabMenuRight a {
+	z-index: 1000;
+	position: relative;
+	display: block; /*background of menu items (default state)*/
+	text-decoration: none;
+	position: relative;
+	text-shadow: 0px 1px 1px #0f0f0f;
+	font-size:11px;
+}
+
+body #admin-tabMenu a, #admin-tabMenu a:visited, body #admin-tabMenuRight a, #admin-tabMenuRight a:visited {
+	color: #666666;
+}
+
+#admin-tabMenu a.current,#admin-tabMenuRight a.current { /*CSS class that's dynamically added to the currently active menu items' LI A element*/
+	color: #a5a5a5;
+}
+
+#admin-tabMenu a:hover, #admin-tabMenuRight a:hover {
+	color: #a5a5a5;
+}

@@ -1,0 +1,37 @@
+#Options +FollowSymlinks
+#RewriteEngine on
+
+# IF WORKING ON THE MAIN FOLDER OF THE WEBSITE
+# PUT IN A SLASH:   /
+# ELSE PUT IN THE FOLDER NAME
+# RewriteBase /sketch/
+
+# SEO - UNCOMMENT TO FORCE WWW ACCESS - REPLACE sitename with your site
+#RewriteCond %{HTTP_HOST} !^www\.sitename\.com$
+#RewriteRule ^(.*) http://www.sitename.com/$1 [L,R=301]
+
+#REDIRECTS
+#RewriteRule (.*)sketch-admin/(.*) 	 sketch-admin/$2		[L]
+#RewriteRule (.*)sketch-files/(.*)	 sketch-files/$2		[L]
+#RewriteRule (.*)sketch-images/(.*)	 sketch-images/$2		[L]
+#RewriteRule (.*)sketch-system/(.*)	 sketch-system/$2		[L]
+#RewriteRule (.*)sketch-upload/(.*)	 sketch-upload/$2		[L]
+#RewriteRule (.*)tiny_mce/(.*)	 	 tiny_mce/$2			[L]
+#RewriteRule (.*)theme/(.*)	 	 	 theme/$2				[L]
+
+#RewriteCond %{REQUEST_URI} !^/(sketch-admin|sketch-files|sketch-images)/
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteCond %{REQUEST_FILENAME} !-l
+#RewriteRule .* index.php [L]
+
+# Optimisation commands
+#FileETag none
+#AddOutputFilterByType DEFLATE text/html text/plain text/xml
+
+<IfModule mod_expires.c>
+	ExpiresActive On
+	ExpiresByType image/gif "access plus 10 years"
+	ExpiresByType image/jpeg "access plus 10 years"
+	ExpiresByType image/png "access plus 10 years"
+</IfModule>
