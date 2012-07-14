@@ -178,6 +178,10 @@ if(class_exists("sketch")){
 		global $sketch;
 		$sketch->setQueryData($start,$description);	
 	}
+	function loadInclude($view){
+		global $sketch;
+		@include($sketch->loadView($view,false,true));
+	}
 	function loadView($view="index",$return=false,$path=false){
 		global $sketch;
 		return $sketch->loadView($view,$return,$path);
