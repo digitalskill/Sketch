@@ -366,7 +366,6 @@ allowPreview: function(){
 previewChanges:function(){
     $(this.loadbox).setStyles({
 	"height":0,
-	"padding":0,
 	"overflow":"hidden",
 	"margin-top":17
     });
