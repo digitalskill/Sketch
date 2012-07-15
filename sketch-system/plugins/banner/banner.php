@@ -179,7 +179,7 @@ class BANNER extends PLUGIN {
 	    });
 	    new Validate($("form_banner"));
 		new accord($("banner_edit_inside"));
-		$("loaderArea").morph({"width":0,"left":131});
+		$("loaderArea").morph({"width":0,"left":235});
 		$("load-box").setStyle("padding-bottom",70);
 		$("bottom-box").addClass("no-shadow");
 		$('adminMask').morph({"width":248,"min-width":248});

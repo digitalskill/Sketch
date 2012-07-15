@@ -49,7 +49,7 @@ class PANELS extends PLUGIN {
 			?>
             	<script type="text/javascript">
 					if($("loaderArea")){
-						$("loaderArea").morph({"width":0,"left":131});
+						$("loaderArea").morph({"width":0,"left":235});
 						$('adminMask').morph({"width":248,"min-width":248});
 						$("load-box").setStyle("padding-bottom",70);
 						$("bottom-box").addClass("no-shadow");

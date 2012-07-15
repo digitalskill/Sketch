@@ -149,32 +149,19 @@
       <div style="float:left; width:100%;margin-bottom:5px;overflow:hidden;">
       <textarea name="panel_content" style="height:200px; width:100%" class="input doTiny:true tinySettings:1" id="bannertext"><?php echo $r->panel_content; ?></textarea>
       </div>
-      <div class="" style="clear:both;float:right;width:45%">
-      	<label>&nbsp;</label>
-        <img src="<?php echo str_replace("index.php","",urlPath($r->panel_image)); ?>" alt="No banner image selected" id="bannerfeatureimg" height="50" />
-       </div>
-       <div style="float:left; width:48%;overflow:hidden;">
-       <label>Image</label>
-        <select name="panel_image" class="bgClass:'select_bg'" onchange="$('bannerfeatureimg').set('src','<?php echo str_replace("index.php","",urlPath()); ?>' + this.value);">
-          <option value="">None</option>
-          <?php foreach($allImages as $key => $value){?>
-          <option value="<?php echo $key; ?>" <?php if($key==$r->panel_image){?>selected="selected"<?php } ?>><?php echo end(explode("/",$key)); ?></option>
-          <?php } ?>
-        </select>
-       </div>
-		<div class="" style="clear:both;float:right;width:45%">
-      	<label class="pt10">&nbsp;</label>
-        <img src="<?php echo str_replace("index.php","",urlPath($r->panel_thumbnail)); ?>" alt="No Banner thumb selected" id="bannerthumbimg" height="50" />
-       </div>
-       <div style="float:left; width:48%;overflow:hidden;">
-       <label class="pt10">Thumbnail</label>
-        <select name="panel_thumbnail" class="bgClass:'select_bg'" onchange="$('bannerthumbimg').set('src','<?php echo str_replace("index.php","",urlPath()); ?>' +this.value);">
-          <option value="">None</option>
-          <?php foreach($allImages as $key => $value){?>
-          <option value="<?php echo $key; ?>" <?php if($key==$r->panel_thumbnail){?>selected="selected"<?php } ?>><?php echo end(explode("/",$key)); ?></option>
-          <?php } ?>
-        </select>
-       </div>
+       <div style="clear:both;float:left;width:100%;">
+        <label>Panel Image</label>
+        <div class="clb" style="margin-top:5px;margin-bottom:5px;padding-bottom:5px; border-bottom:1px solid #ccc;float:left;width:95%">
+        <input type="hidden" name="panel_image" class="imageload" id="i0" value="<?php echo urlPath($r->panel_image); ?>" />
+        </div>
+     </div>
+     
+     <div style="clear:both;float:left;width:100%;">
+        <label>Thumbnail</label>
+        <div class="clb" style="margin-top:5px;margin-bottom:5px;padding-bottom:5px; border-bottom:1px solid #ccc;float:left;width:95%">
+        <input type="hidden" name="panel_image" class="imageload" id="i1" value="<?php echo urlPath($r->panel_thumbnail); ?>" />
+        </div>
+     </div>
        <div style="float:left;clear:both;width:48%;margin-right:5px;margin-bottom:5px;">
         <label class="pt10" style="clear:both;">URL Link (enter in full path, http://www...)</label>
     	<input type="text" name="panel_link" value="<?php echo $r->panel_link; ?>" />
@@ -199,7 +186,7 @@
 				unset($_SESSION['last_clicked_id']);
 			?>
             	<script type="text/javascript">
-					$("loaderArea").morph({"width":0,"left":131});
+					$("loaderArea").morph({"width":0,"left":231});
 					$('adminMask').morph({"width":248});
 					$$(".aspin").unspin();
 					$$(".aspin").removeClass("aspin");
