@@ -24,22 +24,13 @@ class TRACKING extends PLUGIN {
 		}
 	}
 	function form(){ 			// [ REQUIRED ] 
-		$r = getData("sketch_views,sketch_menu","menu_name, sum(viewcount) as viewcount, min(dateviewed) as dateviewed, max(dateviewed) as lastdateviewed","sketch_views.page_id=".sketch("page_id")." GROUP BY menu_name","dateviewed DESC");
-		if($r->rowCount() > 0){
 		?>
-        
-        <ul class="form accordian" style="float:left;width:90%">
-        	<li>
-            
-            </li>
-        	<?php while($r->advance()){?>
-        		<li><strong><?php echo $r->menu_name; ?></strong> page has been viewed <?php echo intval($r->viewcount); ?> times between <?php echo $r->dateviewed; ?> - <?php echo $r->lastdateviewed; ?></li>
-        	<?php } ?>
-        </ul>
-        <?php
-		}else{
-			echo "<p>No Pages have been tracked yet</p>";	
-		}
+        <div class="accord-body">
+        	<div class="accord-container">
+        	<iframe src="<?php echo urlPath("trackingchart"); ?>" frameborder="0" allowtransparency="1" height="600" width="100%" ></iframe>
+		   </div>
+		   </div>
+		 <?php
 	}
 	function install( ) {
 		$global_location             = ( @$this->settings[ 'global' ] == 1 ) ? @$this->settings[ 'location' ] : '';
