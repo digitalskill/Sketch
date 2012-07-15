@@ -519,7 +519,7 @@ resize: function(){
 		$(this.windowMask).setStyles({
 		    "height":"60px",
 		    "bottom":0,
-		    "top":$(window).getSize().y-60,
+		    "top":$(window).getSize().y-60
 		});
 		$(this.loadbox).setStyles({
 			"margin-top":17

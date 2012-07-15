@@ -64,7 +64,6 @@ class ADMIN extends PLUGIN {
             }
         }
 ?>
-       
         </div>
         <div id="admin-tabMenuRight">
         	<a href="<?php echo urlPath( "?logout=true" ); ?>" class="logout:true" style="float:right;"><span>Logout</span></a>
@@ -126,7 +125,9 @@ class ADMIN extends PLUGIN {
 </div>
 <script type="text/javascript">
     function sortAdminMenu(){
+		try{
         new Sorter($("admin-tabMenu"),{"url":"<?php echo urlPath( "admin" ); ?>/plugin_<?php echo $this->settings[ 'name' ];?>"});
+		}catch(e){}
     };
     sortAdminMenu.delay(1000);
     <?php
