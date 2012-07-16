@@ -407,8 +407,8 @@ Animator = new Class({
 	},
 	resizeonScale: function(){
 		if($(this.objects[this.current]).getElement(".banner-image")){
-			$(this.object).tween("height",$(this.objects[this.current]).getElement(".banner-image").getSize().y);
-			$(this.object).getElements(".anime").tween("height",$(this.objects[this.current]).getElement(".banner-image").getSize().y);
+			$(this.object).setStyle("height",$(this.objects[this.current]).getElement(".banner-image").getSize().y);
+			$(this.object).getElements(".anime").setStyle("height",$(this.objects[this.current]).getElement(".banner-image").getSize().y);
 		}
 		this.width    = $(this.object).getSize().x;
 		this.height   = $(this.object).getSize().y;
