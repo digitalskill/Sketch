@@ -290,7 +290,7 @@ var uploader = new Class({
 				absPath = absPath.replace(/\/\//,'/');
 				root    = root[0].split("?");
 				absPath = root[0] + "/" + absPath + "/";		
-				$(img).set("html","<img src='"+this.options.params.folder+iname+"' alt='"+iname+"' style='height:auto;width:100%;'/><div class='del hide'><a class='success'>NEW</a></div><div class='image_name'>"+file.name+"</div>");
+				$(img).set("html","<img src='"+this.options.params.folder+iname+"' alt='"+iname+"' style='height:auto;width:100%;'/><div class='image_name'>"+file.name+"</div>");
 				$(img).inject(spani,'top');
 				$(spani).inject(par,'top');
 				setupOvers(spani);
@@ -301,6 +301,7 @@ var uploader = new Class({
 					}
 				},this);
 			}
+			
 			break;
 		}
 		this.file = null;												// Set the file name to null

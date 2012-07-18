@@ -26,36 +26,12 @@ class MEMBER extends PLUGIN {
           }// isset($_POST['login'])...
 	}
 	function detailForm(){
-		if(getSettings("version") > 2){
-			$details = $this->e("detailform")=="" ? "detailform" : $this->e("detailform");
-			filter("templates",array("show"=>true,"template_type"=>"form","template_name"=>$details,"data"=>$this->settings[ 'content' ]));
-		}else{
-			if(is_file(loadForm($this->e('detailform'),false))){
-				@include(loadForm($this->e('detailform'),false));
-			}else{
-				if(sketch("mobile")){
-					@include(loadForm("mobiledetailform",false));
-				}else{
-					@include(loadForm("detailform",false));
-				}
-			}
-		}
+		$details = $this->e("detailform")=="" ? "detailform" : $this->e("detailform");
+		filter("templates",array("show"=>true,"template_type"=>"form","template_name"=>$details,"data"=>$this->settings[ 'content' ]));
 	}
 	function loginForm(){
-		if(getSettings("version") > 2){
-			$details = $this->e("detailform")=="" ? "loginform" : $this->e("loginform");
-			filter("templates",array("show"=>true,"template_type"=>"form","template_name"=>$details,"data"=>$this->settings[ 'content' ]));
-		}else{
-		  if(is_file(loadForm($this->e('loginform'),false))){
-			  @include(loadForm($this->e('loginform'),false));
-		   }else{
-			  if(sketch("mobile")){
-				@include(loadForm("mobileloginform",false));
-			  }else{
-				@include(loadForm("loginform",false));
-			  }
-		   } // if is_file()
-		}
+		$details = $this->e("loginform")=="" ? "loginform" : $this->e("loginform");
+		filter("templates",array("show"=>true,"template_type"=>"form","template_name"=>$details,"data"=>$this->settings[ 'content' ]));
 	}
 	function filter($args=""){
 		global $_POST,$GET;
@@ -64,15 +40,8 @@ class MEMBER extends PLUGIN {
 		  memberGetByChr(trim($_GET['chr']));
 		}else{
 		  if(isset($_GET['recover'])){
-				if(is_file(loadForm($this->e('resetform'),false))){
-			  		@include(loadForm($this->e('resetform'),false));
-				}else{
-					if(sketch("mobile")){
-						@include(loadForm("mobileresetform",false));
-					}else{
-						@include(loadForm("resetform",false));
-					}
-				}
+				$details = $this->e('resetform')=="" ? "resetform" : $this->e('resetform');
+				filter("templates",array("show"=>true,"template_type"=>"form","template_name"=>$details,"data"=>$this->settings[ 'content' ]));
           	}else{
             	if(isset($_POST['token']) && isset($_SESSION['token']) &&  $_POST['token'] == $_SESSION['token']){
                         unset($_SESSION['token']);
@@ -133,7 +102,6 @@ class MEMBER extends PLUGIN {
                                 if($val->processForm($_POST)){
                                         if(!memberAdd($_POST)){
                                                 $_POST['error'] = "<div class='error-message'>Registration Failed - That Email Address is already in use.<br />You can login to the site <a href='".urlPath($this->e('successreg'))."'>on this page.</a></div>";
-                                        
                                                 $this->detailForm();
                                         }else{
                                                 helper("email");
@@ -142,7 +110,10 @@ class MEMBER extends PLUGIN {
                                                 unset($data['menu_under']);
                                                 unset($data['register']);
                                                 $file = sketch("abspath")."sketch-system".sketch("slash")."helpers".sketch("slash")."email".sketch("slash")."html.html";
-                                                $emailSuccess = email($this->e("emailto"),$_POST['email'],"Website Registration Details",$data,$file);
+                                               
+											    $emailSuccess = email($this->e("emailto"),$this->e("emailrto"),"Website Sign up for approval",$data,$file);
+											    $emailSuccess = email($this->e("emailto"),htmlentities($_POST['email']),"Website Registration Details",$data,$file);
+												
 												$r = getData("sketch_menu","menu_guid","sketch_menu_id=".intval($this->e("successreg")),"",1);
 												if($r->rowCount() > 0){
 													$r->advance();
@@ -183,12 +154,9 @@ class MEMBER extends PLUGIN {
                                 }
                         }// post reset
                         if(isset($_POST['resetpassword']) && trim($_POST['password']) != ''){
-                                echo updatePassword($_POST['password']);
-                                if(is_file(loadForm($this->e('loginform'),false))){
-                                  @include(loadForm($this->e('loginform'),false));
-                                 }else{
-                                    @include(loadForm("loginform",false));
-                                 } // if is_file()
+							echo updatePassword($_POST['password']);
+							$details = $this->e("loginform")=="" ? "loginform" : $this->e("loginform");
+							filter("templates",array("show"=>true,"template_type"=>"form","template_name"=>$details,"data"=>$this->settings[ 'content' ]));
                         }// reset password
                     }
                 }
@@ -198,6 +166,7 @@ class MEMBER extends PLUGIN {
 		$this->display();
 	}
 	function form(){					// [ REQUIRED ]
-	    include(loadForm("memberadminform",false));
+		$details = $this->e("memberadminform")=="" ? "memberadminform" : $this->e("memberadminform");
+		adminfilter("templates",array("show"=>true,"template_type"=>"form","template_name"=>$details,"data"=>$this->settings[ 'content' ]));
 	}
 }

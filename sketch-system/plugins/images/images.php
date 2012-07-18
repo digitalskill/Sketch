@@ -179,16 +179,16 @@ class IMAGES extends PLUGIN {
     	    <li class="folders <?php if ($count > 0) {
  ?>hide<?php } ?>">
 		<div class="upload_container accordian">
-        	<a class="accord-title button" style="width:95%" ><span class="icons downarrow"></span>Flash Upload</a>
-            <div class="accord-body">
+        	<a class="accord-title button" style="width:92%;float:left;display:block;" ><span class="icons downarrow"></span>Flash Upload</a>
+            <div class="accord-body" style="clear:both">
 	    		<div class="accord-container" style="height:300px;width:95%;padding:5px;">
 		    		<div class="inner_upload">
 					<input type="file" rel="{types:'*.jpg;*.gif;*.png;',upload_url:'<?php echo str_replace("index.php/","", urlPath("/sketch-upload/upload.php")); ?>',params:{folder:'sketch-images<?php echo rtrim(str_replace("//","/",end(explode("sketch-images", $key))),"/"); ?>/',PHPSESSID:'<?php echo session_id(); ?>'}}"/>
 		    		</div>
             	</div>
             </div>
-            <a class="accord-title button" style="width:95%"><span class="icons downarrow"></span>Standard Upload</a>
-            <div class="accord-body">
+            <a class="accord-title button" style="width:92%;float:left;display:block"><span class="icons downarrow"></span>Standard Upload</a>
+            <div class="accord-body" style="clear:both">
 	    		<div class="accord-container" style="width:95%;padding:5px;">
             		<iframe frameborder="0" src="<?php echo urlPath("frameup"); ?>?folder=<?php echo urlencode("sketch-images". rtrim(str_replace("//","/",end(explode("sketch-images", $key))),"/")); ?>/" height="250" width="100%" scrolling="no"></iframe>
             	</div>
@@ -292,8 +292,8 @@ class IMAGES extends PLUGIN {
  ?>hide<?php } ?>">
  
  		<div class="upload_container accordian">
-        	<a class="accord-title button" style="width:95%" ><span class="icons downarrow"></span>Flash Upload</a>
-            <div class="accord-body">
+        	<a class="accord-title button" style="width:92%;float:left;display:block" ><span class="icons downarrow"></span>Flash Upload</a>
+            <div class="accord-body" style="clear:both;">
 	    		<div class="accord-container" style="height:300px;width:95%;padding:5px">
 		    		<div class="inner_upload">
 					<input type="file" rel="{types:'*.pdf;*.doc;*.docx;*.ppt;*.flv;*.swf;*.mp3;*.wav;*.dot;*.xls;',upload_url:'<?php echo str_replace("index.php/","", urlPath("/sketch-upload/upload.php")); ?>',params:{folder:'sketch-files<?php echo rtrim(str_replace("//","/",end(explode("sketch-files", $key))),"/"); ?>/',PHPSESSID:'<?php echo session_id(); ?>'}}"/>
@@ -301,8 +301,8 @@ class IMAGES extends PLUGIN {
             	</div>
             </div>
             
-            <a class="accord-title button" style="width:95%"><span class="icons downarrow"></span>Standard Upload</a>
-            <div class="accord-body">
+            <a class="accord-title button" style="width:92%;float:left;display:block"><span class="icons downarrow"></span>Standard Upload</a>
+            <div class="accord-body" style="clear:both">
 	    		<div class="accord-container" style="width:95%;padding:5px;">
             		<iframe frameborder="0" src="<?php echo urlPath("frameup"); ?>?folder=<?php echo urlencode("sketch-files". rtrim(str_replace("//","/",end(explode("sketch-files", $key))),"/")); ?>/" height="250" width="100%" scrolling="no"></iframe>
             	</div>

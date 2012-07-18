@@ -15,24 +15,14 @@
   <a class="accord-title button"><span class="icons downarrow"></span>Member Details</a>
   <div class="accord-body">
       <div class="accord-container">
-    <label>First name</label>
-    <input type="text" class="required" value="<?php echo sketch("firstname");?>" name="firstname">
-    <label>Last name</label>
-    <input type="text" class="required" value="<?php echo sketch("lastname");?>" name="lastname">
-    <label>Nickname</label>
-    <input type="text" class="required" value="<?php echo sketch("nickname");?>" name="nickname">
-    <label>Password</label>
-    <input type="text" class="password" value="<?php echo secureit(sketch("password"),true);?>" name="password">
-    <label>Email</label>
-    <input type="text" class="required email" value="<?php echo sketch("email");?>" name="email">
-    <label>Address</label>
-    <input type="text" class="required" value="<?php echo sketch("address");?>" name="address">
-    <label>Postcode</label>
-    <input type="text" class="required integer" value="<?php echo sketch("postcode");?>" name="postcode">
-    <label>City</label>
-    <input type="text" class="required" value="<?php echo sketch("city");?>" name="city">
-    <label>Country</label>
-    <input type="text" class="required" value="<?php echo sketch("country");?>" name="country">
+   		<?php 
+		helper("member");
+		$_SESSION['memberid'] = sketch("page_id");
+		$r = getData("sketch_page,sketch_menu","*","sketch_page.page_id='".sketch("page_id")."'");
+		$r->advance();
+		$_POST = contentToArray($r->content);
+		include(loadForm("detailform",false)); 
+		?>
   </div>
   </div>
     </li>

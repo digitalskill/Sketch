@@ -1,0 +1,6 @@
+.sketch-alert{position:absolute}
+.alert-container{background-color:#fff}
+.sketch-alert .alert-title{font-size:20px;padding-bottom:10px}
+.alert-mask{background-color:#000;z-index:99998}
+.sketch-alert .alert-close{height:35px;margin-top:12px;position:relative}
+.sketch-alert .alert-processing{background-image:url(images/form_processing.gif);background-position:center center;background-repeat:no-repeat;}

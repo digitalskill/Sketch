@@ -3,11 +3,8 @@
 <?php } 
 	$memPage = getData("sketch_menu","menu_guid","sketch_menu_id=".intval($this->e('memberpage')));
 	$memPage->advance();
-
-if(!isset($_REQUEST['preview'])){
 ?>
 <form class="required" method="post" action="<?php echo urlPath($memPage->menu_guid); ?>">
-<?php } ?>
   <?php if(memberid()){ ?>
   <h2>Update your details</h2>
     <input name="update" value="yes" type="hidden" />
@@ -36,12 +33,6 @@ if(!isset($_REQUEST['preview'])){
         <input type="password" class="<?php echo $req; ?> password" name="password">
    </li>
    <?php } ?>
-   <?php if(adminCheck()) {?>
-    <li>
-        <label>Password</label>
-        <input type="text" class="required password" name="password" value="<?php echo secureit($_POST['password'],true); ?>">
-   </li>
-   <?php } ?>
     <li>
         <label>Email</label>
         <input type="text" class="required email" value="<?php echo $_POST['email'];?>" name="email">
@@ -62,36 +53,6 @@ if(!isset($_REQUEST['preview'])){
         <label>Country</label>
         <input type="text" class="required" value="<?php echo $_POST['country']; ?>" name="country">
    </li>
-   <?php if(adminCheck()){ ?>
-   <li>
-  
-        <label>Member Group (select existing groups from this list)</label>
-		<select name="menu_sel" class="bgClass:'select_bg'" onchange="$('theClass').value = $('theClass').value +','+this.value">
-		    <option value="">All Members</option>
-            <?php
-			$found = false;
-			$memdata = getData("sketch_page,sketch_menu","menu_class","page_status='member' GROUP BY menu_class");
-			while($memdata->advance()){
-				if($memdata->menu_class != ''){
-					$found=true
-				?><option value="<?php echo $memdata->menu_class; ?>"><?php echo $memdata->menu_class; ?></option><?php	
-				}
-			}
-			?>
-		</select>
-        <label>
-		<?php if(!$found){ ?>
-        	<div class="alert" style="width:95%;">No Member Group Found - Enter the member group here to create a group</div>
-        <?php }else{ ?>
-        	Enter a new group name below or select one from above (Comma seperate to make members part ofr different groups)
-        <?php } ?>
-        </label>
-        <input name="group" id="theClass" value="<?php echo $_POST['group']; ?>"/>
-       </li>
-   
-   <?php } ?>
-   
-<?php if(!isset($_REQUEST['preview'])){ ?>
    <li>
        <?php if(!memberid()){ ?>
         <button type="submit">Sign Up</button>
@@ -99,8 +60,5 @@ if(!isset($_REQUEST['preview'])){
 	<button type="submit">Update Details</button>
 	<?php } ?>
    </li>
-<?php } ?>
   </ul>
-<?php if(!isset($_REQUEST['preview'])){ ?>
 </form>
-<?php } ?>

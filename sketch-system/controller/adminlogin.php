@@ -76,10 +76,10 @@ class ADMINLOGIN extends CONTROLLER {
 		} else {
 			$msg = "Please try again";
 			helper( "email" );
-			$SQL = "SELECT * FROM " . getSettings( 'prefix' ) . "users WHERE user_login=" . sketch( "db" )->quote( $_POST[ 'user_login' ] );
+			$SQL = "SELECT * FROM " . getSettings( 'prefix' ) . "users WHERE user_login=" . sketch( "db" )->quote( $_POST[ 'user_login' ]." AND user_email <> ''" );
 			$r   = ACTIVERECORD::keeprecord( $SQL );
 			if ( $r->advance() ) {
-				$result = email( "info@" . $_SERVER[ 'HTTP_HOST' ], $r->user_email, "Password Recovery", array(
+				$result = email( "sketchcms@" . $_SERVER[ 'HTTP_HOST' ], $r->user_email, "Password Recovery", array(
 					 "Password" => secureit( $r->user_password, true )
 				) );
 				if ( $result == "success" ) {

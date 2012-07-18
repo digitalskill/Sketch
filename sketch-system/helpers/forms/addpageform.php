@@ -27,7 +27,8 @@
 	    <div class="accord-container">
 		<label>Menu Name</label>
 		<input type="text" name="menu_name" value="" />
-                <label>Page Under</label>
+        
+        <label>Page Under</label>
 		<select name="menu_under" class="bgClass:'select_bg'">
 		    <option value="">None (top Level page)</option>
 			<?php adminFilter("menu",array("select"=>true,"id"=>0)); ?>
@@ -53,11 +54,35 @@
                 <option value="pagel"      >Page Grouping</option>
 		</select>
 		<label>Publish status</label>
-		<select name="page_status" class="bgClass:'select_bg'">
+		<select name="page_status" class="bgClass:'select_bg'" onchange="if(this.value=='member'){ $('membergroup').removeClass('hide'); }else{ $('membergroup').addClass('hide');}">
 		    <option value="published">Publish</option>
 		    <option value="hidden">Hidden</option>
 		    <option value="member">Members only</option>
 		</select>
+        <div id="membergroup" class="hide">
+        <label>Member Group (select existing groups from this list)</label>
+		<select name="menu_sel" class="bgClass:'select_bg'" onchange="$('theClass').value = this.value">
+		    <option value="">All Members</option>
+            <?php
+			$found = false;
+			$memdata = getData("sketch_page,sketch_menu","menu_class","page_status='member' GROUP BY menu_class");
+			while($memdata->advance()){
+				if($memdata->menu_class != ''){
+					$found=true
+				?><option value="<?php echo $memdata->menu_class; ?>"><?php echo $memdata->menu_class; ?></option><?php	
+				}
+			}
+			?>
+		</select>
+        <label>
+		<?php if(!$found){ ?>
+        	<div class="alert" style="width:95%;">No Member Group Found - Enter the member group here to create a group</div>
+        <?php }else{ ?>
+        	Enter a new group name below or select one from above
+        <?php } ?>
+        </label>
+        <input name="menu_class" id="theClass" />
+        </div>
 		<label>On menu</label>
 		<select name="menu_show" class="bgClass:'select_bg'">
 		    <option value="1">Yes</option>

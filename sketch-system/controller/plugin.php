@@ -273,6 +273,7 @@ class PLUGIN extends CONTROLLER {
 	public function showForm( ) {
 		global $sketch;
 		$this->settings[ 'content' ] = @$this->settings[ 'edit' ];
+		if(!isset($_GET['noform'])){
 ?>
 	<form class="required ajax:true <?php
 		if ( @strpos( $this->settings[ "adminclass" ], "updateForm:false" ) === false ) { ?>output:'load-box'<?php } ?>" method="post" action="<?php echo urlPath( "admin" ); ?>/admin_plugin_<?php echo $this->settings[ 'name' ]; ?>" id="form_<?php echo $this->settings[ 'name' ]; ?>">
@@ -280,13 +281,16 @@ class PLUGIN extends CONTROLLER {
 	    <input type="hidden" name="plugin_id" value="<?php echo $this->settings[ 'plugin_id' ]; ?>" />
 	    <input type="hidden" name="preview" value="edit" />
 <?php
+		}
 		if ( is_file( sketch( "abspath" ) . sketch( "user_theme_path" ) . "views" . sketch( "slash" ) . "forms" . sketch( "slash" ) . strtolower( trim( $this->settings[ 'name' ] ) ) . ".php" ) ) {
 			include( sketch( "abspath" ) . sketch( "user_theme_path" ) . "views" . sketch( "slash" ) . "forms" . sketch( "slash" ) . strtolower( trim( $this->settings[ 'name' ] ) ) . ".php" );
 		} else {
 			$this->form();
 		}
+		if(!isset($_GET['noform'])){
 ?>
 	    <div style="clear:both;">&nbsp;</div>
 	</form><?php
+		}
 	}
 }

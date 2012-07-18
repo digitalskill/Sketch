@@ -40,7 +40,7 @@ function memberSet($details){
 function memberAdd($details){
 	global $_POST;
 	$exists = false;
-	$mem = getData("sketch_page","content","WHERE page_type='member' AND content LIKE '%".str_replace("'","",sketch("db")->quote($details['email']))."%'","","1");
+	$mem = getData("sketch_page","content","WHERE content LIKE '%".str_replace("'","",sketch("db")->quote($details['email']))."%'","","1");
 	if($mem->rowCount() > 0){
 		$mem->advance();
 		$result = unserialize($mem->content);
@@ -78,7 +78,7 @@ function memberAdd($details){
 		$data['updated_by'] = $details['nickname'];
 		$data['page_title'] = $details['nickname'];
 		$data['page_status'] = 'hidden';
-		$data['page_type'] = "member"; 
+		$data['page_type'] = "unapproved"; 
 		$r = ACTIVERECORD::keeprecord(insertDB("sketch_page",$data));
 		if($r){
 			$pid 	= lastInsertId();

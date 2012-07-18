@@ -10,8 +10,7 @@
 </ul>
 <ul class="form accordian" style="float:left;width:70%">
     <li><div class="content-column">
-	    <div class="title">e-Commerce settings</div>
-	    <div class="big-font">Setup your sites E-commerce</div>
+	    <div class="title">E-Commerce settings</div>
 	</div></li>
     <li>
 	    <a class="button accord-title"><span class="icons downarrow"></span>Check out settings</a>

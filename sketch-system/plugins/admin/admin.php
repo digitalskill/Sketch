@@ -64,6 +64,7 @@ class ADMIN extends PLUGIN {
             }
         }
 ?>
+       
         </div>
         <div id="admin-tabMenuRight">
         	<a href="<?php echo urlPath( "?logout=true" ); ?>" class="logout:true" style="float:right;"><span>Logout</span></a>
