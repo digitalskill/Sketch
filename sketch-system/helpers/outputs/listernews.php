@@ -6,7 +6,8 @@
 while($panel_q->advance()){
     $c = contentToArray($panel_q->result['content']);
 ?>
-  <li> <a href="<?php echo urlPath($panel_q->menu_guid); ?>"><?php if(isset($c['page_image']) && trim($c['page_image'])!=""){?><img src="<?php echo urlPath($c["page_image"]); ?>" alt="" style="width:60px" class="left" /><?php } ?></a>
+  <li> <a href="<?php echo urlPath($panel_q->menu_guid); ?>">
+  	<?php if(isset($c['page_image']) && trim($c['page_image'])!=""){?><img src="<?php echo urlPath($c["page_image"]); ?>" alt="" style="width:60px" class="left" /><?php } ?></a>
     <h4 class="title"><a href="<?php echo urlPath($panel_q->menu_guid); ?>"><?php echo $panel_q->page_heading; ?></a><span>
     <?php
 	    list($y,$m,$d) = explode("-",$panel_q->page_date);

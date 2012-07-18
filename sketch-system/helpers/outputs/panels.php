@@ -77,7 +77,9 @@
 										"WHERE page_status='published' AND menu_under=".intval($popPosts->sketch_menu_id));
 					$comments->advance();
 					?>
-            		<li><a href="<?php echo urlPath($popPosts->menu_guid); ?>" title=""><img src="<?php echo $c['page_image']==""?  urlPath("sketch-images/art/blog-th1.jpg") :  urlPath($c['page_image']); ?>" alt=""></a>
+            		<li><a href="<?php echo urlPath($popPosts->menu_guid); ?>" title="">
+                    <img src="<?php echo $c['page_image']==""?  urlPath("sketch-images/art/blog-th1.jpg") :  urlPath($c['page_image']); ?>" alt="">
+                    </a>
             		<h4><a href="<?php echo urlPath($popPosts->menu_guid); ?>" title=""><?php echo $popPosts->page_heading; ?></a></h4>
             		<span class="infor"><?php echo @date("d F, Y",strtotime($popPosts->page_date)); ?> | <a href="<?php echo urlPath($popPosts->menu_guid); ?>" title=""><?php echo intval($comments->commentcount); ?> Comments</a></span></li>
             <?php } ?>
