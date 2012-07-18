@@ -1,7 +1,7 @@
 <?php 
 helper("session");
 helper("member");
-if(isset($_POST['token']) && $_POST['token']==sessionGet("token") && isset($_POST['addpostcoment']) && $_POST['addpostcoment']=="addpostcoment" && memberid()){ 
+if(isset($_POST['token']) && $_POST['token']==sessionGet("token") && isset($_POST['addpostcoment']) && $_POST['addpostcoment']=="addpostcoment" && (memberid() || sketch("public_post"))){ 
 	sessionRemove('token');
 	$data 					= $_POST;
 	$data['menu_under'] 	= intval($_POST['replyto']) > 0 ?  intval($_POST['replyto']) : intval(sketch("sketch_menu_id"));
@@ -13,7 +13,7 @@ if(isset($_POST['token']) && $_POST['token']==sessionGet("token") && isset($_POS
 	
 	$memDetails		    	= memberGet();
 	$_POST['member_id']	    = intval(memberid());
-	$data['updated_by']	    = (isset($memDetails['nickname']) && $memDetails['nickname']!= "")? $memDetails['nickname'] : $_SERVER['HTTP_HOST'];
+	$data['updated_by']	    = (isset($memDetails['nickname']) && $memDetails['nickname']!= "")? $memDetails['nickname'] : (isset($_POST['name'])? trim(htmlentities($_POST['name'])) : $_SERVER['HTTP_HOST'] );
 	$serial			    	= $_POST;
 	foreach($serial as $key => $value){
 	    $serial[$key] 			= htmlentities(strip_tags(trim(stripslashes($value))));
@@ -36,7 +36,7 @@ if(isset($_POST['token']) && $_POST['token']==sessionGet("token") && isset($_POS
 	$addp 	= addData("sketch_menu",$data);
 	?>
     <div class="post alert">
-  		<h2 class="title">Thank you - your comment will appear once moderated</h2>
+  		<h5 class="title">Thank you - your comment will appear once moderated</h5>
     </div>
     <?php
 }
@@ -161,7 +161,7 @@ if(adminCheck()){
           </ul>	
 <?php	}
 	}
-	if(memberid()){ 
+	if(memberid() || sketch("public_post")=="yes"){ 
 		$details = memberGet();
 	?>
 		<div id="comment-form" class="comment-form">
@@ -171,12 +171,21 @@ if(adminCheck()){
             <input type="hidden" name="addpostcoment" value="addpostcoment">
             <input type="hidden" name="token" value="<?php $tok = md5(rand()); sessionSet("token",$tok,false); echo sessionGet("token"); ?>" class="required"/>
             <input type="hidden" name="replyto" id="replyto" value="" />
-            <div class="comment-input">
+            <?php if(memberid()){?>
+            <div class="comment-input" style="width:48%;margin-right:2%">
               <p>Hi <?php echo !isset($details['nickname']) || $details['nickname']==''? $details['firstname']." ".$details['lastname'] : $details['nickname']; ?>, as a member you can leave a comment or click reply to give feedback on other members comments.</p>
               <p>We love to hear what our members think - and your comments will appear once moderated.</p>
             </div>
-            <div class="comment-textarea">
-              <textarea name="textarea" id="textarea"></textarea>
+            <?php }else{ ?>
+            <div class="comment-input" style="width:48%;margin-right:2%">
+            <label>Name</label>
+             <input type="text" name="name" class="required" value="" />
+            <label>Email</label>
+            <input type="text" name="email" class="required email" value="" />
+            </div>
+            <?php } ?>
+            <div class="comment-textarea"  style="width:48%">
+              <textarea name="textarea" id="textarea" style="width:99%"></textarea>
                <button type="submit" name="submit"><span class="icons pen"></span>Leave comment</button>
             </div>
           </form>
