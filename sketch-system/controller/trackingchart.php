@@ -54,13 +54,13 @@ class TRACKINGCHART extends CONTROLLER{
 		  <?php 
 		  $counter = 0;
 		  $bignum  = 0;
-		  $chdl	   = "";
+		  $chdl	   = array();
 		  $chd     = "";
 		  $dvmin   = "";
 		  $dvEnd   = "";
 		  while($r->advance()){ 
 		  	$bignum = $bignum < $r->viewcount ? $r->viewcount : $bignum;
-			$chdl	.= "|".htmlentities($r->menu_name);
+			$chdl[]	= htmlentities($r->menu_name);
 			$chd	.= ",".intval($r->viewcount);
 			$dvmin   = $dvmin > strtotime($r->dateviewed) 		|| $dvmin == ""? strtotime($r->dateviewed) : $dvmin;
 			$dvEnd   = $dvEnd < strtotime($r->lastdateviewed) 	|| $dvEnd=="" ? strtotime($r->lastdateviewed) : $dvEnd;
@@ -68,7 +68,10 @@ class TRACKINGCHART extends CONTROLLER{
           	dataTable.setValue(<?php echo $counter; ?>, 0,<?php echo intval($r->viewcount); ?>);
 		  <?php 
 		  	$counter++;
-		  } ?>
+		  } 
+		  
+		  $chdl = implode("|", array_reverse($chdl));
+		  ?>
           draw(dataTable);
         }
       }
@@ -76,7 +79,7 @@ class TRACKINGCHART extends CONTROLLER{
       function draw(dataTable) {
         var vis = new google.visualization.ImageChart(document.getElementById('chart'));
         var options = {
-          chxl: '1:<?php echo $chdl; ?>|',
+          chxl: '1:|<?php echo $chdl; ?>|',
           chxp: '',
           chxr: '0,0,<?php echo $bignum; ?>',
           chxs: '',
