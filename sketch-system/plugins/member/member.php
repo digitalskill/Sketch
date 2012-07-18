@@ -18,12 +18,33 @@ class MEMBER extends PLUGIN {
             if($this->e('memberpage')==sketch("page_id")){
               $_POST = memberGet();
               if(memberid() || isset($_GET['register'])){
-                $this->detailForm();
+				 if(isset($_GET['purchase']) && memberid()){
+					 ?>
+                     <a style="float:right;" href="<?php echo urlPath("sketch-admin"); ?>" class="button"><span class="icons lock"></span>Logout</a>
+                     <a style="float:right;" href="<?php echo urlPath(sketch("menu_guid")); ?>" class="button"><span class="icons user"></span>View Your Details</a>
+					 	
+					 <?php
+					 $this->purchaseHistory();
+				 }else{
+					if(memberid()){
+						?>
+                        <a style="float:right;" href="<?php echo urlPath("sketch-admin"); ?>" class="button"><span class="icons lock"></span>Logout</a>
+                        <a style="float:right;" href="<?php echo urlPath(sketch("menu_guid")); ?>?purchase" class="button"><span class="icons book"></span>View Purchase history</a>
+							
+						<?php
+					}
+                	$this->detailForm();
+				 }
               }else{
                  $this->loginForm();
               }//else if memberid
             }// if this->e('memberpage')
           }// isset($_POST['login'])...
+		  ?><div style="clear:both"></div><?php
+	}
+	function purchaseHistory(){
+		$details = "purchaseform";
+		filter("templates",array("show"=>true,"template_type"=>"form","template_name"=>$details,"data"=>$this->settings[ 'content' ]));
 	}
 	function detailForm(){
 		$details = $this->e("detailform")=="" ? "detailform" : $this->e("detailform");
