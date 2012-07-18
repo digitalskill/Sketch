@@ -141,10 +141,16 @@
         <div class="accord-container">
             <label>Main heading</label>
             <input type="text" name="page_heading" value="">
+            <label>Can Public Comment</label>
+       		<select name="public_post" class="bgClass:'select_bg'">
+        	<option value="no"  <?php if(sketch("public_post") != "yes"){ ?>selected="selected"<?php } ?>>No</option>
+            <option value="yes" <?php if(sketch("public_post") == "yes"){ ?>selected="selected"<?php } ?>>Yes</option>
+       		</select>
             <label>Lead Paragraph</label>
             <textarea name="leadparagraph" style="height:100px;width:95%"></textarea>
             <label>Main content</label>
             <textarea name="edit" class="doTiny:true tinySettings:1" id="edit" style="height:300px;width:95%"></textarea>
+            
         </div>
         </div>
         <a class="accord-title button"><span class="icons downarrow"></span>Blog Summary Content</a>
