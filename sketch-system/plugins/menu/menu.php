@@ -204,7 +204,7 @@ class MENU extends PLUGIN {
 	function createSelect($parentid,$sel,$type="sketch_menu_id",$child=""){
 		$html = '';
 		$curr = $child;
-		$r = getData("sketch_menu","*","menu_under=".$parentid ." and sketch_settings_id=".sketch("siteid"));
+		$r = getData("sketch_menu","*","menu_under=".$parentid ." and page_id <> 25 and sketch_settings_id=".sketch("siteid"));
 		if($r->rowCount() > 0){
 			while($r->advance()){
 				$dummyid = ($type=="sketch_menu_id")? $r->sketch_menu_id : $r->page_id;

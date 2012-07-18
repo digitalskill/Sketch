@@ -1,4 +1,27 @@
-<?php if(!isset($_REQUEST['n'])){?>
+<?php if(isset($_GET['n']) && isset($_GET['group']) && isset($_GET['memid']) && adminCheck()){
+		$mem = getData("sketch_page","content","page_id='".intval($_GET['memid'])."'","","1");
+		$mem->advance();
+		$details = contentToArray($mem->content);
+		$details['group'] = htmlentities(trim($_GET['group']));
+		foreach($details as $k => $v){
+			if(!is_array($v)){
+				$details[$k] = str_replace(array('"'),array(';#;'),stripslashes($v));
+			}else{
+				$details[$k] = $v;
+			}
+		}
+		$data = array();
+		$data['content'] = serialize($details);
+		$data['page_id'] = intval($_GET['memid']);
+		setData("sketch_page",$data);
+		?>
+        <script type="text/javascript">
+			$$(".memgroup").unspin();
+		</script>
+        <?php
+		exit();
+}
+if(!isset($_REQUEST['n'])){?>
 <ul style="float:left;width:100%">
     <li><div class="content-column">
 	    <div class="title">Member Forms</div>
@@ -119,8 +142,9 @@ foreach (getDirectory(sketch("abspath") . sketch("themepath") . "views" . sketch
 	  	$members = getData("sketch_page,sketch_menu","*","(page_type='member' || page_type='unapproved')".$xtra,"page_type DESC",$limit);
 		while($members->advance()){
 			$c = contentToArray($members->content);
-			?><div id="<?php echo 'm'.$members->page_id; ?>" style="clear:both;">
-            	<a class="button" style="float:left" href='<?php echo urlPath($members->menu_guid); ?>'><span class="icons user"></span><?php echo $c['email']; ?> | <span style="font-weight:bold">Group: <?php echo @$c['group']; ?></span></a>
+			?><div id="<?php echo 'm'.$members->page_id; ?>" style="clear:both;width:96%;float:left;">
+            	<div style="float:right;width:40%"><div style="float:left;padding:5px;">Group:</div><input type='text' style="width:20%;" name='memgroup' class='memgroup' rel='<?php echo $members->page_id; ?>' value='<?php echo @$c['group']; ?>' /></div>
+            	<a class="button" style="float:left" href='<?php echo urlPath($members->menu_guid); ?>'><span class="icons user"></span><?php echo $c['email']; ?></a>
             <?php if($members->page_type!='member'){?>
             	<a style="float:left" class="button ajaxlink output:'<?php echo 'm'.$members->page_id; ?>'" href='<?php echo urlPath($members->menu_guid); ?>?approvemember=<?php echo $members->page_id; ?>'><span class="icons check"></span>Approve</a> 
 			<?php } ?>
@@ -144,8 +168,21 @@ foreach (getDirectory(sketch("abspath") . sketch("themepath") . "views" . sketch
 		if(intval($rowC->recordAmount) > ($startfrom + $pagelimit)){ ?>
 			<li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_member?page_id=1&preview="); ?>&n=<?php echo $curr+1; ?>" class="button ajaxlink output:'memberlistform'">&raquo;</a></li>
 		<?php } 
-		?></ul>
+		?>
         
+        </ul>
+        <script type="text/javascript">
+			function domemberupdate(){
+				$$(".memgroup").addEvent("keypress",function(event){
+					if(event.key=='enter'){
+						$(this).set('load',{'url':'','method':'post'});
+						$(this).spin();
+						$(this).load('<?php echo urlPath("admin/ajax_plugin_member?page_id=1&preview="); ?>&n=0&memid=' + $(this).get("rel") + '&group=' + this.value);	
+					}
+				});
+			}
+			domemberupdate.delay(500);
+		</script>
         <?php if(!isset($_REQUEST['n'])){?>
          </div>
      </div>
