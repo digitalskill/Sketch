@@ -24,8 +24,9 @@ class FRAMEUP extends CONTROLLER{
 	<html>
 	<head>
 	<meta charset="UTF-8" />
-    <?php getStylePath();  ?>
-	<?php getScriptPath(); ?>
+     <link href="<?php echo urlPath();?>styles?v=1337342400" type="text/css" rel="stylesheet" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/mootools/1.4.0/mootools-yui-compressed.js"></script>
+	<script type="text/javascript" src="<?php echo urlPath(); ?>/scripts?v=1337342400"></script>
     <style type="text/css">
 		body .alert-container{
 			width:200px !important;	
