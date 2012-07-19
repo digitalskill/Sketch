@@ -82,6 +82,10 @@ class FRAMEUP extends CONTROLLER{
 		$unit = strtoupper(substr($POST_MAX_SIZE, -1));
 		$multiplier = ($unit == 'M' ? 1048576 : ($unit == 'K' ? 1024 : ($unit == 'G' ? 1073741824 : 1)));
 		$canUpload = true;
+		if(!in_array(end(explode(".",$_FILES['afile']["name"])),array("gif","jpg","doc","pdf","png","xls","docs","docx"))){
+			$this->showForm("Invalid File Type");																	// File too big - Exit
+			$canUpload = false;
+		}
 		if ((int)$_SERVER['CONTENT_LENGTH'] > $multiplier*(int)$POST_MAX_SIZE && $POST_MAX_SIZE) {
 			$this->showForm("Sorry the file is too big");
 			$canUpload = false;
