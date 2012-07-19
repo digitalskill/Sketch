@@ -473,44 +473,52 @@ class sketch {
 			$this->loadController( $this->page );
 		}
 	}
-	function fileLoadCheck( $file, $view ) {
-		$folder = "override";
-		$file   = $this->abspath . $this->themepath . $folder . $this->slash . $view . ".php";
-		if ( !is_file( $file ) ) {
-			$folder = "views";
-			$file   = $this->abspath . $this->themepath . $folder . $this->slash . $view . ".php";
-		} //!is_file( $file )
-		if ( strtolower( $view ) != "index" && !is_file( $file ) ) {
-			$file = $this->sketchPath . "helpers" . $this->slash . "outputs" . $this->slash . $view . ".php";
-		} //strtolower( $view ) != "index" && !is_file( $file )
-		return $file;
-	}
 	function loadView( $view = "index", $return = false, $path = false ) {
-		global $_SERVER;
 		list( $view,  ) = explode( "?", $view );
-		$view   = trim( str_replace( ".php", "", $view ) );
-		$view   = ( $view == "" ) ? "index" : $view;
-		$folder = ( $this->mobile != false ) ? "views" . $this->slash . "mobile" : "views";
-		$file   = $this->abspath . $this->themepath . $folder . $this->slash . $view . ".php";
-		if ( !is_file( $file ) ) {
-			$file = $this->fileLoadCheck( $file, $view );
-		} //!is_file( $file )
-		if ( is_file( $file ) ) {
+		$view = str_replace( ".php", "", $view );
+		$view = ( $view == "" ) ? "index" : $view;
+		$r = getData("template","*","template_type <> 'form' AND template_type <> 'css' AND template_type <> 'javascript' AND template_name=".sketch("db")->quote($view));
+		if($r->rowCount()==0){
+			$file = $this->abspath . $this->themepath . "views" . $this->slash . $view . ".php";
+			if ( !is_file( $file ) ) {
+				$file = $this->abspath . $this->themepath . "override" . $this->slash . $view . ".php";
+			} //!is_file( $file )
+			if ( !is_file( $file ) ) {
+				$file = $this->sketchPath . "helpers" . $this->slash . "outputs" . $this->slash . $view . ".php";
+			} //!is_file( $file )
+			if ( is_file( $file ) ) {
+				if ( $return == true ) {
+					return file_get_contents( $file );
+				} //$return == true
+				else{
+					if ( $path == true ) {
+						return $file;
+					} //$return == true
+					else {
+						include_once( $file );
+					}
+				}
+			} //is_file( $file )
+			else {
+				$this->loadError( "404" );
+			}
+		}else{
+			$r->advance();
+			if(!is_file(sketch( "abspath" ) . sketch( "themepath" ) . "cache" . sketch( "slash" ) .$r->template_id.".php")){
+				file_put_contents(sketch( "abspath" ) . sketch( "themepath" ) . "cache" . sketch( "slash" ) .$r->template_id.".php", str_replace(array("endphp","phpstart"),array(' ?>',' <?php '),$r->template_content));
+			}
+			$file = sketch( "abspath" ) . sketch( "themepath" ) . "cache" . sketch( "slash" ) .$r->template_id.".php";
 			if ( $return == true ) {
 				return file_get_contents( $file );
-			} //$return == true
-			else {
+			}else{
 				if ( $path == true ) {
 					return $file;
-				} //$path == true
+				} //$return == true
 				else {
 					include_once( $file );
 				}
 			}
-		} //is_file( $file )
-		else {
-			$this->loadError( "404" );
-		}
+		}	
 	}
 	function loadScript( $script = "", $return = false ) {
 		$script = trim( str_replace( ".js", "", $script ) );
@@ -526,21 +534,35 @@ class sketch {
 		} //is_file( $file )
 	}
 	function loadForm( $view = "index", $return = true ) {
-		global $_SERVER;
+		list( $view,  ) = explode( "?", $view );
 		$view = str_replace( ".php", "", $view );
 		$view = ( $view == "" ) ? "index" : $view;
-		$file = $this->user_theme_path . "views" . $this->slash . "forms" . $this->slash . $view . ".php";
-		if ( !is_file( $file ) ) {
-			$file = $this->sketchPath . "helpers" . $this->slash . "forms" . $this->slash . $view . ".php";
-		} //!is_file( $file )
-		if ( is_file( $file ) ) {
+		$r = getData("template","*","template_type = 'form' AND template_type <> 'css' AND template_type <> 'javascript' AND template_name=".sketch("db")->quote($view));
+		if($r->rowCount()==0){
+			$file = $this->abspath . $this->themepath . "views" . $this->slash . "forms" . $this->slash . $view . ".php";
+			if ( !is_file( $file ) ) {
+				$file = $this->sketchPath . "helpers" . $this->slash . "forms" . $this->slash . $view . ".php";
+			} //!is_file( $file )
+			if ( is_file( $file ) ) {
+				if ( $return == true ) {
+					return file_get_contents( $file );
+				} //$return == true
+				else {
+					return $file;
+				}
+			} //is_file( $file )
+		}else{
+			$r->advance();
+			if(!is_file(sketch( "abspath" ) . sketch( "themepath" ) . "cache" . sketch( "slash" ) .$r->template_id.".php")){
+				file_put_contents(sketch( "abspath" ) . sketch( "themepath" ) . "cache" . sketch( "slash" ) .$r->template_id.".php", str_replace(array("endphp","phpstart"),array(' ?>',' <?php '),$r->template_content));
+			}
+			$file = sketch( "abspath" ) . sketch( "themepath" ) . "cache" . sketch( "slash" ) .$r->template_id.".php";
 			if ( $return == true ) {
 				return file_get_contents( $file );
-			} //$return == true
-			else {
+			}else{
 				return $file;
 			}
-		} //is_file( $file )
+		}
 	}
 	function loadModel( $model = "index" ) {
 		$model = trim( str_replace( ".php", "", $model ) );
