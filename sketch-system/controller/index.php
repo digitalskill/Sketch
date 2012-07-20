@@ -74,12 +74,7 @@ class INDEX extends CONTROLLER{
 			helper("member");
 		  }
 		  ob_start("compress_page");
-		  	$templates = sketch("plugins");
-		  	if(isset($templates['templates'])){
-		  		filter("templates",array("show"=>true,"template_type"=>"page","template_name"=>trim(sketch("pagefile"))));
-			}else{
-		  		$this->loadView(trim(sketch("pagefile")));
-			}
+		  $this->loadView(trim(sketch("pagefile")));
 		  ob_end_flush();
 		}
   	}
