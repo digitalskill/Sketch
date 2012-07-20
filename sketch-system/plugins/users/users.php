@@ -76,8 +76,7 @@ class USERS extends PLUGIN {
 	                <label>User rights</label>
 	                <select name="is_super[]" class="bgClass:'select_bg'">
 	                    <option value="1" <?php if ($r->is_super == 1) { ?>selected="selected" <?php } ?>>Super Admin</option>
-	                    <option value="0" <?php if ($r->is_super == 0) { ?>selected="selected" <?php } ?>>Editor</option>
-	                    <option value="2" <?php if ($r->is_super == 2) { ?>selected="selected" <?php } ?>>Blogger</option>
+	                    <option value="0" <?php if ($r->is_super != 1) { ?>selected="selected" <?php } ?>>Editor / Blogger</option>
 		    </select>
 		</li>
 		<li style="float:left;width:15%;clear:none;">
@@ -89,7 +88,7 @@ class USERS extends PLUGIN {
 		</li>
 	    </ul><?php } ?>
         <div class="clb"></div>
-        <a style="width:107px" class="button" id="addnewadmin"><span class="icons user"></span>Add Admin</a>
+        <a style="width:107px;float:left;clear:both" class="button" id="addnewadmin"><span class="icons user"></span>Add Admin</a>
         <script type="text/javascript">
     	function setupClones(){
     	    $('addnewadmin').addEvent("click",function(){
