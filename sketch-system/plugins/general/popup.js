@@ -158,8 +158,12 @@ var Popup = new Class({
 				$(this.masterContainer).set("html","<iframe src='"+this.options.url+"' allowtransparency='1' frameborder='0' style='margin:5px' height='"+(this.options.height-10)+"' width='"+(this.options.width-10)+"' scrolling='auto'></iframe>");
 				this.showContent();
 			}else{
-				$(this.masterContainer).set("load",{onComplete: this.showContent.bind(this),method:'post'});
-				$(this.masterContainer).load(this.options.url);
+				if(this.options.url.contains("jpg") || this.options.url.contains("png") || this.options.url.contains("gif") || this.options.url.contains("JPG") || this.options.url.contains("PNG") || this.options.url.contains("GIF")){
+					this.singleImage = new Asset.image(this.options.url,{onLoad:this.showContent.bind(this),onError:this.closePopup.bind(this),onAbort:this.closePopup.bind(this)});
+				}else{	
+					$(this.masterContainer).set("load",{onComplete: this.showContent.bind(this),method:'post'});
+					$(this.masterContainer).load(this.options.url);
+				}
 			}
 			$(document.body).addEvent("closepop",this.closePopup.bind(this));
 		}
@@ -261,6 +265,13 @@ var Popup = new Class({
 	showContent: function(){
 		var maskSize 	= $(window).getSize();
 		var size = 0;
+		
+		if(this.options.url.contains("jpg") || this.options.url.contains("png") || this.options.url.contains("gif") || this.options.url.contains("JPG") || this.options.url.contains("PNG") || this.options.url.contains("GIF")){
+			this.singleImage.inject($(this.masterContainer));
+			this.options.width = this.singleImage.get("width");
+			this.options.height = this.singleImage.get("height");
+		}
+		
 		// Get size of content
 		if(this.options.auto==true){
 		    $(this.masterContainer).setStyles({"width":"auto","height":"auto","max-width":600,"max-height":600});
