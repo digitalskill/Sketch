@@ -109,10 +109,12 @@ foreach (getDirectory(sketch("abspath") . sketch("themepath") . "views" . sketch
       <input type="text" name="membersearch" id="memsearch" />
       <script type="text/javascript">
 	  	function setMemsearch(){
+			$('memberlistform').unspin();
 			$("memsearch").addEvent("keypress",function(event){
 				if(event.key=="enter"){
+						$('memberlistform').spin();
 						$('memberlistform').set("load",{url:'','method':'post'});
-						$('memberlistform').load('<?php echo urlPath("admin/ajax_plugin_member?page_id=1&noform=t&preview="); ?>&n=0&name='+this.value);
+						$('memberlistform').load('<?php echo urlPath("admin/ajax_plugin_member?page_id=1&noform=t&preview="); ?>&noform=t&n=0&name='+this.value);
 				}
 			});
 		}
@@ -163,16 +165,17 @@ foreach (getDirectory(sketch("abspath") . sketch("themepath") . "views" . sketch
 		<?php
 		$curr = intval(@$_POST['n']) > 1 ? intval($_POST['n']): 1; 
 		for($j=0;$j<($rowC->recordAmount/$pagelimit);$j++){ ?>
-			 <li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_member?page_id=1&preview="); ?>&n=<?php echo $j+1; ?>" class="button <?php if($j+1==$curr){?>current<?php } ?> ajaxlink output:'memberlistform'" ><?php echo $j+1; ?></a></li><?php
+			 <li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_member?page_id=1&preview="); ?>&noform=t&n=<?php echo $j+1; ?>" class="button <?php if($j+1==$curr){?>current<?php } ?> ajaxlink output:'memberlistform'" ><?php echo $j+1; ?></a></li><?php
 		}
 		if(intval($rowC->recordAmount) > ($startfrom + $pagelimit)){ ?>
-			<li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_member?page_id=1&preview="); ?>&n=<?php echo $curr+1; ?>" class="button ajaxlink output:'memberlistform'">&raquo;</a></li>
+			<li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_member?page_id=1&preview="); ?>&noform=t&n=<?php echo $curr+1; ?>" class="button ajaxlink output:'memberlistform'">&raquo;</a></li>
 		<?php } 
 		?>
         
         </ul>
         <script type="text/javascript">
 			function domemberupdate(){
+				$('memberlistform').unspin();
 				$$(".memgroup").addEvent("keypress",function(event){
 					if(event.key=='enter'){
 						$(this).set('load',{'url':'','method':'post'});

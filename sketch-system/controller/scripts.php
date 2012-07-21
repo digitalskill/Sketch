@@ -21,7 +21,12 @@ class SCRIPTS extends CONTROLLER{
 		$this->expiry 	= intval(sketch("cacheseconds")); 
 		$this->filejs	= ((sketch("mobile")==false)? "general" : "scriptssmobile"). @$_REQUEST['v'].((adminCheck())? 'admin':'');
 		if(getSettings("compress")){
-			ob_start("ob_gzhandler");								// G-zips the page
+			if (extension_loaded('zlib')) { 
+				ob_start(); 
+				ob_implicit_flush(0);
+			}else{
+				ob_start( "ob_gzhandler" );
+			}
 		}
 		helper("minifyjs");
 		$this->loadScripts();

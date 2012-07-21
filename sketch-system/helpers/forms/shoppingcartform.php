@@ -1,4 +1,194 @@
 <?php
+$skip = false;
+if(isset($_REQUEST['a']) && adminCheck()){ ?>
+	<label>Invoice Details</label>
+		<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<tr class="tblhead">
+		<td>Type</td>
+		<td>Date</td>
+		<td>Name</td>
+		<td>Email</td>
+		<td>Response</td>
+		<td>Amount</td>
+		<td></td>
+		</tr>		
+			<?php
+			
+		$limit = "";
+		$pagelimit = 25;				// Make this the page output desired
+		if($pagelimit > 0){
+			$limit = " 0,".$pagelimit;
+		}
+		$startfrom = (intval(@$_REQUEST['a']) - 1) * $pagelimit;
+		$startfrom = ($startfrom < 0)? 0 : $startfrom;
+		if($startfrom){
+			$limit = " ".$startfrom.",".$pagelimit;	
+		}
+			
+		helper("shoppingcart");
+		$r = getData("invoice","*","response_code<>'0' AND invoice_response <> 'INTERNET BANKING REQUEST'","invoice_date DESC",$limit);		
+		while($r->advance()){
+		    $deliveryInfo 	= unserialize($r->invoice_details);
+		    $deliveryInfo = (array)getDeliveryInfo($deliveryInfo);	?>
+		    <tr <?php if($r->invoice_filled==1){?>class='filled'<?php }?>>
+                    <td><?php if(stripos($r->invoice_response,"banking request")!==false){?>Internet Banking<?php }else{?>Credit Card<?php } ?></td>
+                    <td><?php echo $r->invoice_date; ?></td>
+                    <td><?php echo $deliveryInfo['firstname']. " ". $deliveryInfo['lastname']; ?></td>
+                    <td><a href="mailto:<?php echo $deliveryInfo['email']; ?>" class="button"><span class="icons mail"></span><?php echo $deliveryInfo['email']; ?></a></td>
+                    <td><?php echo $r->invoice_response;  ?></td>
+                    <td>$<?php echo number_format($r->amount,2,".",",");  ?></td>
+                    <td><a target="_blank" class="button" onclick="javascript:window.open('<?php echo urlPath($this->e("checkoutpage")); ?>?status=view-<?php echo $r->page_id ."-".$r->invoice_id; ?>&chk=<?php echo md5(intval($r->page_id)."-".$r->invoice_id); ?>&adview','orderview','top=0,left=0,fullscreen=no,scrollbars=yes,width=830,height=700,toolbar=no',true); return false;">View</a></td>
+                    </tr>
+            <?php } ?>
+            </table>
+                 <?php
+		$SQL = end(explode("FROM",$r->query));
+		list($SQL,) = explode("limit",strtolower($SQL));
+		$rowC = ACTIVERECORD::keeprecord("SELECT count(invoice_id) as recordAmount FROM " .$SQL);
+		$rowC->advance();
+		?>
+		<ul class="page-navi" style="clear:both;">
+		<?php
+		$curr = intval(@$_REQUEST['a']) > 1 ? intval($_REQUEST['a']): 1; 
+		for($j=0;$j<($rowC->recordAmount/$pagelimit);$j++){ ?>
+			 <li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_shoppingcart?page_id=1&preview="); ?>&a=<?php echo $j+1; ?>" class="button <?php if($j+1==$curr){?>current<?php } ?> ajaxlink output:'failedspot'" ><?php echo $j+1; ?></a></li><?php
+		}
+		if(intval($rowC->recordAmount) > ($startfrom + $pagelimit)){ ?>
+			<li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_shoppingcart?page_id=1&preview="); ?>&a=<?php echo $curr+1; ?>" class="button ajaxlink output:'failedspot'">&raquo;</a></li>
+		<?php } ?>
+        </ul>
+<?php
+	$skip = true;
+}
+
+if(isset($_REQUEST['b']) && adminCheck()){
+	?>
+    	<label>Invoice Details</label>
+		<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<tr class="tblhead">
+		<td>Type</td>
+		<td>Date</td>
+		<td>Name</td>
+		<td>Email</td>
+		<td>Response</td>
+		<td>Amount</td>
+		<td></td>
+		</tr>
+            <?php 
+		$limit = "";
+		$pagelimit = 25;				// Make this the page output desired
+		if($pagelimit > 0){
+			$limit = " 0,".$pagelimit;
+		}
+		$startfrom = (intval(@$_REQUEST['b']) - 1) * $pagelimit;
+		$startfrom = ($startfrom < 0)? 0 : $startfrom;
+		if($startfrom){
+			$limit = " ".$startfrom.",".$pagelimit;	
+		}
+		helper("shoppingcart");
+		$r = getData("invoice","*","response_code='0' AND invoice_response='INTERNET BANKING REQUEST'","invoice_date DESC",$limit);
+		while($r->advance()){
+		    $deliveryInfo 	= contentToArray($r->invoice_details);
+		    $deliveryInfo = (array)getDeliveryInfo($deliveryInfo);	?>
+		    <tr <?php if($r->invoice_filled==1){?>class='filled'<?php }?>>
+                    <td><?php if(stripos($r->invoice_response,"banking request")!==false){?>Internet Banking<?php }else{?>Credit Card<?php } ?></td>
+                    <td><?php echo $r->invoice_date; ?></td>
+                    <td><?php echo $deliveryInfo['firstname']. " ". $deliveryInfo['lastname']; ?></td>
+                    <td><a href="mailto:<?php echo $deliveryInfo['email']; ?>" class="button"><span class="icons mail"></span><?php echo $deliveryInfo['email']; ?></a></td>
+                    <td><?php echo $r->invoice_response;  ?></td>
+                    <td>$<?php echo number_format($r->amount,2,".",",");  ?></td>
+                    <td><a target="_blank" class="button" onclick="javascript:window.open('<?php echo urlPath($this->e("checkoutpage")); ?>?status=view-<?php echo $r->page_id ."-".$r->invoice_id; ?>&chk=<?php echo md5(intval($r->page_id)."-".$r->invoice_id); ?>&adview','orderview','top=0,left=0,fullscreen=no,scrollbars=yes,width=830,height=700,toolbar=no',true); return false;">View</a></td>
+                    </tr>
+            <?php } ?>
+            </table>
+            
+            <?php
+		$SQL = end(explode("FROM",$r->query));
+		list($SQL,) = explode("limit",strtolower($SQL));
+		$rowC = ACTIVERECORD::keeprecord("SELECT count(invoice_id) as recordAmount FROM " .$SQL);
+		$rowC->advance();
+		?>
+		<ul class="page-navi" style="clear:both;">
+		<?php
+		$curr = intval(@$_REQUEST['b']) > 1 ? intval($_REQUEST['b']): 1; 
+		for($j=0;$j<($rowC->recordAmount/$pagelimit);$j++){ ?>
+			 <li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_shoppingcart?page_id=1&preview="); ?>&b=<?php echo $j+1; ?>" class="button <?php if($j+1==$curr){?>current<?php } ?> ajaxlink output:'internetspot'" ><?php echo $j+1; ?></a></li><?php
+		}
+		if(intval($rowC->recordAmount) > ($startfrom + $pagelimit)){ ?>
+			<li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_shoppingcart?page_id=1&preview="); ?>&b=<?php echo $curr+1; ?>" class="button ajaxlink output:'internetspot'">&raquo;</a></li>
+		<?php } ?>
+        </ul>
+	
+	<?php
+	$skip = true;
+}
+
+
+if(isset($_REQUEST['c']) && adminCheck()){
+	?>
+	
+    <label>Invoice Details</label>
+		<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<tr class="tblhead">
+		<td>Type</td>
+		<td>Date</td>
+		<td>Name</td>
+		<td>Email</td>
+		<td>Response</td>
+		<td>Amount</td>
+		<td></td>
+		</tr>		
+			<?php
+			
+		$limit = "";
+		$pagelimit = 25;				// Make this the page output desired
+		if($pagelimit > 0){
+			$limit = " 0,".$pagelimit;
+		}
+		$startfrom = (intval(@$_REQUEST['c']) - 1) * $pagelimit;
+		$startfrom = ($startfrom < 0)? 0 : $startfrom;
+		if($startfrom){
+			$limit = " ".$startfrom.",".$pagelimit;	
+		}
+			
+		helper("shoppingcart");
+		$r = getData("invoice","*","response_code='0' AND invoice_response <> 'INTERNET BANKING REQUEST'","invoice_date DESC",$limit);	
+		while($r->advance()){
+		    $deliveryInfo 	= unserialize($r->invoice_details);
+		    $deliveryInfo = (array)getDeliveryInfo($deliveryInfo);	?>
+		    <tr <?php if($r->invoice_filled==1){?>class='filled'<?php }?>>
+                    <td><?php if(stripos($r->invoice_response,"banking request")!==false){?>Internet Banking<?php }else{?>Credit Card<?php } ?></td>
+                    <td><?php echo $r->invoice_date; ?></td>
+                    <td><?php echo $deliveryInfo['firstname']. " ". $deliveryInfo['lastname']; ?></td>
+                    <td><a href="mailto:<?php echo $deliveryInfo['email']; ?>" class="button"><span class="icons mail"></span><?php echo $deliveryInfo['email']; ?></a></td>
+                    <td><?php echo $r->invoice_response;  ?></td>
+                    <td>$<?php echo number_format($r->amount,2,".",",");  ?></td>
+                    <td><a target="_blank" class="button" onclick="javascript:window.open('<?php echo urlPath($this->e("checkoutpage")); ?>?status=view-<?php echo $r->page_id ."-".$r->invoice_id; ?>&chk=<?php echo md5(intval($r->page_id)."-".$r->invoice_id); ?>&adview','orderview','top=0,left=0,fullscreen=no,scrollbars=yes,width=830,height=700,toolbar=no',true); return false;">View</a></td>
+                    </tr>
+            <?php } ?>
+            </table>
+                 <?php
+		$SQL = end(explode("FROM",$r->query));
+		list($SQL,) = explode("limit",strtolower($SQL));
+		$rowC = ACTIVERECORD::keeprecord("SELECT count(invoice_id) as recordAmount FROM " .$SQL);
+		$rowC->advance();
+		?>
+		<ul class="page-navi" style="clear:both;">
+		<?php
+		$curr = intval(@$_REQUEST['c']) > 1 ? intval($_REQUEST['c']): 1; 
+		for($j=0;$j<($rowC->recordAmount/$pagelimit);$j++){ ?>
+			 <li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_shoppingcart?page_id=1&preview="); ?>&c=<?php echo $j+1; ?>" class="button <?php if($j+1==$curr){?>current<?php } ?> ajaxlink output:'creditcspot'" ><?php echo $j+1; ?></a></li><?php
+		}
+		if(intval($rowC->recordAmount) > ($startfrom + $pagelimit)){ ?>
+			<li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_shoppingcart?page_id=1&preview="); ?>&c=<?php echo $curr+1; ?>" class="button ajaxlink output:'creditcspot'">&raquo;</a></li>
+		<?php } ?>
+        </ul>
+	<?php
+	$skip = true;	
+}
+
+if($skip==false){
+
 if(isset($_REQUEST['n']) && adminCheck()){
 	if(isset($_GET['pid'])){
 		$r = getData("sketch_page","content","page_id=".intval($_GET['pid']));
@@ -185,8 +375,6 @@ if(isset($_REQUEST['n']) && adminCheck()){
 	<a class="button accord-title"><span class="icons downarrow"></span>PAYPAL Options</a>
 	    <div class="accord-body">
 	    <div class="accord-container">
-		<label>Payment Url</label>
-		<input type="text" value="<?php echo $this->e('paypalURL',"https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&token="); ?>" name="paypalURL" />
 		<label>PayPal username</label>
 		<input type="text" value="<?php echo $this->e('payPalUsername'); ?>" name="payPalUsername"/>
 		<label>PayPal Password</label>
@@ -207,11 +395,7 @@ if(isset($_REQUEST['n']) && adminCheck()){
     <li>
 	<a class="button accord-title"><span class="icons downarrow"></span>Internet Banking / Email Orders</a>
 	    <div class="accord-body">
-	    <div class="accord-container">
-            <?php
-		helper("shoppingcart");
-		$r = getData("invoice","*","response_code='0' AND invoice_response='INTERNET BANKING REQUEST'","invoice_date DESC","50");
-?>
+	    <div class="accord-container" id="internetspot">
        		<label>Invoice Details</label>
 		<table width="100%" cellpadding="0" cellspacing="0" border="0">
 		<tr class="tblhead">
@@ -223,8 +407,21 @@ if(isset($_REQUEST['n']) && adminCheck()){
 		<td>Amount</td>
 		<td></td>
 		</tr>
-            <?php while($r->advance()){
-		    $deliveryInfo 	= unserialize($r->invoice_details);
+            <?php 
+		$limit = "";
+		$pagelimit = 25;				// Make this the page output desired
+		if($pagelimit > 0){
+			$limit = " 0,".$pagelimit;
+		}
+		$startfrom = (intval(@$_REQUEST['b']) - 1) * $pagelimit;
+		$startfrom = ($startfrom < 0)? 0 : $startfrom;
+		if($startfrom){
+			$limit = " ".$startfrom.",".$pagelimit;	
+		}
+		helper("shoppingcart");
+		$r = getData("invoice","*","response_code='0' AND invoice_response='INTERNET BANKING REQUEST'","invoice_date DESC",$limit);
+		while($r->advance()){
+		    $deliveryInfo 	= contentToArray($r->invoice_details);
 		    $deliveryInfo = (array)getDeliveryInfo($deliveryInfo);	?>
 		    <tr <?php if($r->invoice_filled==1){?>class='filled'<?php }?>>
                     <td><?php if(stripos($r->invoice_response,"banking request")!==false){?>Internet Banking<?php }else{?>Credit Card<?php } ?></td>
@@ -237,17 +434,33 @@ if(isset($_REQUEST['n']) && adminCheck()){
                     </tr>
             <?php } ?>
             </table>
+            
+            <?php
+		$SQL = end(explode("FROM",$r->query));
+		list($SQL,) = explode("limit",strtolower($SQL));
+		$rowC = ACTIVERECORD::keeprecord("SELECT count(invoice_id) as recordAmount FROM " .$SQL);
+		$rowC->advance();
+		?>
+		<ul class="page-navi" style="clear:both;">
+		<?php
+		$curr = intval(@$_POST['b']) > 1 ? intval($_POST['b']): 1; 
+		for($j=0;$j<($rowC->recordAmount/$pagelimit);$j++){ ?>
+			 <li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_shoppingcart?page_id=1&preview="); ?>&b=<?php echo $j+1; ?>" class="button <?php if($j+1==$curr){?>current<?php } ?> ajaxlink output:'internetspot'" ><?php echo $j+1; ?></a></li><?php
+		}
+		if(intval($rowC->recordAmount) > ($startfrom + $pagelimit)){ ?>
+			<li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_shoppingcart?page_id=1&preview="); ?>&b=<?php echo $curr+1; ?>" class="button ajaxlink output:'internetspot'">&raquo;</a></li>
+		<?php } ?>
+        </ul>
+            
+            
 	    </div>
 	    </div>
     </li>
     <li>
 	<a class="button accord-title"><span class="icons downarrow"></span>Credit Card and PayPal Orders</a>
 	    <div class="accord-body">
-	    <div class="accord-container">
-            <?php
-		helper("shoppingcart");
-		$r = getData("invoice","*","response_code='0' AND invoice_response <> 'INTERNET BANKING REQUEST'","invoice_date DESC");
-?>
+	    <div class="accord-container" id="creditcspot">
+          
        		<label>Invoice Details</label>
 		<table width="100%" cellpadding="0" cellspacing="0" border="0">
 		<tr class="tblhead">
@@ -259,7 +472,23 @@ if(isset($_REQUEST['n']) && adminCheck()){
 		<td>Amount</td>
 		<td></td>
 		</tr>
-            <?php while($r->advance()){
+            <?php
+			
+		$limit = "";
+		$pagelimit = 25;				// Make this the page output desired
+		if($pagelimit > 0){
+			$limit = " 0,".$pagelimit;
+		}
+		$startfrom = (intval(@$_REQUEST['c']) - 1) * $pagelimit;
+		$startfrom = ($startfrom < 0)? 0 : $startfrom;
+		if($startfrom){
+			$limit = " ".$startfrom.",".$pagelimit;	
+		}	
+			
+		 
+		helper("shoppingcart");
+		$r = getData("invoice","*","response_code='0' AND invoice_response <> 'INTERNET BANKING REQUEST'","invoice_date DESC",$limit);
+		while($r->advance()){
 		    $deliveryInfo 	= unserialize($r->invoice_details);
 		    $deliveryInfo = (array)getDeliveryInfo($deliveryInfo);	?>
 		    <tr <?php if($r->invoice_filled==1){?>class='filled'<?php }?>>
@@ -273,17 +502,31 @@ if(isset($_REQUEST['n']) && adminCheck()){
                     </tr>
             <?php } ?>
             </table>
+            
+            <?php
+		$SQL = end(explode("FROM",$r->query));
+		list($SQL,) = explode("limit",strtolower($SQL));
+		$rowC = ACTIVERECORD::keeprecord("SELECT count(invoice_id) as recordAmount FROM " .$SQL);
+		$rowC->advance();
+		?>
+		<ul class="page-navi" style="clear:both;">
+		<?php
+		$curr = intval(@$_REQUEST['c']) > 1 ? intval($_REQUEST['c']): 1; 
+		for($j=0;$j<($rowC->recordAmount/$pagelimit);$j++){ ?>
+			 <li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_shoppingcart?page_id=1&preview="); ?>&c=<?php echo $j+1; ?>" class="button <?php if($j+1==$curr){?>current<?php } ?> ajaxlink output:'creditcspot'" ><?php echo $j+1; ?></a></li><?php
+		}
+		if(intval($rowC->recordAmount) > ($startfrom + $pagelimit)){ ?>
+			<li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_shoppingcart?page_id=1&preview="); ?>&c=<?php echo $curr+1; ?>" class="button ajaxlink output:'creditcspot'">&raquo;</a></li>
+		<?php } ?>
+        </ul>
+            
 	    </div>
 	    </div>
     </li>
     <li>
 	<a class="button accord-title"><span class="icons downarrow"></span>Failed Orders (In case payment has not been captured)</a>
 	    <div class="accord-body">
-	    <div class="accord-container">
-            <?php
-		helper("shoppingcart");
-		$r = getData("invoice","*","response_code<>'0' AND invoice_response <> 'INTERNET BANKING REQUEST'","invoice_date DESC");
-?>
+	    <div class="accord-container" id="failedspot">
        		<label>Invoice Details</label>
 		<table width="100%" cellpadding="0" cellspacing="0" border="0">
 		<tr class="tblhead">
@@ -294,8 +537,23 @@ if(isset($_REQUEST['n']) && adminCheck()){
 		<td>Response</td>
 		<td>Amount</td>
 		<td></td>
-		</tr>
-            <?php while($r->advance()){
+		</tr>		
+			<?php
+			
+		$limit = "";
+		$pagelimit = 25;				// Make this the page output desired
+		if($pagelimit > 0){
+			$limit = " 0,".$pagelimit;
+		}
+		$startfrom = (intval(@$_REQUEST['n']) - 1) * $pagelimit;
+		$startfrom = ($startfrom < 0)? 0 : $startfrom;
+		if($startfrom){
+			$limit = " ".$startfrom.",".$pagelimit;	
+		}
+			
+		helper("shoppingcart");
+		$r = getData("invoice","*","response_code<>'0' AND invoice_response <> 'INTERNET BANKING REQUEST'","invoice_date DESC",$limit);		
+		while($r->advance()){
 		    $deliveryInfo 	= unserialize($r->invoice_details);
 		    $deliveryInfo = (array)getDeliveryInfo($deliveryInfo);	?>
 		    <tr <?php if($r->invoice_filled==1){?>class='filled'<?php }?>>
@@ -309,6 +567,22 @@ if(isset($_REQUEST['n']) && adminCheck()){
                     </tr>
             <?php } ?>
             </table>
+                 <?php
+		$SQL = end(explode("FROM",$r->query));
+		list($SQL,) = explode("limit",strtolower($SQL));
+		$rowC = ACTIVERECORD::keeprecord("SELECT count(invoice_id) as recordAmount FROM " .$SQL);
+		$rowC->advance();
+		?>
+		<ul class="page-navi" style="clear:both;">
+		<?php
+		$curr = intval(@$_POST['a']) > 1 ? intval($_POST['a']): 1; 
+		for($j=0;$j<($rowC->recordAmount/$pagelimit);$j++){ ?>
+			 <li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_shoppingcart?page_id=1&preview="); ?>&a=<?php echo $j+1; ?>" class="button <?php if($j+1==$curr){?>current<?php } ?> ajaxlink output:'failedspot'" ><?php echo $j+1; ?></a></li><?php
+		}
+		if(intval($rowC->recordAmount) > ($startfrom + $pagelimit)){ ?>
+			<li style="float:left;clear:none;"><a href="<?php echo urlPath("admin/ajax_plugin_shoppingcart?page_id=1&preview="); ?>&a=<?php echo $curr+1; ?>" class="button ajaxlink output:'failedspot'">&raquo;</a></li>
+		<?php } ?>
+        </ul>
 	    </div>
 	    </div>
     </li>
@@ -395,7 +669,8 @@ if(isset($_REQUEST['n']) && adminCheck()){
         </div>
         </li>
 </ul>
-<?php } ?>
+<?php }
+} ?>
 <script type="text/javascript">
 	function setupInputs(){	
 		$$(".ajstock").addEvent("keypress",function(event){

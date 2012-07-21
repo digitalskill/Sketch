@@ -23,7 +23,12 @@ class STYLES extends CONTROLLER {
 		helper( "minifycss" );
 		helper( "cache" );
 		if ( getSettings( "compress" ) ) {
-			@ob_start( "ob_gzhandler" );
+			if (extension_loaded('zlib')) { 
+				ob_start(); 
+				ob_implicit_flush(0);
+			}else{
+				ob_start( "ob_gzhandler" );
+			}
 		} //getSettings( "compress" )
 		$this->urlP = urlPath();
 		$this->loadStyles();
@@ -67,7 +72,8 @@ class STYLES extends CONTROLLER {
 							else {
 								$themepath .= "/general";
 							}
-							$themepath = "http://" . end( explode( "http://", $themepath ) );
+							$themepath  = explode( "http://", $themepath );
+							$themepath = "http://" . end( $themepath );
 							$css .= ( str_replace( array("iepngfix/","images/","../" ), array( str_replace( array("/index.php/","/index.php","index.php/"), "", $this->urlP ) . "index.php/iepngfix/", $themepath . "/images/","" ), file_get_contents( rtrim( $dir, "/" ) . "/" . $value ) ) );
 						}
 					} //stripos( $value, ".css" ) !== false && strpos( $value, "._" ) === false && stripos( $value, "cms.css" ) === false && stripos( $value, "edits.css" ) === false && stripos( $value, "mobile.css" ) === false

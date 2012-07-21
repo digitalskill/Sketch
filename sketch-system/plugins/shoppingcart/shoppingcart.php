@@ -26,7 +26,9 @@ class SHOPPINGCART extends PLUGIN {
 			}
 		}else{
 	    	if(isset($_GET['status']) && isset($_GET['chk']) && sketch("menu_guid")==$this->e("checkoutpage")){
-				$invoiceID = intval(end(explode("-",$_GET['status'])));
+				$tmp 		= explode("-",$_GET['status']);
+				$tmp 		= end( $tmp );
+				$invoiceID 	= intval($tmp);
 				$r = getData("invoice","*","invoice_id=".intval($invoiceID));
 				if($r->advance()){
 					if($r->response_code==="0" && md5(intval(memberid())."-".$r->invoice_id)==$_GET['chk'] || adminCheck()){
@@ -90,7 +92,7 @@ class SHOPPINGCART extends PLUGIN {
 		$this->display();
     }
 
-    function filter($args){
+    function filter($args=''){
 		if(isset($args['currency'])){
 		   echo $this->e("currency");
 		}else{

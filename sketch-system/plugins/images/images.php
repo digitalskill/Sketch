@@ -152,8 +152,10 @@ class IMAGES extends PLUGIN {
 		ksort($alli);
 		?>
 	    <ul>
-<?php foreach ($alli as $key => $value) { ?>
-    		<li class="<?php if ($count == 0) { ?>current<?php } ?> input">Images/<?php echo end(explode("sketch-images" . $sketch->slash, $key)); ?></li>
+<?php foreach ($alli as $key => $value) { 
+		$tmp = explode("sketch-images" . $sketch->slash, $key);
+			?>
+    		<li class="<?php if ($count == 0) { ?>current<?php } ?> input">Images/<?php echo end( $tmp ); ?></li>
 <?php
 		    $count++;
 		}
@@ -183,14 +185,22 @@ class IMAGES extends PLUGIN {
             <div class="accord-body" style="clear:both">
 	    		<div class="accord-container" style="height:300px;width:95%;padding:5px;">
 		    		<div class="inner_upload">
-					<input type="file" rel="{types:'*.jpg;*.gif;*.png;',upload_url:'<?php echo str_replace("index.php/","", urlPath("/sketch-upload/upload.php")); ?>',params:{folder:'sketch-images<?php echo rtrim(str_replace("//","/",end(explode("sketch-images", $key))),"/"); ?>/',PHPSESSID:'<?php echo session_id(); ?>'}}"/>
+                    <?php
+						$tmp = explode("sketch-images", $key);
+						$tmp = end( $tmp );
+					?>
+					<input type="file" rel="{types:'*.jpg;*.gif;*.png;',upload_url:'<?php echo str_replace("index.php/","", urlPath("/sketch-upload/upload.php")); ?>',params:{folder:'sketch-images<?php echo rtrim(str_replace("//","/", $tmp ),"/"); ?>/',PHPSESSID:'<?php echo session_id(); ?>'}}"/>
 		    		</div>
             	</div>
             </div>
             <a class="accord-title button" style="width:92%;float:left;display:block"><span class="icons downarrow"></span>Standard Upload</a>
             <div class="accord-body" style="clear:both">
 	    		<div class="accord-container" style="width:95%;padding:5px;">
-            		<iframe frameborder="0" src="<?php echo urlPath("frameup"); ?>?folder=<?php echo urlencode("sketch-images". rtrim(str_replace("//","/",end(explode("sketch-images", $key))),"/")); ?>/" height="250" width="100%" scrolling="no"></iframe>
+                	<?php 
+					$tmp = explode("sketch-images", $key);
+					$tmp = end ( $tmp );		
+					?>
+            		<iframe frameborder="0" src="<?php echo urlPath("frameup"); ?>?folder=<?php echo urlencode("sketch-images". rtrim(str_replace("//","/", $tmp ),"/")); ?>/" height="250" width="100%" scrolling="no"></iframe>
             	</div>
             </div>
 		</div>
@@ -198,8 +208,11 @@ class IMAGES extends PLUGIN {
 		    if (count($value) > 0) {
 			foreach ($value as $k => $v) {
 			    if (isset($v['details']['width'])) {
-				$subcount++; ?>
-	    		<div class="admin_image" rel="<?php echo end(explode($sketch->slash, $k)); ?>" id="admin_image<?php echo $subcount; ?>">
+				$subcount++; 
+					$tmp = explode($sketch->slash, $k);
+					$tmp = end( $tmp );
+				?>
+	    		<div class="admin_image" rel="<?php echo $tmp; ?>" id="admin_image<?php echo $subcount; ?>">
 		    <?php
 				$w = $v['details']['width'];
 				$h = $v['details']['height'];
@@ -227,8 +240,11 @@ class IMAGES extends PLUGIN {
  ?>
 		    			<a href="<?php echo urlPath("admin"); ?>/admin_plugin_<?php echo $this->settings['name']; ?>?remove=<?php echo $k; ?>&item=admin_image<?php echo $subcount; ?>" class="button negative ajaxlink output:'admin_image<?php echo $subcount; ?>'">Delete</a>
 	    <?php } else {
- ?>&nbsp;<?php } ?>
- 						<div><a href="<?php echo urlPath('cropmyimage'); ?>?image=<?php echo end(explode("sketch-images/",$k)); ?>" class="button positive popup iframe:true width:<?php echo ($v['details']['width'] > 270)? $v['details']['width'] + 40 : 270+40;?> height:<?php echo ($v['details']['height']) + 130; ?>" style="color:#778899;margin-left:-2px;border:none;">Edit Image</a></div>
+ ?>&nbsp;<?php } 
+ 						$tmp = explode("sketch-images/",$k);
+						$tmp = end ( $tmp );
+ ?>
+ 						<div><a href="<?php echo urlPath('cropmyimage'); ?>?image=<?php echo $tmp; ?>" class="button positive popup iframe:true width:<?php echo ($v['details']['width'] > 270)? $v['details']['width'] + 40 : 270+40;?> height:<?php echo ($v['details']['height']) + 130; ?>" style="color:#778899;margin-left:-2px;border:none;">Edit Image</a></div>
 		    			<div>Width:  <?php echo $v['details']['width']; ?>px</div>
 		    			<div>Height: <?php echo $v['details']['height']; ?>px</div>
 		    			<div>Used on:
@@ -236,8 +252,11 @@ class IMAGES extends PLUGIN {
 <?php echo $va . "<br />"; ?>
 	    <?php } ?></div>
 		    		    </div>
-                        <?php } ?>
-		    		    <div class="image_name"><?php echo str_ireplace(array("_", "-", ".jpg", ".png", ".gif", ".jpg"), " ", end(explode("/", $k))); ?></div>
+                        <?php } 
+							$tmp = explode("/", $k);
+							$tmp = end( $tmp );
+						?>
+		    		    <div class="image_name"><?php echo str_ireplace(array("_", "-", ".jpg", ".png", ".gif", ".jpg"), " ", $tmp ); ?></div>
 		    		</div>
 <?php
 			    }
@@ -296,7 +315,11 @@ class IMAGES extends PLUGIN {
             <div class="accord-body" style="clear:both;">
 	    		<div class="accord-container" style="height:300px;width:95%;padding:5px">
 		    		<div class="inner_upload">
-					<input type="file" rel="{types:'*.pdf;*.doc;*.docx;*.ppt;*.flv;*.swf;*.mp3;*.wav;*.dot;*.xls;',upload_url:'<?php echo str_replace("index.php/","", urlPath("/sketch-upload/upload.php")); ?>',params:{folder:'sketch-files<?php echo rtrim(str_replace("//","/",end(explode("sketch-files", $key))),"/"); ?>/',PHPSESSID:'<?php echo session_id(); ?>'}}"/>
+                    <?php
+						$tmp = explode("sketch-files", $key );
+						$tmp = end( $tmp );
+					?>
+					<input type="file" rel="{types:'*.pdf;*.doc;*.docx;*.ppt;*.flv;*.swf;*.mp3;*.wav;*.dot;*.xls;',upload_url:'<?php echo str_replace("index.php/","", urlPath("/sketch-upload/upload.php")); ?>',params:{folder:'sketch-files<?php echo rtrim(str_replace("//","/", $tmp ),"/"); ?>/',PHPSESSID:'<?php echo session_id(); ?>'}}"/>
 		    		</div>
             	</div>
             </div>
@@ -304,7 +327,11 @@ class IMAGES extends PLUGIN {
             <a class="accord-title button" style="width:92%;float:left;display:block"><span class="icons downarrow"></span>Standard Upload</a>
             <div class="accord-body" style="clear:both">
 	    		<div class="accord-container" style="width:95%;padding:5px;">
-            		<iframe frameborder="0" src="<?php echo urlPath("frameup"); ?>?folder=<?php echo urlencode("sketch-files". rtrim(str_replace("//","/",end(explode("sketch-files", $key))),"/")); ?>/" height="250" width="100%" scrolling="no"></iframe>
+                <?php
+					$tmp = explode("sketch-files", $key );
+					$tmp = end ($tmp );
+				?>
+            		<iframe frameborder="0" src="<?php echo urlPath("frameup"); ?>?folder=<?php echo urlencode("sketch-files". rtrim(str_replace("//","/", $tmp ),"/")); ?>/" height="250" width="100%" scrolling="no"></iframe>
             	</div>
             </div>
 		</div>
@@ -313,7 +340,9 @@ class IMAGES extends PLUGIN {
 				foreach ($value as $k => $v) {
 				    if (is_file($k)) {
 					$subcount++;
-					$theRel = trim(end(explode($sketch->slash, $k)));
+					$tmp = explode($sketch->slash, $k);
+					$tmp = end( $tmp );
+					$theRel = trim($tmp);
 					if ($theRel != "") {
  ?>
 						<div class="admin_image" rel="<?php echo $theRel; ?>" id="admin_file<?php echo $subcount; ?>">

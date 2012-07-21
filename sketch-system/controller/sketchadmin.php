@@ -10,8 +10,11 @@ class sketchADMIN extends CONTROLLER{
                    <?php } 
                   exit();
                 }
-                list($page,) = explode(".",end(explode("/",$page)));
-		$name = end(explode("_",$page));
+				$tmp = explode("/", $page );
+				$tmp = end( $tmp );
+                list($page,) = explode(".", $tmp );
+				$tmp  = explode("_", $page );
+				$name = end( $tmp );
 		if(strpos($page,"admin") !== false && adminCheck()){ 					// If the plugin is being updated via an admin call
 			if(!isset($sketch->plugins[$name])){
 				$sketch->registerPlugin(array("name"=>$name));

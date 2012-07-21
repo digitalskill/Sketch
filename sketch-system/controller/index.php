@@ -65,8 +65,10 @@ class INDEX extends CONTROLLER{
 		plugin("templates");
     	list($page,) = explode(".",$page);
 		if(sketch("nativePage")==false || !sketch("db") || isset($_REQUEST['single'])){
-		  list($url,) = explode("?",end(explode("/",$page)));
-		  $this->loadView($url);
+			$tmp = explode("/",$page);
+			$tmp = end( $tmp );
+		  	list($url,) = explode("?",$tmp);
+		  	$this->loadView($url);
 		}else{
 		  helper("minifyhtml");
 		  if(sketch("page_type")=="product"){

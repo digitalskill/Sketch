@@ -141,7 +141,12 @@ class sketch {
 				$this->outputHeaders();
 				$this->loadController( "plugin" );
 				if ( getSettings( "compress" ) ) {
-					ob_start( "ob_gzhandler" );
+					if (extension_loaded('zlib')) { 
+						ob_start(); 
+                        ob_implicit_flush(0);
+					}else{
+						ob_start( "ob_gzhandler" );
+					}
 				} //getSettings( "compress" )
 				if ( $this->page_cache == 1 && !adminCheck() && !isset( $_REQUEST[ 'admin' ] ) && !isset( $_REQUEST[ 'adminlogin' ] ) && !$this->mobile ) {
 					helper( "cache" );
@@ -294,7 +299,9 @@ class sketch {
 			}
 			if ( $isfound ) {
 				if ( $this->settings[ 'directory' ] == true && $this->settings[ 'ignore' ] == "" ) {
-					$this->settings[ 'ignore' ] = end( explode( "/", trim( $r->result[ 'main_site_url' ], "/" ) ) );
+					$tmp_url = trim( $r->result[ 'main_site_url' ], "/" );
+					$tmp_url = explode( "/", $tmp_url );
+					$this->settings[ 'ignore' ] = end( $tmp_url );
 				} //$this->settings[ 'directory' ] == true && $this->settings[ 'ignore' ] == ""
 				$settings_row                   = $r->result;
 				$this->settings[ 'dbsettings' ] = $settings_row;
@@ -367,7 +374,9 @@ class sketch {
 			"",
 			"" 
 		), $path );
-		$path       = trim( end( explode( $_SERVER[ 'HTTP_HOST' ], $path ) ) );
+		$path 		= explode( $_SERVER[ 'HTTP_HOST' ], $path );
+		$path       = end( $path );
+		$path		= trim( $path );
 		$path       = str_ireplace( $this->settings[ 'ignore' ], "", $path );
 		$path       = ltrim( rtrim( $path, "/" ), "/" );
 		$this->page = trim( $path ) . ".php";
@@ -443,7 +452,8 @@ class sketch {
 			$this->loadController( "sketchadmin" );
 		} //strpos( $_SERVER[ 'REQUEST_URI' ], "/admin/" ) !== false
 		else {
-			$this->page = end( explode( "/", $this->page ) );
+			$this->page = explode( "/", $this->page );
+			$this->page = end( $this->page );
 			if ( $this->nativePage ) {
 				@list( $y, $m, $d ) = explode( "-", $this->page_date );
 				@list( $ey, $em, $ed ) = explode( "-", $this->page_expiry );
@@ -584,7 +594,12 @@ class sketch {
 	}
 	function loadError( $error = "404" ) {
 		@ob_end_clean();
-		@ob_start( "ob_gzhandler" );
+		if (extension_loaded('zlib')) { 
+			ob_start(); 
+			ob_implicit_flush(0);
+		}else{
+			ob_start( "ob_gzhandler" );
+		}
 		switch ( $error ) {
 			case "404":
 				header( "HTTP/1.0 404 Not Found" );
@@ -636,7 +651,9 @@ class sketch {
 		} //$error
 	}
 	function loadController( $controller = "index" ) {
-		list( $controller,  ) = explode( "?", end( explode( "/", $controller ) ) );
+		$controller 			= explode( "/", $controller );
+		$controller				= end( $controller );
+		list( $controller,  ) = explode( "?", $controller );
 		$controller = strtolower( trim( str_replace( ".php", "", $controller ) ) );
 		$controller = strtolower( ( $controller == "" ) ? "index" : $controller );
 		if ( !class_exists( "CONTROLLER" ) ) {
@@ -753,12 +770,14 @@ class sketch {
 		), $this->slash, $directory );
 		if ( is_dir( $directory ) && stripos( $directory, "_notes" ) === false ) {
 			$direc = scandir( $directory );
-			if ( $direc ) {
+			$dircArray = is_array($direc) ? true : false;
+			if ( $dircArray ) {
 				natcasesort( $direc );
 				foreach ( $direc as $key => $file ) {
 					if ( !preg_match( '~^\.~', $file ) ) {
 						if ( stripos( $file, ".jpg" ) !== false || stripos( $file, ".gif" ) !== false || stripos( $file, ".png" ) !== false ) {
-							$ikey                             = end( explode( "sketch-images" . $this->slash, $directory ) );
+							$tmp							  = explode( "sketch-images" . $this->slash, $directory );
+							$ikey                             = end( $tmp );
 							$ikey                             = str_replace( $this->slash . $this->slash, $this->slash, "sketch-images" . $this->slash . $ikey . $this->slash . ltrim( $file, "/" ) );
 							$ikey                             = str_replace( $this->slash, "/", $ikey );
 							$allImages[ $directory ][ $ikey ] = array( );
@@ -822,7 +841,8 @@ class sketch {
 				foreach ( $direc as $key => $file ) {
 					if ( !preg_match( '~^\.~', $file ) ) {
 						if ( is_file( $directory . $this->slash . $file ) && stripos( $directory . $file, "_notes" ) === false ) {
-							$ikey                                         = end( explode( "sketch-files" . $this->slash, $directory ) );
+							$tmp										  = explode( "sketch-files" . $this->slash, $directory );
+							$ikey                                         = end( $tmp );
 							$ikey                                         = str_replace( $this->slash . $this->slash, $this->slash, "sketch-files" . $this->slash . $ikey . $this->slash . ltrim( $file, $this->slash ) );
 							$ikey                                         = str_replace( $this->slash, "/", $ikey );
 							$allImages[ $directory ][ $ikey ]             = array( );
@@ -861,7 +881,8 @@ class sketch {
 		$allImages = array( );
 		$directory = $this->sketchPath . "plugins" . $this->slash;
 		$direc     = scandir( $directory );
-		if ( $direc && is_array( $direc ) ) {
+		$dirArray  = is_array($direc) ? true : false; 
+		if ( $dirArray ) {
 			foreach ( $direc as $key => $value ) {
 				if ( !preg_match( '~^\.~', $value ) && is_dir( $directory . $this->slash . $value ) ) {
 					$allImages[ $value ] = $value;

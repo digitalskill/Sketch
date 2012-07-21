@@ -41,8 +41,8 @@ class AUTOLIST extends PLUGIN {
 			$panel_q = getData($tables,"*",$ptag);
 			@include(loadView("listernews",false,true));
 			
-			
-			$SQL = end(explode("FROM",$panel_q->query));
+			$tmp = explode("FROM",$panel_q->query);
+			$SQL = end( $tmp );
 				list($SQL,) = explode("limit",strtolower($SQL));
 				$rowC = ACTIVERECORD::keeprecord("SELECT count(sketch_menu_id) as recordAmount FROM " .$SQL);
 				$rowC->advance();
@@ -98,7 +98,8 @@ class AUTOLIST extends PLUGIN {
 		if(sketch("page_type")=="blogl"){
 			$panel_q = getData($tables,"*","menu_under = ".intval(sketch("sketch_menu_id"))." AND page_type='blog' ".$ptag,"");
 				@include(loadView("listerblog",false,true));
-				$SQL = end(explode("FROM",$panel_q->query));
+				$tmp = explode("FROM",$panel_q->query);
+				$SQL = end( $tmp );
 				list($SQL,) = explode("limit",strtolower($SQL));
 				$rowC = ACTIVERECORD::keeprecord("SELECT count(sketch_menu_id) as recordAmount FROM " .$SQL);
 				$rowC->advance();

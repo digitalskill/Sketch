@@ -50,13 +50,8 @@ var Ajaxlinks = new Class({
 				$(this.options.output).getElement("form").fireEvent("removeMCE");
 				
 			}
-			$(this.options.output).empty();
-			var newajaxLink = $(this.options.output).clone();
-			$(newajaxLink).inject($(this.options.output),"before");
-			$(this.options.output).destroy();
-			$(newajaxLink).set("id",this.options.output);
 			var data = this.options.url.split("?");
-			$(newajaxLink).set("load",{onComplete:this.unspin.bind(this),method:'post','data':data[1]});
+			$(this.options.output).set("load",{'url':'',onComplete:this.unspin.bind(this),method:'post','data':data[1]});
 			if(this.options.overlay){
 				$(this.options.output).spin();
 			}

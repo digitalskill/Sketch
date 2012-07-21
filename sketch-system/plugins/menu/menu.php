@@ -112,7 +112,7 @@ class MENU extends PLUGIN {
     function display($args) {     // [ REQUIRED ]
     }
 
-    function showDisplay() {      // [ OVERRIDE ]
+    function showDisplay($area="") {      // [ OVERRIDE ]
 		echo $this->buildMenu(0);
     }
 
@@ -146,6 +146,9 @@ class MENU extends PLUGIN {
 				}
 			} else {
 				if(isset($args['select'])){
+					if(!isset($args['id'])){
+						$args['id'] = sketch("sketch_menu_id");	
+					}
 					$type = isset($args['type'])? $args['type'] : "sketch_menu_id";
 					if(!isset($this->searchMenus[$args['id'].$type])){
 						$this->searchMenus[$args['id'].$type] = $this->createSelect(0,$args['id'],$type);

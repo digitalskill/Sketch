@@ -41,7 +41,7 @@ class USERS extends PLUGIN {
 	$this->showForm();
     }
 
-    function showDisplay() {    // [ OVERRIDE ]
+    function showDisplay($area='') {    // [ OVERRIDE ]
     }
 
     function display() {     // [ REQUIRED ] 		// outputs to the page
