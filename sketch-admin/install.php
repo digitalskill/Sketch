@@ -103,7 +103,11 @@ if(isset($_POST['install'])){
 		}
 		$SQL = "INSERT INTO ".$site_settings['prefix']."users (user_login,user_password,is_super) VALUES('".mysql_real_escape_string($_POST['user_login'])."','".mysql_real_escape_string(secureit($_POST['user_password'],false,stripslashes(trim($_POST['salt']))))."',1)";
 		mysql_query($SQL,$db) or die(mysql_error());
-		$SQL = "INSERT INTO ".$site_settings['prefix']."sketch_settings (sketch_settings_id,global_update,theme_path,main_site_url) VALUES (1,now(),'".mysql_real_escape_string(trim($_POST['theme_path']))."','".mysql_real_escape_string(end(explode("www.",$_POST['main_site_url'])))."')";
+		
+		$tmp = explode("www.",$_POST['main_site_url']);
+		$tmp = end( $tmp );
+		
+		$SQL = "INSERT INTO ".$site_settings['prefix']."sketch_settings (sketch_settings_id,global_update,theme_path,main_site_url) VALUES (1,now(),'".mysql_real_escape_string(trim($_POST['theme_path']))."','".mysql_real_escape_string( $tmp )."')";
 		mysql_query($SQL,$db) or die(mysql_error());
 		$r = true;
 	}
