@@ -26,7 +26,6 @@ while($panel_q->advance()){
     		 <div class="infor"><span class="date">Average rating: <?php echo number_format($r->rating,0); ?></span></div>
         <?php } ?>
     	<a href="<?php echo urlPath($panel_q->menu_guid); ?>" class="button" style="display:block;width:80%"><span class="icons magnifier"></span>View Product</a>
-        <a class="button" style="display:block;width:80%" href="<?php echo urlPath($panel_q->menu_guid); ?>?product=<?php echo $panel_q->page_id; ?>&quantity=<?php echo getItemAmount($panel_q->page_id) > 0? getItemAmount($panel_q->page_id) : 1; ?>"><span class="icons check"></span>Buy Now</a>
     </div>
   </li>
 <?php

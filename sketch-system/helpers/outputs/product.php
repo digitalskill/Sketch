@@ -69,11 +69,13 @@ $comments->advance();
 <?php } ?>
 	</div>
     	<div class="comment-form one-half last">
+        
+<?php if(sketch("product_stock") != 0){ ?>
 <form action="<?php echo urlPath(sketch("menu_guid")); ?>" method="post" class="required" id="productform">
 <ul class="forms">
 <li>
   <input type="hidden" value="<?php echo sketch("page_id"); ?>" name="product" />
-  <label>Amount</label> <input type="text" size="3" name="quantity" id="quantity" class="required integer" value="<?php echo getItemAmount(sketch("page_id")); ?>" />
+  <label>Amount</label> <input type="text" size="3" name="quantity" id="quantity" title="Please update the stock amount" class="required integer minValue:1 <?php if(sketch("product_stock") != '-1'){?>maxValue:<?php echo intval(sketch("product_stock"));  }?>" value="" />
 </li>
 <li>  
   <?php if(sketch("product_size") != ""){ ?>
@@ -81,7 +83,7 @@ $comments->advance();
                 	<select name="size" class="bgClass:'select_bg'">
                     	<?php $allSizes = explode(",",sketch("product_size")); 
 								foreach($allSizes as $key => $value){ ?>
-                    			<option value="<?php echo $value; ?>" <?php if(getProductSize(sketch("page_id"))==$value){?>selected="selected"<?php } ?>><?php echo $value; ?></option>
+                    			<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
                                 <?php } ?>
                     </select>
                 <?php } ?>
@@ -92,16 +94,19 @@ $comments->advance();
                 	<select name="color" class="bgClass:'select_bg'">
                     	<?php $allSizes = explode(",",sketch("product_color")); 
 								foreach($allSizes as $key => $value){ ?>
-                    			<option value="<?php echo $value; ?>" <?php if(getProductColour(sketch("page_id"))==$value){?>selected="selected"<?php } ?>><?php echo $value; ?></option>
+                    			<option value="<?php echo $value; ?>"><?php echo $value; ?></option>
                                 <?php } ?>
                     </select>
                 <?php } ?>
                 </li>
                 <li>
-  <button class="button" onclick="new Event(event).stop(); if($('quantity').get('value')==0){ $('quantity').set('value',1);} $('productform').submit();"><span class="icons plus"></span>Buy Now</button>
+  <button class="button" type="submit" onclick="if($('quantity').get('value')==0){ $('quantity').set('value',1);}"><span class="icons plus"></span>Buy Now</button>
 </li>
 </ul>
 </form>
+<?php }else{?>
+	<h3>Product is out of stock</h3>
+<?php } ?>
 </div>
 	
   <div class="top-border" style="clear:both";></div>
@@ -114,7 +119,7 @@ $comments->advance();
 			$counter = 0;
 			while($r->advance()){
           		echo $counter > 0? ", " : ""; ?>
-  <a href="<?php echo urlPath(sketch("menu_guid"));?>?tag=<?php echo urlencode($r->tag_name); ?>" title=""><?php echo $r->tag_name; ?></a>
+  					<a href="<?php echo urlPath(sketch("menu_guid"));?>?tag=<?php echo urlencode($r->tag_name); ?>" title=""><?php echo $r->tag_name; ?></a>
   <?php 
 				$counter++;
 				}

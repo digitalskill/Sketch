@@ -31,8 +31,8 @@
 <a class="accord-title button"><span class="icons downarrow"></span>Product Information</a>
 <div class="accord-body">
     <div class="accord-container">
-        <label>Product In Stock</label>
-        <input type="text" name="product_stock" class="integer" value="<?php echo sketch( "product_stock" ); ?>">
+        <label>Product In Stock (enter in '-1' to make stock always avaialble)</label>
+        <input type="text" name="product_stock" class="" value="<?php echo sketch( "product_stock" ); ?>">
         <label>Product Weight</label>
         <input type="text" name="product_weight" class="decimal" value="<?php echo sketch( "product_weight" ); ?>">
         <label>Product Price</label>

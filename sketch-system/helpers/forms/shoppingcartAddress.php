@@ -16,7 +16,7 @@ if(getProducts()){
  <?php if(!memberid() && $this->e("members")!= ""){?>
     <div style="float:right;width:35%">
     <h5>Already a member?</h5>
-    <p><a href="<?php echo urlPath("membership");?>" class="button"><span class="icons user"></span>Login to your account</a></p>
+    <p><a href="<?php echo urlPath($this->e("members"));?>" class="button"><span class="icons user"></span>Login to your account</a></p>
       </div>
 <?php }
 	if($errorMessage != ''){
@@ -64,7 +64,8 @@ if(getProducts()){
 	<?php } ?>
     </li>
     <li>
-	<label>&nbsp;</label><a href="<?php echo urlPath(sketch("menu_guid")); ?>" class="button pill bleft" style="padding-bottom: 3px;"><span class="icons leftarrow"></span>Back to Cart</a>
+	<label>&nbsp;</label>
+    <button onclick="window.location='<?php echo urlPath(sketch("menu_guid")); ?>';"	class="button pill bleft" type="button"><span class="icons leftarrow"></span>Back to Cart</button>
     <button type="submit" class="button pill bright positive primary" name="continue" style="margin-left:0;"><span class="icons rightarrow"></span>Continue</button>
     </li>
     </ul>

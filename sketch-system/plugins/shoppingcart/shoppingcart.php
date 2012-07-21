@@ -12,70 +12,70 @@ class SHOPPINGCART extends PLUGIN {
 	return $new;
     }
     function display() {		    // [ REQUIRED ]
-	global $_GET;
-	$products = "";
-	if(addProduct()){
-	    header("Location:".urlPath($this->e("checkoutpage")));
-	    exit();
-	}
-	if(isset($_GET['result']) || isset($_GET['token'])){
-	    if(isset($_GET['result'])){
-		$this->pxReceipt();
-	    }else{
-		$this->payPalConfirm();
-	    }
-	}else{
-	    if(isset($_GET['status']) && isset($_GET['chk']) && sketch("menu_guid")==$this->e("checkoutpage")){
-		$invoiceID = intval(end(explode("-",$_GET['status'])));
-		$r = getData("invoice","*","invoice_id=".intval($invoiceID));
-		if($r->advance()){
-		    if($r->response_code==="0" && md5(intval(memberid())."-".$r->invoice_id)==$_GET['chk'] || adminCheck()){
-		      clearShoppingCart();
-		      $showReceipt	= true;
-		      $deliveryInfo	= unserialize($r->invoice_details);
-		      $products	= $deliveryInfo['itembreakdown'];
-		      $internetBanking = trim($r->invoice_response)=="INTERNET BANKING REQUEST"? true : false;
-		      unset($deliveryInfo['itembreakdown']);
-		      @include(loadForm("shoppingcartPayment",false));
-		    }else{
-			if(md5(intval(memberid())."-".$r->invoice_id)==$_GET['chk']){
-			    $errorMessage = "Sorry - you must be logged in to view your order.";
-			}else{
-			    $errorMessage = "Sorry - your payment was not approved.<br />Reason:".$r->invoice_response."</p>";
-			}
-		    }
+		global $_GET;
+		$products = "";
+		if(addProduct()){
+			header("Location:".urlPath($this->e("checkoutpage")));
+			exit();
 		}
-	    }else{
-		if(sketch("menu_guid")==$this->e("checkoutpage")){
-		    if(isset($_POST['payonline']) || isset($_POST['banktransfer'])){
-			if(isset($_POST['payonline'])){
-				$this->pay();
+		if(isset($_GET['result']) || isset($_GET['token'])){
+			if(isset($_GET['result'])){
+				$this->pxReceipt();
 			}else{
-			    if(isset($_POST['banktransfer'])){
-				$this->bankTransfer();
-			    }
+				$this->payPalConfirm();
 			}
-		    }else{
+		}else{
+	    	if(isset($_GET['status']) && isset($_GET['chk']) && sketch("menu_guid")==$this->e("checkoutpage")){
+				$invoiceID = intval(end(explode("-",$_GET['status'])));
+				$r = getData("invoice","*","invoice_id=".intval($invoiceID));
+				if($r->advance()){
+					if($r->response_code==="0" && md5(intval(memberid())."-".$r->invoice_id)==$_GET['chk'] || adminCheck()){
+					  clearShoppingCart();
+					  $showReceipt	= true;
+					  $deliveryInfo	= unserialize($r->invoice_details);
+					  $products	= $deliveryInfo['itembreakdown'];
+					  $internetBanking = trim($r->invoice_response)=="INTERNET BANKING REQUEST"? true : false;
+					  unset($deliveryInfo['itembreakdown']);
+					  @include(loadForm("shoppingcartPayment",false));
+					}else{
+					if(md5(intval(memberid())."-".$r->invoice_id)==$_GET['chk']){
+						$errorMessage = "Sorry - you must be logged in to view your order.";
+					}else{
+						$errorMessage = "Sorry - your payment was not approved.<br />Reason:".$r->invoice_response."</p>";
+					}
+		    	}
+			}
+	    }else{
+			if(sketch("menu_guid")==$this->e("checkoutpage")){
+		    	if(isset($_POST['payonline']) || isset($_POST['banktransfer'])){
+					if(isset($_POST['payonline'])){
+						$this->pay();
+					}else{
+			    		if(isset($_POST['banktransfer'])){
+							$this->bankTransfer();
+			    		}
+					}
+		    	}else{
 			if(isset($_POST['continue'])){
 			    helper("validate");
 			    $form = VALIDATE::loadForm("shoppingcartAddress");
 			    if($form->processForm($_POST)){
-				saveDeliveryInfo($form->getCleanedValues());
+					saveDeliveryInfo($form->getCleanedValues());
 					@include(loadForm("shoppingcartPayment",false));
 			    }else{
-				$errorMessage = $form->getError();
+					$errorMessage = $form->getError();
 			       @include(loadForm("shoppingcartAddress",false));
 			    }
 			}else{
-			    if(isset($_POST['checkout'])){
-				if($this->e("cctypes")=="paypal"){
-				    $this->startPayPal();
-				}else{
-				    if(is_array(getDeliveryInfo())){
-					$_POST = getDeliveryInfo();
-				    }
-				    @include(loadForm("shoppingcartAddress",false));
-				}
+			    if(isset($_POST['docheckout']) || isset($_POST['checkout'])){
+					if($this->e("cctypes")=="paypal" && isset($_POST['checkout'])){
+				    	$this->startPayPal();
+					}else{
+				    	if(is_array(getDeliveryInfo())){
+							$_POST = getDeliveryInfo();
+				    	}
+				    	@include(loadForm("shoppingcartAddress",false));
+					}
 			    }else{
 					@include(loadView("shoppingcartCheckout",false,true));
 			    }
@@ -116,22 +116,38 @@ class SHOPPINGCART extends PLUGIN {
     }
 
     function bankTransfer(){
-	$itemBreakDown['itembreakdown'] = sessionGet('itembreakdown');
-	$ItemBreakdown['sizes']		= (array)sessionGet("sizes");
-	$ItemBreakdown['colors']	= (array)sessionGet("color");
-	$deliveryInfo		    	= (array)getDeliveryInfo();
-	$data			    		= array();
-	$data['page_id']	    	= intval(memberid());
-	$data['invoice_details']    = serialize(array_merge($itemBreakDown,$deliveryInfo));
-	$data['amount']		    	= floatval($itemBreakDown['itembreakdown']['amount']);
-	$data['invoice_date']	    = date("Y-m-d H:i:s");
-	$data['response_code']	    = 0;
-	$data['invoice_response']   = "INTERNET BANKING REQUEST";
-	$r			    = ACTIVERECORD::keeprecord(insertDB("invoice",$data));
-	if($r){
-	    $iid = lastInsertId();
-	    $this->email_notice($iid);
-	}
+		$itemBreakDown['itembreakdown'] = sessionGet('itembreakdown');
+		$deliveryInfo		    	= (array)getDeliveryInfo();
+		$data			    		= array();
+		$data['page_id']	    	= intval(memberid());
+		$data['invoice_details']    = serialize(array_merge($itemBreakDown,$deliveryInfo));
+		$data['amount']		    	= floatval($itemBreakDown['itembreakdown']['amount']);
+		$data['invoice_date']	    = date("Y-m-d H:i:s");
+		$data['response_code']	    = 0;
+		$data['invoice_response']   = "INTERNET BANKING REQUEST";
+		
+		
+		foreach($itemBreakDown['itembreakdown'] as $key => $value){
+			list($id,$size,$color) = explode(":",$key);
+			$qty = $value[0];	
+			$updated = getData("sketch_page","content","page_id=".intval($id));
+			$updated->advance();
+			$c = contentToArray($updated->content);
+			$amountLeft = intval($c['product_stock']) - intval($qty) >= 0 ? intval($c['product_stock']) - intval($qty) : 0;
+			if($c['product_stock'] != '-1'){
+				$updateqty = array();
+				$c['product_stock'] = intval($c['product_stock']) - intval($qty);
+				$updateqty['content'] 	= serialize($c);
+				$updateqty['edit'] 		= $updateqty['content'];
+				setData("sketch_page",$updateqty,"Where page_id=".intval($id));
+			}
+		}
+		
+		$r			    			= ACTIVERECORD::keeprecord(insertDB("invoice",$data));
+		if($r){
+			$iid = lastInsertId();
+			$this->email_notice($iid);
+		}
     }
     function email_notice($iid){
 	helper("email");
@@ -155,10 +171,11 @@ class SHOPPINGCART extends PLUGIN {
 							$itm_r = getData("sketch_page,sketch_menu","*",getSettings("prefix")."sketch_page.page_id=".intval($key));
 							if($itm_r){
 								$itm_r->advance();
-								$data['Item id: '.$key] = "Item Ordered: ".$itm_r->page_title.
+								list($id,$size,$color) = explode(":",$key);
+								$data['Item id: '.$id] = "Item Ordered: ".$itm_r->page_title.
 															"<br />Item Cost: $".number_format($value[1],2,'.',',').'($NZ)ea
-															 <br />Colour: '.@$items['colors'][$key].'
-															 <br />Size: '.@$items['sizes'][$key].'
+															 <br />Colour: '.$color.'
+															 <br />Size: '.$size.'
 															 <br />Amount Ordered: '.$value[0];
 								$totals += $value[1] * $value[0];
 							}
@@ -208,31 +225,27 @@ class SHOPPINGCART extends PLUGIN {
 	exit();
     }
     function pay(){
-	if($this->e("cctypes")=="dps"){
-	    $this->dpsRedirect();
-	}else{
-	    if($this->e("cctypes")=="paypal"){
-		$this->payPalConfirmed();
-	    }
-	}
+		if($this->e("cctypes")=="dps"){
+	    	$this->dpsRedirect();
+		}else{
+	    	if($this->e("cctypes")=="paypal"){
+				$this->payPalConfirmed();
+	    	}
+		}
     }
     function dpsRedirect(){
-	global $_POST;
-	helper("pxpay");
-	$itemBreakDown['itembreakdown'] = sessionGet("itembreakdown");
-	$ItemBreakdown['sizes']		= (array)sessionGet("sizes");
-	$ItemBreakdown['colors']	= (array)sessionGet("color");
-	$deliveryInfo			= (array)getDeliveryInfo();
+		global $_POST;
+		helper("pxpay");
+		$itemBreakDown['itembreakdown'] = sessionGet("itembreakdown");
+		$deliveryInfo			= (array)getDeliveryInfo();
+		$PxAccess_Url			= $this->e('vpcURL');
+		$PxAccess_Userid		= $this->e('vpc_Merchant');
+		$PxAccess_Key			= $this->e('secure_secret');
+		$Mac_Key				= substr($this->e('secure_secret'),strlen($this->e('secure_secret'))-16);
+		$pxaccess				= new PxAccess($PxAccess_Url, $PxAccess_Userid, $PxAccess_Key, $Mac_Key);
 
-	$PxAccess_Url			= $this->e('vpcURL');
-	$PxAccess_Userid		= $this->e('vpc_Merchant');
-	$PxAccess_Key			= $this->e('secure_secret');
-	$Mac_Key			= substr($this->e('secure_secret'),strlen($this->e('secure_secret'))-16);
-
-	$pxaccess			= new PxAccess($PxAccess_Url, $PxAccess_Userid, $PxAccess_Key, $Mac_Key);
-
-	$SQL	= "INSERT INTO ".getSettings("prefix")."invoice (page_id,invoice_details,amount,invoice_date) VALUES (".intval(memberid()).",'".serialize(array_merge($itemBreakDown,$deliveryInfo))."',".floatval($itemBreakDown['itembreakdown']['amount']).",'".date("Y-m-d :H:i:s")."')";
-	$r	= ACTIVERECORD::keeprecord($SQL);
+		$SQL	= "INSERT INTO ".getSettings("prefix")."invoice (page_id,invoice_details,amount,invoice_date) VALUES (".intval(memberid()).",'".serialize(array_merge($itemBreakDown,$deliveryInfo))."',".floatval($itemBreakDown['itembreakdown']['amount']).",'".date("Y-m-d :H:i:s")."')";
+		$r	= ACTIVERECORD::keeprecord($SQL);
 	if($r){
 	    $iid	    = lastInsertId();
 	    $request	    = new PxPayRequest();
@@ -263,9 +276,9 @@ class SHOPPINGCART extends PLUGIN {
 	$PxAccess_Url	    = $this->e('vpcURL'); //"https://www.paymentexpress.com/pxpay/pxpay.aspx";
 	$PxAccess_Userid    = $this->e('vpc_Merchant');
 	$PxAccess_Key	    = $this->e('secure_secret');
-	$Mac_Key	    = substr($this->e('secure_secret'),strlen($this->e('secure_secret'))-16);
-	$pxaccess	    = new PxAccess($PxAccess_Url, $PxAccess_Userid, $PxAccess_Key, $Mac_Key);
-	$enc_hex	    = $_GET["result"];
+	$Mac_Key	    	= substr($this->e('secure_secret'),strlen($this->e('secure_secret'))-16);
+	$pxaccess	    	= new PxAccess($PxAccess_Url, $PxAccess_Userid, $PxAccess_Key, $Mac_Key);
+	$enc_hex	    	= $_GET["result"];
 	#getResponse method in PxAccess object returns PxPayResponse object
 	#which encapsulates all the response data
 	$rsp = $pxaccess->getResponse($enc_hex);
@@ -298,15 +311,35 @@ class SHOPPINGCART extends PLUGIN {
 	$merchTxnRef 	   = $rsp->getMerchantReference();
 
 	$MerchantTxnId	   = $rsp->getMerchantTxnId();
-	$CardNumber	   = $rsp->getCardNumber();
-	$DateExpiry	   = $rsp->getDateExpiry();
+	$CardNumber	   		= $rsp->getCardNumber();
+	$DateExpiry	   		= $rsp->getDateExpiry();
 	$CardHolderName	   = $rsp->getCardHolderName();
 
-	$invoiceid	   = end(explode('-',$merchTxnRef));
+	$invoiceid	   		= end(explode('-',$merchTxnRef));
 
-	$SQL		   = "UPDATE ".getSettings("prefix")."invoice SET rrn=".sketch("db")->quote($receiptNo).",amount='".floatval($AmountSettlement)."', invoice_ref=".sketch("db")->quote($merchTxnRef).",invoice_response='".$result."', response_code='".$response_code."' WHERE invoice_id='".intval($invoiceid)."'";
-	$r		   = ACTIVERECORD::keeprecord($SQL,"invoice");
+	$SQL		   		= "UPDATE ".getSettings("prefix")."invoice SET rrn=".sketch("db")->quote($receiptNo).",amount='".floatval($AmountSettlement)."', invoice_ref=".sketch("db")->quote($merchTxnRef).",invoice_response='".$result."', response_code='".$response_code."' WHERE invoice_id='".intval($invoiceid)."'";
+	$r		   			= ACTIVERECORD::keeprecord($SQL,"invoice");
 	if($rsp->getSuccess()== "1"){
+		$invoi = getData("invoice","invoice_details","WHERE invoice_id='".intval($invoiceid)."'");
+		$invoi->advance();
+		$c = contentToArray($invoi->invoice_details);
+		foreach($c['itembreakdown'] as $key => $value){
+			if(isset($value[0]) && $value[0] > 0){
+				list($id,$size,$color) = explode(":",$key);
+				$qty = $value[0];	
+				$updated = getData("sketch_page","content","page_id=".intval($id));
+				$updated->advance();
+				$cin = contentToArray($updated->content);
+				$amountLeft = intval($cin['product_stock']) - intval($qty) >= 0 ? intval($cin['product_stock']) - intval($qty) : 0;
+				if($cin['product_stock'] != '-1'){
+					$data = array();
+					$cin['product_stock'] = intval($cin['product_stock']) - intval($qty);
+					$data['content'] 	= serialize($cin);
+					$data['edit'] 		= $data['content'];
+					setData("sketch_page",$data,"Where page_id=".intval($id));
+				}
+			}
+		}
 	    $this->email_notice($invoiceid);
 	    header("Location: ".urlPath(sketch("menu_guid"))."?status=".intval(memberid())."-".$invoiceid."&chk=".md5(intval(memberid())."-".$invoiceid));
 	    exit();
@@ -316,67 +349,65 @@ class SHOPPINGCART extends PLUGIN {
 	}
     }
     function startPayPal(){
-	helper("paypal");
-	$resArray		= CallShortcutExpressCheckout ($this->getPayPalDetails());
-	$ack			= strtoupper($resArray["ACK"]);
-	if($ack=="SUCCESS" || $ack=="SUCCESSWITHWARNING"){
-	    RedirectToPayPal ( $resArray["TOKEN"],$this->getPayPalDetails());
-	}else{
-	    $errorMessage =	 "PayPal API Call Failed.<br />Error Code: ". urldecode($resArray["L_ERRORCODE0"]);
-	    $errorMessage .=     "<br/>Error Message: ". urldecode($resArray["L_LONGMESSAGE0"]);
-	    $errorMessage .=     "<br/ >Severity Code: ". urldecode($resArray["L_SEVERITYCODE0"]);
-	    @include(loadView("shoppingcartCheckout",false,true));
-	}
+		helper("paypal");
+		$resArray		= CallShortcutExpressCheckout ($this->getPayPalDetails());
+		$ack			= strtoupper($resArray["ACK"]);
+		if($ack=="SUCCESS" || $ack=="SUCCESSWITHWARNING"){
+	    	RedirectToPayPal ( $resArray["TOKEN"],$this->getPayPalDetails());
+		}else{
+	    	$errorMessage =	 "PayPal API Call Failed.<br />Error Code: ". urldecode($resArray["L_ERRORCODE0"]);
+	    	$errorMessage .=     "<br/>Error Message: ". urldecode($resArray["L_LONGMESSAGE0"]);
+	    	$errorMessage .=     "<br/ >Severity Code: ". urldecode($resArray["L_SEVERITYCODE0"]);
+	    	@include(loadView("shoppingcartCheckout",false,true));
+		}
     }
     function getPayPalDetails(){
-	global $_SESSION;;
-	$extras			= array();
-	$extras['SandboxFlag']	= $this->e("payPalLive")== "yes" ? true : false;
-	$extras['API_Endpoint']	= ($this->e("payPalLive") == "yes") ? "https://api-3t.paypal.com/nvp" : "https://api-3t.sandbox.paypal.com/nvp";
-	$extras['API_UserName'] = $this->e("payPalUsername");
-	$extras['API_Password'] = $this->e("payPalPassword");
-	$extras['API_Signature']= $this->e("payPalSignature");
-	$extras['sBNCode']	= "PP-ECWizard";
-	$extras['USE_PROXY']	= false;
-	$extras['PROXY_HOST']	= '127.0.0.1';
-	$extras['PROXY_PORT']	= '808';
-	$extras['PAYPAL_URL']	= ($this->e("payPalLive") == "yes")  ? "https://www.paypal.com/webscr?cmd=_express-checkout&token=" : "https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&token=";
-	$extras['version']	= "64";
-	$extras['paymentAmount']= $_SESSION["paymentAmount"];
-	$extras['currencyCodeType'] = $this->e("payPalCurrencyCode","NZD");
-	$extras['paymentType']	= "Sale";
-	$extras['returnURL']	= urlPath(sketch("menu_guid"));
-	$extras['cancelURL']	= urlPath(sketch("menu_guid"));
-	$extras['TOKEN']	= sessionGet("token");
-	$extras['payer_id']	= sessionGet("payer_id");
-	return $extras;
+		global $_SESSION;
+		$extras					= array();
+		$extras['SandboxFlag']	= $this->e("payPalLive")== "yes" ? true : false;
+		$extras['API_Endpoint']	= ($this->e("payPalLive") == "yes") ? "https://api-3t.paypal.com/nvp" : "https://api-3t.sandbox.paypal.com/nvp";
+		$extras['API_UserName'] = $this->e("payPalUsername");
+		$extras['API_Password'] = $this->e("payPalPassword");
+		$extras['API_Signature']= $this->e("payPalSignature");
+		$extras['sBNCode']		= "PP-ECWizard";
+		$extras['USE_PROXY']	= false;
+		$extras['PROXY_HOST']	= '127.0.0.1';
+		$extras['PROXY_PORT']	= '808';
+		$extras['PAYPAL_URL']	= ($this->e("payPalLive") == "yes")  ? "https://www.paypal.com/webscr?cmd=_express-checkout&token=" : "https://www.sandbox.paypal.com/webscr?cmd=_express-checkout&token=";
+		$extras['version']		= "64";
+		$extras['paymentAmount']= $_SESSION["paymentAmount"];
+		$extras['currencyCodeType'] = $this->e("payPalCurrencyCode","NZD");
+		$extras['paymentType']	= "Sale";
+		$extras['returnURL']	= urlPath(sketch("menu_guid"));
+		$extras['cancelURL']	= urlPath(sketch("menu_guid"));
+		$extras['TOKEN']		= sessionGet("token");
+		$extras['payer_id']		= sessionGet("payer_id");
+		return $extras;
     }
     function payPalConfirmed(){
-	global $_SESSION;
-	helper("paypal");
-	$resArray = ConfirmPayment ($this->getPayPalDetails());
-	$ack = strtoupper($resArray["ACK"]);
+		global $_SESSION;
+		helper("paypal");
+		$resArray = ConfirmPayment ($this->getPayPalDetails());
+		$ack = strtoupper($resArray["ACK"]);
 	if( $ack == "SUCCESS" || $ack == "SUCCESSWITHWARNING" ){
 	    $itemBreakDown['itembreakdown'] = sessionGet("itembreakdown");
-		$ItemBreakdown['sizes']		= (array)sessionGet("sizes");
-		$ItemBreakdown['colors']	= (array)sessionGet("color");
 	    $deliveryInfo		    = (array)getDeliveryInfo();
-	    $transactionId	= @$resArray["PAYMENTINFO_0_TRANSACTIONID"];	// ' Unique transaction ID of the payment. Note:  If the PaymentAction of the request was Authorization or Order, this value is your AuthorizationID for use with the Authorization & Capture APIs.
+	    $transactionId		= @$resArray["PAYMENTINFO_0_TRANSACTIONID"];	// ' Unique transaction ID of the payment. Note:  If the PaymentAction of the request was Authorization or Order, this value is your AuthorizationID for use with the Authorization & Capture APIs.
 	    $transactionType 	= @$resArray["PAYMENTINFO_0_TRANSACTIONTYPE"];		//' The type of transaction Possible values: l  cart l  express-checkout
-	    $paymentType	= @$resArray["PAYMENTINFO_0_PAYMENTTYPE"];			//' Indicates whether the payment is instant or delayed. Possible values: l  none l  echeck l  instant
-	    $orderTime 		= @$resArray["ORDERTIME"];			//' Time/date stamp of payment
-	    $amt		= @$resArray["PAYMENTINFO_0_AMT"];		//' The final amount charged, including any shipping and taxes from your Merchant Profile.
-	    $currencyCode	= @$resArray["CURRENCYCODE"];			//' A three-character currency code for one of the currencies listed in PayPay-Supported Transactional Currencies. Default: USD.
-	    $feeAmt		= @$resArray["FEEAMT"];				//' PayPal fee amount charged for the transaction
-	    $settleAmt		= @$resArray["SETTLEAMT"];			//' Amount deposited in your PayPal account after a currency conversion.
-	    $taxAmt		= @$resArray["TAXAMT"];				//' Tax charged on the transaction.
-	    $exchangeRate	= @$resArray["EXCHANGERATE"];			//' Exchange rate if a currency conversion occurred. Relevant only if your are billing in their non-primary currency. If the customer chooses to pay with a currency other than the non-primary currency, the conversion occurs in the customer's account.
-	    $paymentStatus	= @$resArray["PAYMENTINFO_0_PAYMENTSTATUS"];
-	    $pendingReason	= @$resArray["PAYMENTINFO_0_PENDINGREASON"];
-	    $reasonCode		= @$resArray["PAYMENTINFO_0_REASONCODE"];
+	    $paymentType		= @$resArray["PAYMENTINFO_0_PAYMENTTYPE"];			//' Indicates whether the payment is instant or delayed. Possible values: l  none l  echeck l  instant
+	    $orderTime 			= @$resArray["ORDERTIME"];			//' Time/date stamp of payment
+	    $amt				= @$resArray["PAYMENTINFO_0_AMT"];		//' The final amount charged, including any shipping and taxes from your Merchant Profile.
+	    $currencyCode		= @$resArray["CURRENCYCODE"];			//' A three-character currency code for one of the currencies listed in PayPay-Supported Transactional Currencies. Default: USD.
+	    $feeAmt				= @$resArray["FEEAMT"];				//' PayPal fee amount charged for the transaction
+	    $settleAmt			= @$resArray["SETTLEAMT"];			//' Amount deposited in your PayPal account after a currency conversion.
+	    $taxAmt				= @$resArray["TAXAMT"];				//' Tax charged on the transaction.
+	    $exchangeRate		= @$resArray["EXCHANGERATE"];			//' Exchange rate if a currency conversion occurred. Relevant only if your are billing in their non-primary currency. If the customer chooses to pay with a currency other than the non-primary currency, the conversion occurs in the customer's account.
+	    $paymentStatus		= @$resArray["PAYMENTINFO_0_PAYMENTSTATUS"];
+	    $pendingReason		= @$resArray["PAYMENTINFO_0_PENDINGREASON"];
+	    $reasonCode			= @$resArray["PAYMENTINFO_0_REASONCODE"];
 	    if($resArray['ACK']!="Success"){
-		$errorMessage = "Sorry - your payment was not approved.<br />Payment Status:".$paymentStatus."<br/>Reason code".$reasonCode."</p>";
-		@include(loadForm("shoppingcartPayment",false));
+			$errorMessage = "Sorry - your payment was not approved.<br />Payment Status:".$paymentStatus."<br/>Reason code".$reasonCode."</p>";
+			@include(loadForm("shoppingcartPayment",false));
 	    }else{
 		$SQL    = "INSERT INTO ".getSettings("prefix")."invoice (response_code,rrn,invoice_ref,invoice_response,page_id,invoice_details,amount,invoice_date) ".
 			    "VALUES (0,".sketch("db")->quote($transactionId).",".
@@ -385,6 +416,23 @@ class SHOPPINGCART extends PLUGIN {
 			    ",".intval(memberid()).",'".serialize(array_merge($itemBreakDown,$deliveryInfo))."',".floatval($amt).",'".date("Y-m-d :H:i:s")."')";
 		$r	    = ACTIVERECORD::keeprecord($SQL);
 		$invoiceid  = lastInsertId();
+		
+		foreach($itemBreakDown['itembreakdown'] as $key => $value){
+			list($id,$size,$color) = explode(":",$key);
+			$qty = $value[0];	
+			$updated = getData("sketch_page","content","page_id=".intval($id));
+			$updated->advance();
+			$c = contentToArray($updated->content);
+			$amountLeft = intval($c['product_stock']) - intval($qty) >= 0 ? intval($c['product_stock']) - intval($qty) : 0;
+			if($c['product_stock'] != '-1'){
+				$data = array();
+				$c['product_stock'] = intval($c['product_stock']) - intval($qty);
+				$data['content'] 	= serialize($c);
+				$data['edit'] 		= $data['content'];
+				setData("sketch_page",$data,"Where page_id=".intval($id));
+			}
+		}
+		
 		$this->email_notice($invoiceid);
 	    }
 	}else{
@@ -395,50 +443,50 @@ class SHOPPINGCART extends PLUGIN {
 	}
     }
     function payPalConfirm(){
-	global $_GET;
-	helper("paypal");
-	$token	    = $_GET['token'];
-	$resArray   = GetShippingDetails( $token,$this->getPayPalDetails());
-	$ack = strtoupper($resArray["ACK"]);
-	// A payerID should be set - if not -user has cancelled
-	if( $ack == "SUCCESS" || $ack == "SUCESSWITHWARNING"){
-	    if(!isset($resArray['PAYERID'])){
-		$errorMessage = "Payment Cancelled";
-		@include(loadView("shoppingcartCheckout",false,true));
-	    }else{
-		$shipDetails = array();
-		sessionSet("token",@$resArray['TOKEN']);
-		sessionSet("invoiceNumber",@$resArray["INVNUM"]);
-		sessionSet("payer_id",@$resArray["PAYERID"]);
-		$shipDetails['email'] 		= @$resArray["EMAIL"];		// ' Email address of payer.
-		$shipDetails['payerStatus']	= @$resArray["PAYERSTATUS"];	// ' Status of payer. Character length and limitations: 10 single-byte alphabetic characters.
-		$shipDetails['salutation']	= @$resArray["SALUTATION"];	// ' Payer's salutation.
-		$shipDetails['firstname']	= @$resArray["FIRSTNAME"];	// ' Payer's first name.
-		$shipDetails['middlename']	= @$resArray["MIDDLENAME"];	// ' Payer's middle name.
-		$shipDetails['lastname']	= @$resArray["LASTNAME"];	// ' Payer's last name.
-		$shipDetails['suffix']		= @$resArray["SUFFIX"];		// ' Payer's suffix.
-		$shipDetails['business']	= @$resArray["BUSINESS"];	// ' Payer's business name.
-		$shipDetails['ship To Name']	= @$resArray["SHIPTONAME"];	// ' Person's name associated with this address.
-		$shipDetails['ship To Street']	= @$resArray["SHIPTOSTREET"];	// ' First street address.
-		$shipDetails['ship To Street2']	= @$resArray["SHIPTOSTREET2"];	// ' Second street address.
-		$shipDetails['ship To City']	= @$resArray["SHIPTOCITY"];	// ' Name of city.
-		$shipDetails['ship To State']	= @$resArray["SHIPTOSTATE"];	// ' State or province
-		$shipDetails['ship To Zip']		= @$resArray["SHIPTOZIP"];	// ' U.S. Zip code or other country-specific postal code.
-		$shipDetails['phone']		= @$resArray["PHONENUM"];	// ' Payer's contact telephone number. Note:  PayPal returns a contact telephone number only if your Merchant account profile settings require that the buyer enter one.
-		$shipDetails['country']		= false;
-		$cCode				= getCountryCode("",@$resArray["COUNTRYCODE"]);
-		foreach(explode(",",$this->e("countries")) as $key => $value){
-		    if(stripos($value,$cCode)!==false){
-			$shipDetails['country'] = $value;
-		    }
-		}
-		if($shipDetails['country'] !== false){
-		    $errorMessage =	 "Sorry - we do not ship to that country.";
-		    @include(loadView("shoppingcartCheckout",false,true));
-		}else{
-		    saveDeliveryInfo($shipDetails);
-		    @include(loadForm("shoppingcartPayment",false));
-		}
+		global $_GET;
+		helper("paypal");
+		$token	    = $_GET['token'];
+		$resArray   = GetShippingDetails( $token,$this->getPayPalDetails());
+		$ack = strtoupper($resArray["ACK"]);
+		// A payerID should be set - if not -user has cancelled
+		if( $ack == "SUCCESS" || $ack == "SUCESSWITHWARNING"){
+	    	if(!isset($resArray['PAYERID'])){
+				$errorMessage = "Payment Cancelled";
+				@include(loadView("shoppingcartCheckout",false,true));
+	   		}else{
+			$shipDetails = array();
+			sessionSet("token",@$resArray['TOKEN']);
+			sessionSet("invoiceNumber",@$resArray["INVNUM"]);
+			sessionSet("payer_id",@$resArray["PAYERID"]);
+			$shipDetails['email'] 		= @$resArray["EMAIL"];		// ' Email address of payer.
+			$shipDetails['payerStatus']	= @$resArray["PAYERSTATUS"];	// ' Status of payer. Character length and limitations: 10 single-byte alphabetic characters.
+			$shipDetails['salutation']	= @$resArray["SALUTATION"];	// ' Payer's salutation.
+			$shipDetails['firstname']	= @$resArray["FIRSTNAME"];	// ' Payer's first name.
+			$shipDetails['middlename']	= @$resArray["MIDDLENAME"];	// ' Payer's middle name.
+			$shipDetails['lastname']	= @$resArray["LASTNAME"];	// ' Payer's last name.
+			$shipDetails['suffix']		= @$resArray["SUFFIX"];		// ' Payer's suffix.
+			$shipDetails['business']	= @$resArray["BUSINESS"];	// ' Payer's business name.
+			$shipDetails['ship To Name']	= @$resArray["SHIPTONAME"];	// ' Person's name associated with this address.
+			$shipDetails['ship To Street']	= @$resArray["SHIPTOSTREET"];	// ' First street address.
+			$shipDetails['ship To Street2']	= @$resArray["SHIPTOSTREET2"];	// ' Second street address.
+			$shipDetails['ship To City']	= @$resArray["SHIPTOCITY"];	// ' Name of city.
+			$shipDetails['ship To State']	= @$resArray["SHIPTOSTATE"];	// ' State or province
+			$shipDetails['ship To Zip']		= @$resArray["SHIPTOZIP"];	// ' U.S. Zip code or other country-specific postal code.
+			$shipDetails['phone']		= @$resArray["PHONENUM"];	// ' Payer's contact telephone number. Note:  PayPal returns a contact telephone number only if your Merchant account profile settings require that the buyer enter one.
+			$shipDetails['country']		= false;
+			$cCode				= getCountryCode("",@$resArray["COUNTRYCODE"]);
+			foreach(explode(",",$this->e("countries")) as $key => $value){
+		    	if(stripos($value,$cCode)!==false){
+					$shipDetails['country'] = $value;
+		    	}
+			}
+			if($shipDetails['country'] !== false){
+		    	$errorMessage =	 "Sorry - we do not ship to that country.";
+		    	@include(loadView("shoppingcartCheckout",false,true));
+			}else{
+		    	saveDeliveryInfo($shipDetails);
+		    	@include(loadForm("shoppingcartPayment",false));
+			}
 	    }
 	} else {
 	    $errorMessage =	 "PayPal API Call Failed.<br />Error Code: ". urldecode($resArray["L_ERRORCODE0"]);

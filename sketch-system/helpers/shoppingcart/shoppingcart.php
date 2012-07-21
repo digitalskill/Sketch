@@ -6,8 +6,9 @@ function getProducts($items=""){
 	$items = is_array($items)? $items : (array)sessionGet("cart");
 	$where = "WHERE page_type='product' AND (";
 	foreach($items as $key => $value){
+		list($k,) = explode(":",$key);
 		if(intval($value) > 0 && intval($key) > 1){
-			$where .= (($where=="WHERE page_type='product' AND (")?  "" : " OR " ). "page_id=".intval($key);	
+			$where .= (($where=="WHERE page_type='product' AND (")?  "" : " OR " ). "page_id=".intval($k);	
 		}else{
 			unset($items[$key]);
 		}
@@ -17,33 +18,25 @@ function getProducts($items=""){
 	}
 	return ($where=="WHERE page_type='product' AND (")? false : getData("sketch_page","*",$where.")","page_id");
 }
-function addProduct($item="",$quantity=1){
+function addProduct($item="",$quantity=1,$size="",$color=""){
 	global $_REQUEST,$_POST;
 	if(isset($_REQUEST['quantity']) && isset($_REQUEST['product']) && !is_array($_POST['product']) && $item==""){
 		$items = (array)sessionGet("cart");
-		$colors = (array)sessionGet("color");
-		$sizes = (array)sessionGet("sizes");
-		$items[$_REQUEST['product']] = $_REQUEST['quantity'];
-		$colors[$_REQUEST['product']] = $_REQUEST['color'];
-		$sizes[$_REQUEST['product']] = $_REQUEST['size'];
+		$items[$_REQUEST['product'].":".$_REQUEST['size'].":".$_REQUEST['color']] = $_REQUEST['quantity'];
 		sessionAdd("cart",$items);
-		sessionAdd("color",$colors);
-		sessionAdd("sizes",$sizes);
 		return true;
 	}else{
 	    if(isset($_POST['product']) && is_array($_POST['product'])){
 		$items = (array)sessionGet("cart");
-		$colors = (array)sessionGet("color");
-		$sizes = (array)sessionGet("sizes");
 		foreach($_POST['product'] as $key => $value){
-		    $items[$value] = $_POST['quantity'][$key];
+		    $items[$value.":".@$_POST['size'][$key].":".@$_POST['color'][$key]] = $_POST['quantity'][$key];
 		    sessionAdd("cart",$items);
 		}
 		return false; // already on shopping page to bulk update
 	    }else{
 		if($item != ""){
 			$items = (array)sessionGet("cart");
-			$items[$item] = $quantity;
+			$items[$item.":".$size.":".$color] = $quantity;
 			sessionAdd("cart",$items);
 			return true;
 		}
@@ -133,5 +126,3 @@ function addtoWishList($item=""){
 	memberSet($details);
 	}
 }
-addtoWishList();
-removeFromWishlist();

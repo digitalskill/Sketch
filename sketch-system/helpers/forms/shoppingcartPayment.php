@@ -27,13 +27,9 @@ if($errorMessage != ''){ ?>
 	<?php echo $errorMessage; ?>
       </div>
 <?php }
-
-$r = getProducts($products);
-if($r){ ?>
+$amounts	    = ($showReceipt)? $products : sessionGet("cart");
+if($amounts){ ?>
 <form action="<?php echo urlPath(sketch("menu_guid")); ?>" method="post" class="" id="productform"><?php
-    $amounts	    = ($showReceipt)? $products : sessionGet("cart");
-	$sizes	    	= ($showReceipt)? $products : sessionGet("sizes");
-	$colours	    = ($showReceipt)? $products : sessionGet("color");
     $total	    	= 0;
     $GST	    	= 0;
     $deliveryInfo   = (array)getDeliveryInfo($deliveryInfo);
@@ -52,17 +48,20 @@ if($r){ ?>
 	    	<div class="one-sixth last">Line Total</div>
 	    </div>
 	<div class="top-border" style="clear:both"></div><?php
-    while($r->advance()){
-	$c = unserialize($r->content);
-	foreach ($c as $k => $v) {
-	    $c[$k] = str_replace(";#;",'"', $v);
-	}
-	$p 	   =    ($showReceipt)? floatval($products[$r->page_id][1]) : floatval($c['product_price']);
-	$qty   =  	($showReceipt)? intval($products[$r->page_id][0]) : $amounts[$r->page_id];
-	$size  =  	($showReceipt)? ($products['sizes'][$r->page_id]) : $sizes[$r->page_id];
-	$color =	($showReceipt)? ($products['colors'][$r->page_id]) : $colours[$r->page_id];
+	foreach($amounts as $key => $qty){
+			list($id,$size,$color) = explode(":",$key);
+			$r = getData("sketch_page,sketch_menu","*","sketch_page.page_id='".intval($id)."'");
+			$r->advance();
+			$c 		= contentToArray($r->content);
+			$qty 	= 	 ($showReceipt)? floatval($products[$key][0]) : $qty;
+			$p 	   	=    ($showReceipt)? floatval($products[$key][1]) : floatval($c['product_price']);
+			if(intval($qty) > 0){
 	?>
-    	<div style="clear:both"></div>
+        <div style="font-size:12px;font-weight:bold;clear:both">
+			<?php 
+				echo strip_tags($r->page_heading);
+				?>
+            </div>
 	    <div class="productImage one-sixth" >
 		<?php if(trim($c['page_image']) != ""){?>
 		<img src="<?php echo urlPath($c['page_image']); ?>" style="height:auto; width:100%" border="0" alt="<?php echo strip_tags($r->page_heading);  ?>"/>
@@ -89,11 +88,11 @@ if($r){ ?>
 		$<?php echo number_format($p * intval($qty),2,'.',',');
 			$total += $p * intval($qty); ?>&nbsp;
 	    </div>
-	
-<?php	    $ItemBreakdown[$r->page_id] = array($qty,$p);
-	} ?>
+		<div class="top-border" style="clear:both"></div>
+<?php	    $ItemBreakdown[$key] = array($qty,$p);
+		} 
+	}?>
 </div>
-<div class="top-border" style="clear:both"></div>
 <div class="productRow">
 <h4>Delivery Details</h4>
 <?php if($showReceipt==false && !isset($_GET['token'])){?>
@@ -120,14 +119,14 @@ if($r){ ?>
 </div>
 <?php if($showReceipt==false){
 	    $ItemBreakdown['amount']   = ($total+$freight)*(floatval($this->e("gst","0"))+1);
-		$ItemBreakdown['sizes']		= (array)sessionGet("sizes");
-		$ItemBreakdown['colors']	= (array)sessionGet("color");
 	    sessionAdd("itembreakdown",$ItemBreakdown);
 ?>
 <div class="top-border" style="clear:both"></div>
     <div style="padding:10px">
     	<div style="float:right">
-    <a class="button pill bleft" style="padding-bottom:3px;" href="<?php echo urlPath($this->e("checkoutpage")); ?>"><span class="icons leftarrow"></span>Change Order</a>
+        
+        <button onclick="window.location = '<?php echo urlPath($this->e("checkoutpage")); ?>'"	class="button pill bleft" type="button"><span class="icons leftarrow"></span>Change Order</button>
+        
     <?php if(($this->e("onlinebanking")=="yes" || $this->e("onlinebanking")=="email") && !isset($_GET['token'])){?>
 	<button type="submit" name="banktransfer" class="button pill <?php if($this->e("cctypes","")==""){?>positive primary bright<?php }else{ ?>middle<?php } ?>"><span class='icons mail'></span><?php echo $this->e("onlinebanking")=="email"? "Email Order" : "Pay by Bank Transfer"; ?></button>
     <?php } ?>
