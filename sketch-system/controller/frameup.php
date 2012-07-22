@@ -34,6 +34,7 @@ class FRAMEUP extends CONTROLLER{
 		body .sketch-alert{
 			left:5px !important;	
 		}
+		a.button{float:left !important}
 	</style>
     </head>
     <body style="padding:5px;margin:0px;background:#fff">
@@ -57,12 +58,14 @@ class FRAMEUP extends CONTROLLER{
 	<form class="required" style="margin:0px;width:95%" enctype="multipart/form-data"  onSubmit="if($('afile').get('value')!=''){$(document.body).spin(false);}" action="<?php echo urlPath("frameup"); ?>" target="_self" method="post" id="uploadform">
         	<input type="hidden" name="imagetoken" value="<?php echo $_SESSION['imagetoken']; ?>"/>
             <input type="hidden" name="folder" value="<?php echo urldecode(trim($_REQUEST['folder'])); ?>">
-        	<div>
+        	<ul class="forms">
+            <li>
                 	<input type="file" name="afile" class="required nojs bgClass:'somclass' fileTypes:'<?php echo strpos($_REQUEST['folder'],"sketch-images")!==false? $validFiles["images"]  : $validFiles["files"] ; ?>'" id="afile" title="Please select a file to upload" />
-         	</div>
-            <div>
+         	 </li>
+            <li>
                 	<button type="submit" name="uploadme" onclick="$('uploadform').set('action', $('uploadform').get('action') +'?' + (Math.random()));">Upload</button>
-            </div>
+            </li>
+            </ul>
         </form>
         <?php if($msg=="Success"){?>
         	<div style="float:left;clear:both;margin-top:5px;background:#fff;width:100%;position:relative">
@@ -83,7 +86,10 @@ class FRAMEUP extends CONTROLLER{
 		$unit = strtoupper(substr($POST_MAX_SIZE, -1));
 		$multiplier = ($unit == 'M' ? 1048576 : ($unit == 'K' ? 1024 : ($unit == 'G' ? 1073741824 : 1)));
 		$canUpload = true;
-		if(!in_array(end(explode(".",$_FILES['afile']["name"])),array("gif","jpg","doc","pdf","png","xls","docs","docx"))){
+		$fname = explode(".",$_FILES['afile']["name"]);
+		$fname = end ( $fname );
+		$fname = strtolower( $fname );
+		if(!in_array( $fname ,array("gif","jpg","jpeg","doc","pdf","png","txt","flv","swf","xls","docx"))){
 			$this->showForm("Invalid File Type");																	// File too big - Exit
 			$canUpload = false;
 		}
