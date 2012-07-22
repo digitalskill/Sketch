@@ -99,7 +99,7 @@ class STYLES extends CONTROLLER {
 											,$r->template_content);
 				} //$r->advance()
 			} //getSettings( "version" ) > 2
-			$css = str_replace("//","/",$css);
+			$css = str_replace(array("//",sketch( "themepath" )."views"),array("/",sketch( "themepath" )."/views"),$css);
 			echo getSettings( 'cache' ) ? CssMin::compress( $css ) : $css;
 			$cache->end();
 		} //!$cache->start()
