@@ -120,6 +120,34 @@
 	}
 ?>
 		</select>
+        
+        <?php if( sketch( "page_status" ) == "member" ){?>
+        <label>Member Group (select existing groups from this list)</label>
+		<select name="menu_sel" class="bgClass:'select_bg'" onchange="$('theClass').value = $('theClass').value +','+this.value">
+		    <option value="">All Members</option>
+            <?php
+			$found = false;
+			$memdata = getData("sketch_page,sketch_menu","menu_class","page_status='member' GROUP BY menu_class");
+			while($memdata->advance()){
+				if($memdata->menu_class != ''){
+					$found=true
+				?><option value="<?php echo $memdata->menu_class; ?>" <?php if(sketch("menu_class")==$memdata->menu_class){?>selected="selected"<?php } ?>><?php echo $memdata->menu_class; ?></option><?php	
+				}
+			}
+			?>
+		</select>
+        <label>
+		<?php if(!$found){ ?>
+        	<div class="alert" style="width:95%;">No Member Group Found</div>
+        <?php }else{ ?>
+        	Enter a new group name below or select one from above
+        <?php } ?>
+        </label>
+        <input name="menu_class" type="text" id="theClass" value="<?php echo sketch("menu_class"); ?>"/>
+        
+        <?php }else{ ?>
+         <input name="menu_class" type="hidden" id="theClass" value="<?php echo sketch("menu_class"); ?>"/>
+        <?php } ?>
 		</div>
 		</div>
 		</div>

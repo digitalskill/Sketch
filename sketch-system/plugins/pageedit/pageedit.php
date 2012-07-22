@@ -139,6 +139,13 @@ class PAGEEDIT extends PLUGIN
 			unset($_POST[$value]);
 		}
 	}
+	$menuData = array();
+	$menuData["menu_class"] = strip_tags($_POST['menu_class']);
+	$menuData['page_id']	= $this->page_id;
+	$menuData['sketch_menu_id'] = sketch('sketch_menu_id');
+	setData("sketch_menu",$menuData,"WHERE page_id=".intval($this->page_id));
+	
+	unset($_POST['menu_class']);
 	
     foreach ( $_POST as $key => $value ) {
 		if(!is_array($value)){
