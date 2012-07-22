@@ -207,7 +207,7 @@ if(isset($_REQUEST['n']) && adminCheck()){
 		exit();	
 	}
 		$limit = "";
-		$pagelimit = 25;				// Make this the page output desired
+		$pagelimit = 10;				// Make this the page output desired
 		if($pagelimit > 0){
 			$limit = " limit 0,".$pagelimit;
 		}
@@ -587,8 +587,7 @@ if(isset($_REQUEST['n']) && adminCheck()){
 	    </div>
     </li>
      <li>
-	<a class="button accord-title" onclick="if($(this).hasClass('open')){ $(this).getParent('li').set('style',''); $(this).getParent('ul').getElements('li').setStyle('display','block'); }else{
-    		$(this).getParent('ul').getElements('li').setStyle('display','none'); $(this).getParent('li').setStyles({'position':'absolute','display':'block','top':0,'z-index':99,right:'1%','left':'1%','width':'98%'}); }"><span class="icons downarrow"></span>Product inventory</a>
+	<a class="button accord-title"><span class="icons downarrow"></span>Product inventory</a>
 	    <div class="accord-body">
 	    <div class="accord-container">
         <label>Search product records (enter text and press the Enter key)</label>
@@ -608,7 +607,7 @@ if(isset($_REQUEST['n']) && adminCheck()){
       <div id="memberlistform">
       	<?php 
 		$limit = "";
-		$pagelimit = 25;				// Make this the page output desired
+		$pagelimit = 10;				// Make this the page output desired
 		if($pagelimit > 0){
 			$limit = " 0,".$pagelimit;
 		}
@@ -627,7 +626,7 @@ if(isset($_REQUEST['n']) && adminCheck()){
                         <td>Amount Sold</td>
                         </tr>
         	<?php 
-				$prod = getData("sketch_page,sketch_menu","*","page_type='product'","menu_under,sketch_menu_id limit 25");
+				$prod = getData("sketch_page,sketch_menu","*","page_type='product'","menu_under,sketch_menu_id limit ".$limit);
 				while($prod->advance()){
 					$c = contentToArray($prod->content);
 					$inv = getData("invoice","*","response_code=0 AND invoice_details LIKE '%".$prod->page_id.":%'");
@@ -676,10 +675,10 @@ if(isset($_REQUEST['n']) && adminCheck()){
 		$$(".ajstock").addEvent("keypress",function(event){
 			if(event.key=="enter"){
 				event.stop();
-				$(this).getParent("td").spin();
+				$(this).spin();
 				var updatevals = new Request.HTML({'url':'<?php echo urlPath("admin/ajax_plugin_shoppingcart?page_id=1&noform=t&preview="); ?>&n=0t&pid=' + $(this).get("rel") + '&stock='+this.value,'method':'get',onComplete: function(){
 					$$(".ajstock").each(function(item,index){
-						$(item).getParent("td").unspin();
+						$(item).unspin();
 					});
 				}});
 				updatevals.send();	
@@ -688,15 +687,35 @@ if(isset($_REQUEST['n']) && adminCheck()){
 		$$(".ajcost").addEvent("keypress",function(event){
 			if(event.key=="enter"){
 				event.stop();
-				$(this).getParent("td").spin();
+				$(this).spin();
 				var updatevals = new Request({'url':'<?php echo urlPath("admin/ajax_plugin_shoppingcart?page_id=1&noform=t&preview="); ?>&n=0&pid=' + $(this).get("rel") + '&cost='+this.value,'method':'get',onComplete: function(){
 					$$(".ajcost").each(function(item,index){
-						$(item).getParent("td").unspin();
+						$(item).unspin();
 					});
 				}});
 				updatevals.send();	
 			}
 		});	
+		
+		$$(".ajstock").addEvent("blur",function(event){
+				$(this).spin();
+				var updatevals = new Request.HTML({'url':'<?php echo urlPath("admin/ajax_plugin_shoppingcart?page_id=1&noform=t&preview="); ?>&n=0t&pid=' + $(this).get("rel") + '&stock='+this.value,'method':'get',onComplete: function(){
+					$$(".ajstock").each(function(item,index){
+						$(item).unspin();
+					});
+				}});
+				updatevals.send();	
+		});	
+		$$(".ajcost").addEvent("blur",function(event){
+				$(this).spin();
+				var updatevals = new Request({'url':'<?php echo urlPath("admin/ajax_plugin_shoppingcart?page_id=1&noform=t&preview="); ?>&n=0&pid=' + $(this).get("rel") + '&cost='+this.value,'method':'get',onComplete: function(){
+					$$(".ajcost").each(function(item,index){
+						$(item).unspin();
+					});
+				}});
+				updatevals.send();	
+		});	
+		
 		$$(".ajaxlink").each(function(item,index){
 			new Ajaxlinks(item); 
 		});	
