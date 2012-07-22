@@ -128,11 +128,17 @@ if($amounts){ ?>
         <button onclick="window.location = '<?php echo urlPath($this->e("checkoutpage")); ?>'"	class="button pill bleft" type="button"><span class="icons leftarrow"></span>Change Order</button>
         
     <?php if(($this->e("onlinebanking")=="yes" || $this->e("onlinebanking")=="email") && !isset($_GET['token'])){?>
-	<button type="submit" name="banktransfer" class="button pill <?php if($this->e("cctypes","")==""){?>positive primary bright<?php }else{ ?>middle<?php } ?>"><span class='icons mail'></span><?php echo $this->e("onlinebanking")=="email"? "Email Order" : "Pay by Bank Transfer"; ?></button>
+	<button type="submit" name="banktransfer" class="button pill <?php if($this->e("cctypes","")=="" || ($this->e("cctypes")=="paypal" && !isset($_GET['token']))){?>positive primary bright<?php }else{ ?>middle<?php } ?>"><span class='icons mail'></span><?php echo $this->e("onlinebanking")=="email"? "Email Order" : "Pay by Bank Transfer"; ?></button>
     <?php } ?>
-    <?php if($this->e("cctypes","")!= ""){?>
-		<button type="submit" name="payonline" class="button pill positive primary bright"><span class='icons check'></span><?php echo $this->e("cctypes")=="paypal"? "Confirm payment" : "Pay by Credit Card"; ?></button>
-    <?php } ?>
+    <?php if($this->e("cctypes","")!= ""){ ?>
+    	<?php if($this->e("cctypes")=="paypal" && isset($_GET['token'])){?>
+			<button type="submit" name="payonline" class="button pill positive primary bright"><span class='icons check'></span><?php echo $this->e("cctypes")=="paypal"? "Confirm payment" : "Pay by Credit Card"; ?></button>
+    	<?php }else{ 
+				if($this->e("cctypes")!="paypal"){ ?>
+        	<button type="submit" name="payonline" class="button pill positive primary bright"><span class='icons check'></span><?php echo $this->e("cctypes")=="paypal"? "Confirm payment" : "Pay by Credit Card"; ?></button>
+        <?php 	}
+			   }?>
+	<?php } ?>
 </div>
 </div>
 <div class="top-border" style="clear:both"></div>
