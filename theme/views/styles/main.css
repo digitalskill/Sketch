@@ -2,7 +2,6 @@ ul, ol{
 	margin:0;
 	padding:0;	
 }
-
 h1, h2, h3, h4, h5, h6, p{
 	margin:0;
 	padding:0;
@@ -13,8 +12,6 @@ body {
 	background-color: #f0f0f0;
 	color: #565656;
 	font-size: 13px;
-	overflow-y: scroll;
-	overflow-x: hidden;
 }
 
 p {
@@ -1260,7 +1257,7 @@ ul.ads li {
 
 #newslist p {
 	margin: 0;
-	width: 73%;
+	width: 75%;
 	float:left;
 }
 

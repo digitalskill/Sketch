@@ -43,12 +43,7 @@ class STYLES extends CONTROLLER {
 						$themepath = $this->urlP . sketch( "themepath" );
 						$themepath = str_replace( "index.php/", "", $themepath );
 						if ( !$admindir ) {
-							if ( sketch( "mobile" ) ) {
-								$themepath .= "views/mobile/styles/images/";
-							} //sketch( "mobile" )
-							else {
-								$themepath .= "views/styles/images/";
-							}
+							$themepath .= "views/styles/images/";
 							$css .= ( str_replace( array(
 								 "iepngfix/",
 								"images/",
@@ -58,7 +53,7 @@ class STYLES extends CONTROLLER {
 									 "/index.php/",
 									"/index.php",
 									"index.php/" 
-								), "", $this->urlP ) . "index.php/iepngfix/",
+								), "/", $this->urlP ) . "index.php/iepngfix/",
 								$themepath,
 								"" 
 							), file_get_contents( rtrim( $dir, "/" ) . "/" . $value ) ) );
@@ -74,7 +69,7 @@ class STYLES extends CONTROLLER {
 							}
 							$themepath  = explode( "http://", $themepath );
 							$themepath = "http://" . end( $themepath );
-							$css .= ( str_replace( array("iepngfix/","images/","../" ), array( str_replace( array("/index.php/","/index.php","index.php/"), "", $this->urlP ) . "index.php/iepngfix/", $themepath . "/images/","" ), file_get_contents( rtrim( $dir, "/" ) . "/" . $value ) ) );
+							$css .= ( str_replace( array("iepngfix/","images/","../" ), array( str_replace( array("/index.php/","/index.php","index.php/"), "/", $this->urlP ) . "index.php/iepngfix/", $themepath . "/images/","" ), file_get_contents( rtrim( $dir, "/" ) . "/" . $value ) ) );
 						}
 					} //stripos( $value, ".css" ) !== false && strpos( $value, "._" ) === false && stripos( $value, "cms.css" ) === false && stripos( $value, "edits.css" ) === false && stripos( $value, "mobile.css" ) === false
 				} //$files as $key => $value
@@ -86,16 +81,11 @@ class STYLES extends CONTROLLER {
 		$cache = CACHECLASS::cache( $this->filecss, $this->expiry );
 		if ( !$cache->start() ) {
 			$css = '';
-			if ( sketch( "mobile" ) == false ) {
-				$css .= $this->getPluginStyles( sketch( "sketchPath" ) . "plugins" . sketch( "slash" ) . "general" . sketch( "slash" ), true );
-				$css .= $this->getPluginStyles( sketch( "abspath" ) . sketch( "themepath" ) . "views" . sketch( "slash" ) . "styles" . sketch( "slash" ) );
-				if ( adminCheck() ) {
-					$css .= $this->getPluginStyles( sketch( "sketchPath" ) . "plugins" . sketch( "slash" ) . "admin" . sketch( "slash" ), true );
-				} //adminCheck()
-			} //sketch( "mobile" ) == false
-			else {
-				$css .= $this->getPluginStyles( sketch( "abspath" ) . sketch( "themepath" ) . "views" . sketch( "slash" ) . "mobile" . sketch( "slash" ) . "styles" . sketch( "slash" ) );
-			}
+			$css .= $this->getPluginStyles( sketch( "sketchPath" ) . "plugins" . sketch( "slash" ) . "general" . sketch( "slash" ), true );
+			$css .= $this->getPluginStyles( sketch( "abspath" ) . sketch( "themepath" ) . "views" . sketch( "slash" ) . "styles" . sketch( "slash" ) );
+			if ( adminCheck() ) {
+				$css .= $this->getPluginStyles( sketch( "sketchPath" ) . "plugins" . sketch( "slash" ) . "admin" . sketch( "slash" ), true );
+			} //adminCheck()
 			if ( getSettings( "version" ) > 2 ) {
 				$r = getData( "template", "*", "template_type='css'" );
 				//die(urlPath(sketch( "themepath" ) . "views" . sketch( "slash" ) . "styles" . sketch( "slash" )));
@@ -109,6 +99,7 @@ class STYLES extends CONTROLLER {
 											,$r->template_content);
 				} //$r->advance()
 			} //getSettings( "version" ) > 2
+			$css = str_replace("//","/",$css);
 			echo getSettings( 'cache' ) ? CssMin::compress( $css ) : $css;
 			$cache->end();
 		} //!$cache->start()
