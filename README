@@ -1,8 +1,70 @@
-Install Sketch on your server:
-Unzip the file and place the contents in a web folder or in the document root of your website.
+OPEN SOURCE 
 
-Create a database on your server
+Sketch is a PHP 5 CMS system built from the servers perspective. 
+It aims for server speed and performance first. 
+It has full support for customization and supports all the latest standards. 
 
-Access the site in your browser
-
-Enjoy!!
+<ol>
+<li>Sketch version 3 has a website with documentation</li>
+<li>FULL mobile support<ul><li>Sketch will convert pages to work with iphone,ipad and Android based devices.</li></ul></li>
+<li>Sketch can now run with NO database present - perfect for small budgets or that "small" site.</li>
+</ol>
+<h3>Sketch comes With:</h3>
+<ul><li>Shopping Cart
+	<ul>
+	    <li>DPS</li><li>Online Banking</li><li>Paypal</li>
+	</ul>
+    <li>Gallery<ul><li>Each gallery supports light box features</li></ul></li>
+    <li>Blogs<ul><li>Sketch support multiple blogs/forum pages for members and for the public</li></ul></li>
+    <li>Members</li>
+    <li>News pages</li>
+    <li>Animated Banners</li>
+    <li>Casestudies</li>
+    <li>XML feeds</li>
+    <li>Twitter</li>
+    <li>Multi-page create</li>
+    <li>Multi-site</li>
+    <li>Caching<ul>
+	    <li>Caching will give the correct headers to have the user cache it</li>
+	    <li>Caching will create a flat file on the server so the server does not have to re-process it</li>
+	    <li>Entire Pages can be cached on the server - improving performance.</li>
+	</ul>
+    </li>
+    <li>Page Tags</li>
+    <li>Simple Install</li>
+    <li>Secure<ul><li>Encrypts all passwords / cookies using a random md5 encryption key.</li>
+	    <li>Forms use tokens to get authorization</li>
+	    <li>age content goes though an approval process</li>
+	    <li>Forces removal of install files</li>
+	    <li>Supports USER_AUTH to make a site private until launch</li>
+	</ul>
+    </li>
+    <li>Bench-marked
+	<ul>
+	    <li>Simply add ?benchmark to the URL to get real feed back in the console (firebug/crome/safari web tools)</li>
+	</ul>
+    </li>
+    <li>Multi-Platform
+	<ul>
+	    <li>IIS / Linux platforms.</li><li>Apache on windows,Mac or Linux environments</li>
+	</ul>
+    </li>
+    <li>Extendable
+	<ul><li>Sketch uses Models / View / Controllers - but in a flexible way</li>
+	    <li>Don't want to use the MVC - then don't - drop a page in to the views folder and let it run - sketch will take care of the rest.</li>
+	    <li>Each Page,plugin,output and form can be modified - the saving is managed behind the scenes.</li>
+	</ul>
+    </li>
+    <li>Helpful
+	<ul><li>Sketch has a helpers folder - In there is are Validation/ Email / Paypal / DPS / minification and more...</li>
+	    <li>Sketch presents a full error when things go wrong</li>
+	    <li>Errors can be turned off when Development mode is finished</li>
+	</ul>
+    </li>
+    <li>Tiny<ul><li>All pages are stripped of comments and whitespace</li></ul></li>
+    <li>Best Practice<ul><li>Latest Standards are used in headers,  Ajax requests not cached</li></ul></li>
+<li>Mootools<ul><li>Get the best of mootools by just using the styles in forms</li></ul></li>
+	<li>SEO<ul><li>Analytics and Standards are used to create meta tags</li></ul></li>
+	<li>RSS<ul><li>Blogs and News Get an rss feed at newsfeed and blogfeed</li></ul></li>
+	<li>Moveable<ul><li>Sketch knows when it is in a subfolder - these are never written to file paths - so when moving the site form one folder to another - Sketch adjusts the links for you.</li></ul></li></ul>
+    
