@@ -1,98 +1,80 @@
-OPEN SOURCE 
+OPEN SOURCE---
 
 Sketch is a PHP 5 CMS system built from the servers perspective. 
 It aims for server speed and performance first. 
 It has full support for customization and supports all the latest standards. 
 
-
-SHOPIING CARTS
+SHOPPING CART---
 DPS
 Online Banking
 Paypal
 
-GALLERIES
+GALLERIES---
 Each gallery supports light box features
 
-BLOGGING
+BLOGGING---
 Sketch support multiple blogs/forum pages for members and for the public
 
-MEMBERSHIP
+MEMBERSHIP---
 Sketch supports membership grouping and features.
 
+PAGES AND FEATURES---
 News pages
-
+Blogging
+Galleries
+Products
+Page Tags
+Simple Install
 Animated Banners
-
 Casestudies
-
 XML feeds
-
 Twitter
-
 Multi-page create
-
 Multi-site
 
-CACHING
-
+CACHING---
 Caching will give the correct headers to have the user cache it
-
 Caching will create a flat file on the server so the server does not have to re-process it
-
 Entire Pages can be cached on the server - improving performance.
 
-Page Tags
-
-Simple Install
-
-SECURE
+SECURE---
 Encrypts all passwords / cookies using a random md5 encryption key.
-
 Forms use tokens to get authorization
-
-age content goes though an approval process
-
+Page content goes though an approval process
 Forces removal of install files
-
 Supports USER_AUTH to make a site private until launch
 
-BENCHMARKED
-
+BENCHMARKED---
 Simply add ?benchmark to the URL to get real feed back in the console (firebug/crome/safari web tools)
 
-
-MULTI-PLATFORM
-
+MULTI-PLATFORM---
 IIS / Linux platforms.
 Apache on windows,Mac or Linux environments
 
-Extendable
+EXTENDABLE---
 Sketch uses Models / View / Controllers - but in a flexible way
-
 Don't want to use the MVC - then don't - drop a page in to the views folder and let it run - sketch will take care of the rest.
 
 Each Page,plugin,output and form can be modified - the saving is managed behind the scenes.
-Helpful
+
+HELPFUL---
 Sketch has a helpers folder - In there is are Validation/ Email / Paypal / DPS / minification and more...
-
 Sketch presents a full error when things go wrong
-
 Errors can be turned off when Development mode is finished
 
-Tiny
+TINY---
 All pages are stripped of comments and whitespace
-
 Best Practice
 Latest Standards are used in headers, Ajax requests not cached
 
 Mootools
 Get the best of mootools by just using the styles in forms
 
-SEO
+SEO---
 Analytics and Standards are used to create meta tags
 
-RSS
+RSS---
 Blogs and News Get an rss feed at newsfeed and blogfeed
 
-Moveable
+PORTABLE---
 Sketch knows when it is in a subfolder - these are never written to file paths - so when moving the site form one folder to another - Sketch adjusts the links for you.
