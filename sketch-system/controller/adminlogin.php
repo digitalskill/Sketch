@@ -124,7 +124,7 @@ class ADMINLOGIN extends CONTROLLER {
 ?>
 <div id="login">
 <div id="mehide" style="display:none;"></div>
-<div id="version">Developed by <a href="email:husko2006@gmail.com">Husko</a></div>
+<div id="version"><a href="#">Sketch Version 3</a></div>
 <?php
 		$data = array(
 			 0 => @$_COOKIE[ 'name' ],
